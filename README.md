@@ -6,10 +6,11 @@ First, you will need nodejs from https://nodejs.org/en/download/ and git from ht
 
 Afterwards, use
   >git clone https://github.gatech.edu/mclayton34/4400-Phase3.git
+
 to download the repo.
 
 Now you need to install the packages listed in the package.json dependencies.
-First CD into the new directory
+First cd into the new directory
   >cd 4400-Phase3
   
 then use npm to install all of the required frameworks and extensions.  Use this command to do it in one line:
@@ -22,8 +23,10 @@ Whenever developing, the application needs to be run in debug mode in order for 
 
 For windows, use the following
   >set DEBUG=4400-phase3:*
-  npm start
+  >
+  >npm start
   
 For *nix, use the following
   >export DEBUG=4400-phase3:*
-  npm start
+  >
+  >npm start
