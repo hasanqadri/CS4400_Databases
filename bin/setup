@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 //Logger for db.js to behave
-global.logger = require('loglevel');
-logger.setLevel(logger.levels.DEBUG);
+global.log = require('loglevel');
+log.setLevel(log.levels.DEBUG);
 
 var db = require('../db.js');
 
@@ -70,8 +70,8 @@ var setup = function (error, results, fields) {
         );
     }
     logger.debug("Tables added successfully");
-    db.con.close();
-    process.ext();
+    db.con.end();
+    process.exit();
 };
 
 db.con.query("SELECT * " +

@@ -55,7 +55,7 @@ app.use(function (err, req, res, next) {
 });
 
 // logging configuration
-global.logger = require('loglevel');
-logger.setLevel(app.get('env') === 'development' ? logger.levels.DEBUG : logger.levels.ERROR);
+global.log = require('loglevel');
+log.setLevel(app.get('env') === 'development' ? log.levels.DEBUG : log.levels.ERROR);
 
 module.exports = app;
