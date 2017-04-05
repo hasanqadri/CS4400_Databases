@@ -6,8 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var sassMiddleware = require('node-sass-middleware');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
+var index = require('./controllers/index');
+var users = require('./controllers/users');
 
 var app = express();
 
@@ -53,5 +53,9 @@ app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error');
 });
+
+// logging configuration
+global.logger = require('loglevel');
+logger.setLevel(app.get('env') === 'development' ? logger.levels.DEBUG : logger.levels.ERROR);
 
 module.exports = app;
