@@ -20,5 +20,13 @@ con.connect(function (e) {
 });
 
 module.exports = {
-    con: con
+    con: con,
+    open: function() {
+        this.con = mysql.createConnection({
+            host: process.env.DB_HOST || "localhost",
+            user: process.env.DB_USER || "SLS017",
+            password: process.env.DB_PASS || "GROUP17_SPR16",
+            database: "SLS017"
+        });
+    }
 };
