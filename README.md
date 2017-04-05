@@ -14,9 +14,9 @@ First cd into the new directory
   >cd 4400-Phase3
   
 then use npm to install all of the required frameworks and extensions.  Use this command to do it in one line:
-  >npm i body-parser cookie-parser debug express node-mysql jade morgan serve-favicon node-sass-middleware
+  >npm i body-parser cookie-parser debug express node-mysql jade morgan serve-favicon node-sass-middleware loglevel
   
-Now you're done and can run the application.  If you intend on making DB changes, make sure that you setup mysql after.
+Now you're done and can run the application.  You need either setup MySQL or set the environment variables DB_HOST, DB_USER, DB_PASS to a valid MySQL installation.
 
 ## MySQL Setup (*nix only)
 Using your package manager, install mysql-server and start the service.  You can set your root password to anything.
@@ -33,6 +33,9 @@ Next, run the following commands in order
  >
  >mysql -uroot -p${rootpasswd} -e "FLUSH PRIVILEGES";
 
+
+To populate the database, cd to the project directory and run
+>node bin/setup
 
   
 ## Running the application

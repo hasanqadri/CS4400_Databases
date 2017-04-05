@@ -1,0 +1,81 @@
+#!/usr/bin/env node
+
+//Logger for db.js to behave
+global.logger = require('loglevel');
+logger.setLevel(logger.levels.DEBUG);
+
+var db = require('../db.js');
+
+//Is only called from query success
+var setup = function (error, results, fields) {
+    if (error) {
+        throw error;
+    } else if (results.length > 0) {
+        throw "database is already populated";
+    } else {
+        db.con.query(
+            "CREATE TABLE Users(  " +
+            "username VARCHAR(255) NOT NULL UNIQUE, " +
+            "email VARCHAR(255) NOT NULL UNIQUE, " +
+            "password VARCHAR(255) NOT NULL, " +
+            "usertype ENUM ('admin','official','scientist') NOT NULL, " +
+            "PRIMARY KEY (username));"
+        );
+        db.con.query(
+            "CREATE TABLE City_states( " +
+            "city VARCHAR(255) NOT NULL, " +
+            "state VARCHAR(255) NOT NULL, " +
+            "PRIMARY KEY (city, state));"
+        );
+        db.con.query(
+            "CREATE TABLE City_officials( " +
+            "username VARCHAR(255) NOT NULL UNIQUE, " +
+            "title VARCHAR(255) NOT NULL, " +
+            "approved TINYINT(1) DEFAULT 0 NOT NULL, " +
+            "city VARCHAR(255) NOT NULL, " +
+            "state VARCHAR(255) NOT NULL, " +
+            "PRIMARY KEY (username), " +
+            "FOREIGN KEY (username) REFERENCES Users(username) ON DELETE CASCADE ON UPDATE CASCADE, " +
+            "FOREIGN KEY (city, state) REFERENCES City_states(city, state) ON DELETE CASCADE ON UPDATE CASCADE);"
+        );
+        db.con.query(
+            "CREATE TABLE POIs( " +
+            "city VARCHAR(255) NOT NULL," +
+            " state VARCHAR(255) NOT NULL," +
+            " location_name VARCHAR(255) NOT NULL UNIQUE," +
+            " date_flagged DATE NOT NULL, " +
+            "flag TINYINT(1) DEFAULT 0 NOT NULL," +
+            " zip_code INTEGER(5) NOT NULL," +
+            " PRIMARY KEY(location_name)," +
+            " FOREIGN KEY (city,state) REFERENCES City_states(city,state) ON DELETE CASCADE ON UPDATE CASCADE);"
+        );
+        db.con.query(
+            "CREATE TABLE Data_Types ( " +
+            "type VARCHAR(255) NOT NULL, " +
+            "PRIMARY KEY (type));"
+        );
+        db.con.query(
+            "INSERT INTO Data_Types (type) VALUES ('mold'), ('air_quality');"
+        );
+        db.con.query(
+            "CREATE TABLE Data_Points( " +
+            "location_name VARCHAR(255) NOT NULL, " +
+            "date_time DATETIME NOT NULL, " +
+            "data_value BIGINT NOT NULL, " +
+            "data_type VARCHAR(255) NOT NULL, " +
+            "accepted TINYINT(1) DEFAULT 0 NOT NULL," +
+            "PRIMARY KEY(location_name, date_time), " +
+            "FOREIGN KEY (location_name) references POIs(location_name) ON DELETE CASCADE ON UPDATE CASCADE, " +
+            "FOREIGN KEY (data_type) references Data_Types(type) ON DELETE CASCADE ON UPDATE CASCADE);"
+        );
+    }
+    logger.debug("Tables added successfully");
+    db.con.close();
+    process.ext();
+};
+
+db.con.query("SELECT * " +
+    "FROM information_schema.tables " +
+    "WHERE table_schema='SLS017' " +
+    "AND table_name = 'Users' " +
+    "LIMIT 1", setup);
