@@ -1,78 +1,104 @@
 /**
  * Created by Mark on 4/5/2017.
  */
-db = require('../db.js');
+
+const db = require('../db.js');
 
 class record {
-    constructor(name, fields, vars) {
+    constructor(name, fields, vals) {
+        //we need a name to commit data
+        if (name === null) {
+            throw 'Needs a type name to commit to table';
+        }
         //Dont create rows with implicit null
-        if (fields.length !== vars.length) {
-            throw "Field length and var length are not the same.";
+        if (fields.length !== vals.length) {
+            throw 'Field length and var length are not the same.';
         }
         //Identifying information used for update and delete, private
         this._name = name;
         this._fields = fields;
-        this._vars = vars;
+        this._vals = vals;
 
         //Member variables that can be changed, public
-        this.fields = fields;
-        this.vars = vars;
+        for (let i = 0; i < fields.length; i++) {
+            this[fields[i]] = vals[i];
+        }
     }
 
-    create(err) {
-        function conc(fields, vars) {
-            let out = "(";
-            for (let i = 0; i < fields.length; i++) {
-                out = out + fields[i] + ",";
-            }
-            out = out.slice(0, -1) + ") VALUES (";
-            for (let i = 0; i < vars.length; i++) {
-                out = out + vars[i] + ",";
-            }
-            return out.slice(0, 1) + ")";
-        }
+    make(success, err) {
+        this._validate();
 
-        return db.con.query("INSERT INTO " + this._name
-                + conc(fields, vars) + ";",
-            function(error, results, fields) {
+        let out = '(';
+        for (let field of this._fields) {
+            out = out + this[field] + ','
+        }
+        out = out.slice(0, -1) + ')';
+
+        return db.query('INSERT INTO ' + this._name + ' VALUES ' + out,
+            function (error, results, fields) {
                 if (error) {
+                    //sql error callback
                     err(error);
                 } else {
-                    return true;
+                    //success callback
+                    success(results);
                 }
-        });
+            });
     }
 
-    update(err) {
-        function conc(fields, vars) {
-            let out = "";
-            for (let i = 0; i < fields.length; i++) {
-                out = out + fields[i] + "=" + vars[i] + ",";
+    commit(success, err) {
+        function concat() {
+            let out = '';
+            for (let i = 0; i < this._fields.length; i++) {
+                out = out + this._fields[i] + '=\'' + this[this._fields[i]] + '\',';
             }
             return out.slice(0, -1);
         }
-        return db.con.query("UPDATE " + this._name
-            + " SET "
-                + conc(this.fields, this.vars)
-            + " WHERE "
-                + conc(this._fields, this._vars)
-            + ";",
-            function(error, results, fields) {
+
+        //throws if required field doesn't exist in this object
+        this._validate();
+        db.query('UPDATE ' + this._name + ' SET ' + concat() + ' WHERE ' + this._identity(),
+            function (error, results, fields) {
                 if (error) {
-                   throw error;
+                    //sql error callback
+                    err(error);
                 } else {
-                    return true;
+                    //Now that changes are in db, we have to update identifying values
+                    let newvals = [];
+                    for (let field in this._fields) {
+                        newvals.append(this[field]);
+                    }
+                    this._vals = newvals;
+                    //result callback
+                    success(success);
                 }
             }
         );
     }
+
+    //private helper methods
+    _identity() {
+        let out = '';
+        for (let i = 0; i < this._fields.length; i++) {
+            out = out + this._fields[i] + '=\'' + this._vals[i] + '\' AND ';
+        }
+        return out.slice(0, -5);
+    }
+
+    _validate() {
+        for (let field of this._fields) {
+            if (!this.hasOwnProperty(field) || this[field] === null) {
+                throw 'Necessary field ' + field + ' not fulfilled';
+            }
+        }
+    }
 }
 
-function fetch(name, fields = "*", condition = null, limit = null) {
-    let sql = "SELECT " + fields + " FROM " + name + (condition ? condition : "") + (limit ? " LIMIT " + limit: "") + ";";
+function fetch(name, fields = '*', condition = null, limit = null) {
+    let sql = 'SELECT ' + fields + ' FROM ' + name + (condition ? condition : '') + (limit ? ' LIMIT ' + limit : '') + ';';
 
-    return db.con.query(sql,
-        function(error, results, fields) {
+    return db.query(sql,
+        function (error, results, fields) {
             if (error) {
                 throw error;
             } else {
@@ -81,3 +107,5 @@ function fetch(name, fields = "*", condition = null, limit = null) {
         }
     );
 }
+
+module.exports = record;

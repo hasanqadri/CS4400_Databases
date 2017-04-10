@@ -2,31 +2,27 @@
  * Created by Mark on 4/5/2017.
  */
 
-var mysql = require("mysql");
+const mysql = require('mysql');
 
-var con = mysql.createConnection({
-    host: process.env.DB_HOST || "localhost",
-    user: process.env.DB_USER || "SLS017",
-    password: process.env.DB_PASS || "GROUP17_SPR16",
-    database: "SLS017"
-});
-
-con.connect(function (e) {
-    if (e) {
-        log.error('Error connecting to DB', e);
-    } else {
-        log.debug('DB connected successfully');
-    }
-});
+const host = process.env.DB_HOST || 'localhost';
+const user = process.env.DB_USER || 'SLS017';
+const password = process.env.DB_PASS || 'GROUP17_SPR16';
+const database = 'SLS017';
 
 module.exports = {
-    con: con,
-    open: function() {
-        this.con = mysql.createConnection({
-            host: process.env.DB_HOST || "localhost",
-            user: process.env.DB_USER || "SLS017",
-            password: process.env.DB_PASS || "GROUP17_SPR16",
-            database: "SLS017"
-        });
+    query: function (querystring, res) {
+        try {
+            this.con = mysql.createConnection({
+                host: host,
+                user: user,
+                password: password,
+                database: database
+            });
+            this.con.query(querystring, res)
+        } finally {
+            this.con.end();
+        }
     }
 };
+
+

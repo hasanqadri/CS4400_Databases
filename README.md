@@ -14,7 +14,7 @@ First cd into the new directory
   >cd 4400-Phase3
   
 then use npm to install all of the required frameworks and extensions.  Use this command to do it in one line:
-  >npm i body-parser cookie-parser debug express node-mysql jade morgan serve-favicon node-sass-middleware loglevel
+  >npm i body-parser cookie-parser debug express mysql jade morgan serve-favicon node-sass-middleware loglevel mocha
   
 Now you're done and can run the application.  You need either setup MySQL or set the environment variables DB_HOST, DB_USER, DB_PASS to a valid MySQL installation.
 
@@ -44,9 +44,9 @@ Whenever developing, the application needs to be run in debug mode in order for 
 For windows, use the following
   >set DEBUG=4400-phase3:*
   >
-  >npm start
+  >node --use_strict bin\\www
   
 For *nix, use the following
   >export DEBUG=4400-phase3:*
   >
-  >npm start
+  >node --use_strict bin/www
