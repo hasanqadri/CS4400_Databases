@@ -94,19 +94,5 @@ describe('Record', function () {
                 done();
             });
         });
-
-
     });
-    //TODO: Mini mock MYSQL.
-    // it('should create a new user in the database', function(done) {
-    //     let type = 'admin';
-    //     let fields = ['username', 'email', 'password', 'usertype'];
-    //     let vals = ['john.doe', 'jd@example.com', 'password', 'admin'];
-    //     let myRecord = new record(type, fields, vals);
-    //     myRecord.make(function(msg) {
-    //         assert.equal(msg, "i");
-    //     });
-    //     done();
-    // });
-
 });
