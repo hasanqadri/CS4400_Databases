@@ -2,23 +2,35 @@
  * Created by Mark on 4/5/2017.
  */
 
-var mysql = require("mysql");
+const mysql = require('mysql');
 
-var con = mysql.createConnection({
-    host: process.env.DB_HOST || "localhost",
-    user: process.env.DB_USER || "SLS017",
-    password: process.env.DB_PASS || "GROUP17_SPR16",
-    database: "SLS017"
-});
+const host = process.env.DB_HOST || 'localhost';
+const user = process.env.DB_USER || 'SLS017';
+const password = process.env.DB_PASS || 'GROUP17_SPR17';
+const database = process.env.DB_DB || 'SLS017';
 
-con.connect(function (e) {
-    if (e) {
-        log.error('Error connecting to DB', e);
-    } else {
-        log.debug('DB connected successfully');
-    }
+const con = mysql.createConnection({
+    host: host,
+    user: user,
+    password: password,
+    database: database
 });
 
 module.exports = {
-    con: con
+    query: function (options, cb) {
+        try {
+            var con = mysql.createConnection({
+                host: host,
+                user: user,
+                password: password,
+                database: database
+            });
+            con.query(options, cb)
+        } finally {
+            con.end();
+        }
+    },
+    mysql: mysql
 };
+
+

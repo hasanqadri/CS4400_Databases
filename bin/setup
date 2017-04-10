@@ -1,34 +1,61 @@
 #!/usr/bin/env node
 
-//Logger for db.js to behave
+//Logger for con.js to behave
 global.log = require('loglevel');
 log.setLevel(log.levels.DEBUG);
 
-var db = require('../db.js');
+const mysql = require('mysql');
+
+const host = process.env.con_HOST || 'localhost';
+const user = process.env.con_USER || 'SLS017';
+const password = process.env.con_PASS || 'GROUP17_SPR17';
+const database = process.env.con_con || 'SLS017';
+
+const con = mysql.createConnection({
+    host: host,
+    user: user,
+    password: password,
+    database: database
+});
+
+con.connect(function (err) {
+    if (err) throw err;
+    log.debug('connected as id ' + con.threadId);
+});
 
 //Is only called from query success
-var setup = function (error, results, fields) {
+const setup = function (error, results, fields) {
     if (error) {
         throw error;
     } else if (results.length > 0) {
         throw "database is already populated";
     } else {
-        db.con.query(
-            "CREATE TABLE Users(  " +
+        const cb = function (err, result, rows) {
+            if (err) {
+                throw err;
+            }
+        };
+        con.query(
+            {
+                sql: "CREATE TABLE Users(  " +
             "username VARCHAR(255) NOT NULL UNIQUE, " +
             "email VARCHAR(255) NOT NULL UNIQUE, " +
             "password VARCHAR(255) NOT NULL, " +
             "usertype ENUM ('admin','official','scientist') NOT NULL, " +
-            "PRIMARY KEY (username));"
+                "PRIMARY KEY (username));"
+            }, cb
         );
-        db.con.query(
-            "CREATE TABLE City_states( " +
+        con.query(
+            {
+                sql: "CREATE TABLE City_states( " +
             "city VARCHAR(255) NOT NULL, " +
             "state VARCHAR(255) NOT NULL, " +
-            "PRIMARY KEY (city, state));"
+                "PRIMARY KEY (city, state));"
+            }, cb
         );
-        db.con.query(
-            "CREATE TABLE City_officials( " +
+        con.query(
+            {
+                sql: "CREATE TABLE City_officials( " +
             "username VARCHAR(255) NOT NULL UNIQUE, " +
             "title VARCHAR(255) NOT NULL, " +
             "approved TINYINT(1) DEFAULT 0 NOT NULL, " +
@@ -36,10 +63,12 @@ var setup = function (error, results, fields) {
             "state VARCHAR(255) NOT NULL, " +
             "PRIMARY KEY (username), " +
             "FOREIGN KEY (username) REFERENCES Users(username) ON DELETE CASCADE ON UPDATE CASCADE, " +
-            "FOREIGN KEY (city, state) REFERENCES City_states(city, state) ON DELETE CASCADE ON UPDATE CASCADE);"
+                "FOREIGN KEY (city, state) REFERENCES City_states(city, state) ON DELETE CASCADE ON UPDATE CASCADE);"
+            }, cb
         );
-        db.con.query(
-            "CREATE TABLE POIs( " +
+        con.query(
+            {
+                sql: "CREATE TABLE POIs( " +
             "city VARCHAR(255) NOT NULL," +
             " state VARCHAR(255) NOT NULL," +
             " location_name VARCHAR(255) NOT NULL UNIQUE," +
@@ -47,18 +76,22 @@ var setup = function (error, results, fields) {
             "flag TINYINT(1) DEFAULT 0 NOT NULL," +
             " zip_code INTEGER(5) NOT NULL," +
             " PRIMARY KEY(location_name)," +
-            " FOREIGN KEY (city,state) REFERENCES City_states(city,state) ON DELETE CASCADE ON UPDATE CASCADE);"
+                " FOREIGN KEY (city,state) REFERENCES City_states(city,state) ON DELETE CASCADE ON UPDATE CASCADE);"
+            }, cb
         );
-        db.con.query(
-            "CREATE TABLE Data_Types ( " +
+        con.query(
+            {
+                sql: "CREATE TABLE Data_Types ( " +
             "type VARCHAR(255) NOT NULL, " +
-            "PRIMARY KEY (type));"
+                "PRIMARY KEY (type));"
+            }, cb
         );
-        db.con.query(
-            "INSERT INTO Data_Types (type) VALUES ('mold'), ('air_quality');"
+        con.query(
+            {sql: "INSERT INTO Data_Types (type) VALUES ('mold'), ('air_quality');"}, cb
         );
-        db.con.query(
-            "CREATE TABLE Data_Points( " +
+        con.query(
+            {
+                sql: "CREATE TABLE Data_Points( " +
             "location_name VARCHAR(255) NOT NULL, " +
             "date_time DATETIME NOT NULL, " +
             "data_value BIGINT NOT NULL, " +
@@ -66,16 +99,41 @@ var setup = function (error, results, fields) {
             "accepted TINYINT(1) DEFAULT 0 NOT NULL," +
             "PRIMARY KEY(location_name, date_time), " +
             "FOREIGN KEY (location_name) references POIs(location_name) ON DELETE CASCADE ON UPDATE CASCADE, " +
-            "FOREIGN KEY (data_type) references Data_Types(type) ON DELETE CASCADE ON UPDATE CASCADE);"
+                "FOREIGN KEY (data_type) references Data_Types(type) ON DELETE CASCADE ON UPDATE CASCADE);"
+            }, cb
         );
+
+        //External triggers
+        con.query(
+            {
+                sql: "CREATE TRIGGER deny_username_change BEFORE UPDATE ON Users" +
+                "FOR EACH ROW BEGIN" +
+                "IF NEW.username != OLD.username THEN" +
+                "SIGNAL sqlstate '45000' SET message_text = 'Users.username cannot be edited!';" +
+                "END IF;" +
+                "END;"
+            }, cb
+        );
+
+        con.query(
+            {
+                sql: "CREATE TRIGGER deny_cityofficial_username_change BEFORE UPDATE ON City_officials" +
+                "FOR EACH ROW BEGIN" +
+                "IF NEW.username != OLD.username THEN" +
+                "SIGNAL sqlstate '45000' SET message_text = 'City_officials.username cannot be edited!';" +
+                "END IF;" +
+                "END;"
+            }, cb
+        );
+        log.debug("Tables added successfully");
     }
-    logger.debug("Tables added successfully");
-    db.con.end();
     process.exit();
 };
 
-db.con.query("SELECT * " +
+con.query({
+    sql: "SELECT * " +
     "FROM information_schema.tables " +
     "WHERE table_schema='SLS017' " +
     "AND table_name = 'Users' " +
-    "LIMIT 1", setup);
+    "LIMIT 1"
+}, setup);

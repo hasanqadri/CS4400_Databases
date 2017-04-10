@@ -14,7 +14,7 @@ First cd into the new directory
   >cd 4400-Phase3
   
 then use npm to install all of the required frameworks and extensions.  Use this command to do it in one line:
-  >npm i body-parser cookie-parser debug express node-mysql jade morgan serve-favicon node-sass-middleware loglevel
+  >npm i body-parser cookie-parser debug express mysql jade morgan serve-favicon node-sass-middleware loglevel mocha
   
 Now you're done and can run the application.  You need either setup MySQL or set the environment variables DB_HOST, DB_USER, DB_PASS to a valid MySQL installation.
 
@@ -27,15 +27,25 @@ Set whatever you have your password as a var using
 Next, run the following commands in order
  >mysql -uroot -p${rootpasswd} -e "CREATE DATABASE SLS017 /*\\!40100 DEFAULT CHARACTER SET utf8 */;"
  >
- >mysql -uroot -p${rootpasswd} -e "CREATE USER SLS017@localhost IDENTIFIED BY 'GROUP17_SPR16';"
+ >mysql -uroot -p${rootpasswd} -e "CREATE USER SLS017@localhost IDENTIFIED BY 'GROUP17_SPR17';"
  >
  >mysql -uroot -p${rootpasswd} -e "GRANT ALL PRIVILEGES ON SLS017.* TO 'SLS017'@'localhost';"
  >
  >mysql -uroot -p${rootpasswd} -e "FLUSH PRIVILEGES";
-
-
-To populate the database, cd to the project directory and run
->node bin/setup
+ 
+ To populate the database, cd to the project directory and run
+ >node bin/setup
+ 
+ To enable running tests on the database, these commands must also be run
+ >mysql -uroot -p${rootpasswd} -e "CREATE DATABASE SLS017_TEST_ENV /*\\!40100 DEFAULT CHARACTER SET utf8 */;"
+ >
+ >mysqldump -uroot -p${rootpasswd} SLS017 | mysql -uroot -p${rootpasswd} SLS017_TEST_ENV;
+ >
+ >mysql -uroot -p${rootpasswd} -e "CREATE USER SLS017_TEST@localhost IDENTIFIED BY 'TEST';"
+ >
+ >mysql -uroot -p${rootpasswd} -e "GRANT ALL PRIVILEGES ON SLS017_TEST_ENV.* TO 'SLS017_TEST'@'localhost';"
+ >
+ >mysql -uroot -p${rootpasswd} -e "FLUSH PRIVILEGES";
 
   
 ## Running the application
@@ -44,9 +54,9 @@ Whenever developing, the application needs to be run in debug mode in order for 
 For windows, use the following
   >set DEBUG=4400-phase3:*
   >
-  >npm start
+  >node --use_strict bin\\www
   
 For *nix, use the following
   >export DEBUG=4400-phase3:*
   >
-  >npm start
+  >node --use_strict bin/www
