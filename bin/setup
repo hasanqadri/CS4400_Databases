@@ -77,15 +77,15 @@ con.query(
     " FOREIGN KEY (city,state) REFERENCES City_states(city,state) ON DELETE CASCADE ON UPDATE CASCADE);"
 );
 con.query(
-    "CREATE TABLE Data_Types ( " +
+    "CREATE TABLE Data_types ( " +
     "type VARCHAR(255) NOT NULL, " +
     "PRIMARY KEY (type));"
 );
 con.query(
-    "INSERT INTO Data_Types (type) VALUES ('mold'), ('air_quality');"
+    "INSERT INTO Data_types (type) VALUES ('mold'), ('air_quality');"
 );
 con.query(
-    "CREATE TABLE Data_Points( " +
+    "CREATE TABLE Data_points( " +
     "location_name VARCHAR(255) NOT NULL, " +
     "date_time DATETIME NOT NULL, " +
     "data_value BIGINT NOT NULL, " +
@@ -96,23 +96,24 @@ con.query(
     "FOREIGN KEY (data_type) references Data_Types(type) ON DELETE CASCADE ON UPDATE CASCADE);"
 );
 
-// //External triggers
-// con.query("CREATE TRIGGER deny_username_change BEFORE UPDATE ON Users" +
-//     "FOR EACH ROW BEGIN" +
-//     "IF NEW.username != OLD.username THEN" +
-//     "SIGNAL sqlstate '45000' SET message_text = 'Users.username cannot be edited!';" +
-//     "END IF;" +
-//     "END;"
-//     , cb
-// );
-//
-// con.query("CREATE TRIGGER deny_cityofficial_username_change BEFORE UPDATE ON City_officials" +
-//     "FOR EACH ROW BEGIN" +
-//     "IF NEW.username != OLD.username THEN" +
-//     "SIGNAL sqlstate '45000' SET message_text = 'City_officials.username cannot be edited!';" +
-//     "END IF;" +
-//     "END;"
-//     , cb
-// );
+//External triggers
+con.query("CREATE TRIGGER deny_username_change BEFORE UPDATE ON Users" +
+    "FOR EACH ROW BEGIN" +
+    "IF NEW.username != OLD.username THEN" +
+    "SIGNAL sqlstate '45000' SET message_text = 'Users.username cannot be edited!';" +
+    "END IF;" +
+    "END;"
+    , cb
+);
+
+con.query("CREATE TRIGGER deny_cityofficial_username_change BEFORE UPDATE ON City_officials" +
+    "FOR EACH ROW BEGIN" +
+    "IF NEW.username != OLD.username THEN" +
+    "SIGNAL sqlstate '45000' SET message_text = 'City_officials.username cannot be edited!';" +
+    "END IF;" +
+    "END;"
+    , cb
+);
+
 log.debug("Tables added successfully");
 con.end();

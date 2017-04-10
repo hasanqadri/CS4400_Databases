@@ -67,46 +67,65 @@ class record {
         db.query({sql: sql, values: values},
             function (error, results, fields) {
                 if (error) {
-                    //sql error callback
-                    err(error);
-                } else {
-                    //Now that changes are in db, we have to update identity values
-                    let newvals = [];
-                    for (let field in this._fields) {
-                        newvals.append(this[field]);
+                    if (err) {
+                        //sql error callback
+                        err(error);
+                    } else {
+                        throw err;
                     }
-                    this._vals = newvals;
-                    //result callback
-                    success(success);
+                } else {
+                    if (success) {
+                        //success callback
+                        success(results);
+                    }
                 }
             }
         );
     }
 
-    static fetch(name, fields = ['*'], vals, limit = null) {
+    static fetch(args, success, error) {
+        var name = args['name'];
+        var vals = args['vals'];
+        var limit = args['limit'];
+        var fields = args['fields'];
+
         if (name === null) {
             throw "name cannot be null"
         }
-        let sql = 'SELECT ?? from ?';
-        if (vals.length > 0) {
+
+        let sql = 'SELECT ?? from ' + db.mysql.escapeId(name);
+        if (!args.hasOwnProperty('fields')) {
+            sql = 'SELECT * from ' + db.mysql.escapeId(name);
+        }
+
+        if (Object.keys(vals).length > 0) {
             sql += ' WHERE ';
             for (var property in vals) {
                 if (vals.hasOwnProperty(property)) {
-                    sql += ' AND ' + db.mysql.escape(property) + '=' + db.mysql.escape(vals.property);
+                    sql += db.mysql.escapeId(property) + '=' + db.mysql.escape(vals[property]) + ' AND ';
                 }
             }
+            sql = sql.slice(0, -5);
         }
         if (limit !== null && parseInt(limit, 10) > 1) {
             sql += ' LIMIT ' + parseInt(limit, 10);
         }
 
-        var res = [];
-        db.query({sql: sql, values: [fields, name]}).stream().pipe(function (err, res, fields) {
-            //make a new object and return it to res
-           log.debug(res);
+        db.query({sql: sql, values: [fields, name]}, function (error, results, fields) {
+            if (error) {
+                if (err) {
+                    //sql error callback
+                    err(error);
+                } else {
+                    throw err;
+                }
+            } else {
+                if (success) {
+                    //success callback
+                    success(results);
+                }
+            }
         });
-
-        //return res
     }
 
     //private helper methods

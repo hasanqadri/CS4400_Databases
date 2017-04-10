@@ -62,6 +62,11 @@ class city_official extends user {
             );
         }, err);
     }
+
+    static fetch(args, success, error) {
+        args['type'] = 'City_officials';
+        super.fetch(args, success, error);
+    }
 }
 
 module.exports = city_official;

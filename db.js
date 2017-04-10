@@ -25,8 +25,8 @@ module.exports = {
                 password: password,
                 database: database
             });
+            con.connect();
             res = con.query(options, cb);
-            return res;
         } finally {
             con.end();
         }
