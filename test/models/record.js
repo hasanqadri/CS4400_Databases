@@ -95,18 +95,35 @@ describe('Record', function () {
             });
         });
 
+        it('should update the database when commit happens', function(done) {
+            let type = 'Users';
+            let fields = ['username', 'email', 'password', 'usertype'];
+            let vals = ['john.doe', 'jd@example.com', 'password', 'admin'];
+            let myRecord = new record(type, fields, vals);
+            myRecord.make(function(res) {
+                assert(res !== null, true);
+            });
 
+            let fieldDict = {};
+            for (let i = 0; i < fields.length; i++) {
+                fieldDict[fields[i]] = vals[i];
+            }
+            var db_results = record.fetch('Users', '*', fields);
+            assert(db_results.length, 1, 'more than one result in db.fetch!');
+
+            var db_result = db_results[0];
+
+            assert(db_result.hasOwnProperty('username'), true, 'username not a property of new record!');
+            assert(db_result.username, myRecord.username);
+
+            assert(db_result.hasOwnProperty('email'), true, 'email not a property of new record!');
+            assert(db_result.email, myRecord.email);
+
+            assert(db_result.hasOwnProperty('password'), true, 'password not a property of new record!');
+            assert(db_result.password, myRecord.password);
+
+            assert(db_result.hasOwnProperty('usertype'), true, 'usertype not a property of new record!');
+            assert(db_result.usertype, myRecord.usertype);
+        });
     });
-    //TODO: Mini mock MYSQL.
-    // it('should create a new user in the database', function(done) {
-    //     let type = 'admin';
-    //     let fields = ['username', 'email', 'password', 'usertype'];
-    //     let vals = ['john.doe', 'jd@example.com', 'password', 'admin'];
-    //     let myRecord = new record(type, fields, vals);
-    //     myRecord.make(function(msg) {
-    //         assert.equal(msg, "i");
-    //     });
-    //     done();
-    // });
-
 });
