@@ -28,13 +28,12 @@ class record {
     make(success, err) {
         this._validate();
 
-        let out = '(';
+        let out = {};
         for (let field of this._fields) {
-            out = out + this[field] + ','
+            out[field] = this[field];
         }
-        out = out.slice(0, -1) + ')';
 
-        return db.query('INSERT INTO ' + this._name + ' VALUES ' + out,
+        return db.query('INSERT INTO ' + this._name + ' SET ? ', out,
             function (error, results, fields) {
                 if (error) {
                     //sql error callback
@@ -47,17 +46,15 @@ class record {
     }
 
     commit(success, err) {
-        function concat() {
-            let out = '';
-            for (let i = 0; i < this._fields.length; i++) {
-                out = out + this._fields[i] + '=\'' + this[this._fields[i]] + '\',';
-            }
-            return out.slice(0, -1);
-        }
-
         //throws if required field doesn't exist in this object
         this._validate();
-        db.query('UPDATE ' + this._name + ' SET ' + concat() + ' WHERE ' + this._identity(),
+
+        let out = {};
+        for (let field of this._fields) {
+            out[field] = this[field];
+        }
+
+        db.query('UPDATE ' + this._name + ' SET ? WHERE ' + this._identity(), out,
             function (error, results, fields) {
                 if (error) {
                     //sql error callback
@@ -80,7 +77,7 @@ class record {
     _identity() {
         let out = '';
         for (let i = 0; i < this._fields.length; i++) {
-            out = out + this._fields[i] + '=\'' + this._vals[i] + '\' AND ';
+            out = out + this._fields[i] + '= ' + db.mysql.escape(this._vals[i]) + ' AND ';
         }
         return out.slice(0, -5);
     }
@@ -94,18 +91,18 @@ class record {
     }
 }
 
-function fetch(name, fields = '*', condition = null, limit = null) {
-    let sql = 'SELECT ' + fields + ' FROM ' + name + (condition ? condition : '') + (limit ? ' LIMIT ' + limit : '') + ';';
-
-    return db.query(sql,
-        function (error, results, fields) {
-            if (error) {
-                throw error;
-            } else {
-                var objects = [];
-            }
-        }
-    );
-}
+// var fetch = function fetch(name, fields = '*', condition = null, limit = null) {
+//     let sql = 'SELECT ' + fields + ' FROM ' + name + (condition ? condition : '') + (limit ? ' LIMIT ' + limit : '') + ';';
+//
+//     return db.query(sql,
+//         function (error, results, fields) {
+//             if (error) {
+//                 throw error;
+//             } else {
+//                 var objects = [];
+//             }
+//         }
+//     );
+// };
 
 module.exports = record;
