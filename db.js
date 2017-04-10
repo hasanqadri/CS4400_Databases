@@ -6,21 +6,28 @@ const mysql = require('mysql');
 
 const host = process.env.DB_HOST || 'localhost';
 const user = process.env.DB_USER || 'SLS017';
-const password = process.env.DB_PASS || 'GROUP17_SPR16';
-const database = 'SLS017';
+const password = process.env.DB_PASS || 'GROUP17_SPR17';
+const database = process.env.DB_DB || 'SLS017';
+
+const con = mysql.createConnection({
+    host: host,
+    user: user,
+    password: password,
+    database: database
+});
 
 module.exports = {
-    query: function (sql, values, cb) {
+    query: function (options, cb) {
         try {
-            this.con = mysql.createConnection({
+            var con = mysql.createConnection({
                 host: host,
                 user: user,
                 password: password,
                 database: database
             });
-            this.con.query(sql, values, cb)
+            con.query(options, cb)
         } finally {
-            this.con.end();
+            con.end();
         }
     },
     mysql: mysql

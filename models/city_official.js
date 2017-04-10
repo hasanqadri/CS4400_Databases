@@ -23,8 +23,9 @@ class city_official extends user {
         out['state'] = this.state;
         out['title'] = this.title;
 
+        let sql = 'INSERT INTO City_officials SET ?';
         //also insert City_officials data
-        return db.query('INSERT INTO City_officials SET ?', out,
+        return db.query({sql: sql, vals: out},
             function (error, results, fields) {
                 if (error) {
                     err(error);
@@ -39,14 +40,16 @@ class city_official extends user {
         //throws if required field doesn't exist in this object
         super.commit(function () {
 
-            var out = {};
-            out['username'] = this.username;
-            out['approved'] = this.approved;
-            out['city'] = this.city;
-            out['state'] = this.state;
-            out['title'] = this.title;
+            var values = {};
+            values['approved'] = this.approved;
+            values['city'] = this.city;
+            values['state'] = this.state;
+            values['title'] = this.title;
+            values['username'] = this.username;
 
-            db.query('UPDATE City_officials SET ? WHERE username=\'' + db.mysql.escape(this.username) + '\'', out,
+            let sql = 'UPDATE City_officials SET ? WHERE username=?';
+
+            db.query({sql: sql, values: values},
                 function (error, results, fields) {
                     if (error) {
                         //sql error callback

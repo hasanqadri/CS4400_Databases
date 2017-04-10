@@ -28,12 +28,14 @@ class record {
     make(success, err) {
         this._validate();
 
-        let out = {};
+        let values = {};
         for (let field of this._fields) {
-            out[field] = this[field];
+            values[field] = this[field];
         }
 
-        return db.query('INSERT INTO ' + this._name + ' SET ? ', out,
+        let sql = 'INSERT INTO ' + this._name + ' SET ? ';
+
+        return db.query({sql: sql, values: values},
             function (error, results, fields) {
                 if (error) {
                     //sql error callback
@@ -49,12 +51,13 @@ class record {
         //throws if required field doesn't exist in this object
         this._validate();
 
-        let out = {};
+        let values = {};
         for (let field of this._fields) {
-            out[field] = this[field];
+            values[field] = this[field];
         }
 
-        db.query('UPDATE ' + this._name + ' SET ? WHERE ' + this._identity(), out,
+        let sql = 'UPDATE ' + this._name + ' SET ? WHERE ' + this._identity();
+        db.query({sql: sql, values: values},
             function (error, results, fields) {
                 if (error) {
                     //sql error callback
