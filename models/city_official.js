@@ -16,10 +16,15 @@ class city_official extends user {
         super.make(function () {
         }, err);
 
-        let out = '(' + this.username + ',' + this.approved + ',' + this.city + ',' + this.title + ')';
+        var out = {};
+        out['username'] = this.username;
+        out['approved'] = this.approved;
+        out['city'] = this.city;
+        out['state'] = this.state;
+        out['title'] = this.title;
 
         //also insert City_officials data
-        return db.query('INSERT INTO City_officials VALUES ' + out,
+        return db.query('INSERT INTO City_officials SET ?', out,
             function (error, results, fields) {
                 if (error) {
                     err(error);
@@ -33,26 +38,26 @@ class city_official extends user {
     commit(success, err) {
         //throws if required field doesn't exist in this object
         super.commit(function () {
-        }, err);
 
+            var out = {};
+            out['username'] = this.username;
+            out['approved'] = this.approved;
+            out['city'] = this.city;
+            out['state'] = this.state;
+            out['title'] = this.title;
 
-        db.query('UPDATE City_officials SET ' + out + ' WHERE username=\'' + this.username,
-            function (error, results, fields) {
-                if (error) {
-                    //sql error callback
-                    err(error);
-                } else {
-                    //Now that changes are in db, we have to update identifying values
-                    let newvals = [];
-                    for (let field in this._fields) {
-                        newvals.append(this[field]);
+            db.query('UPDATE City_officials SET ? WHERE username=\'' + db.mysql.escape(this.username) + '\'', out,
+                function (error, results, fields) {
+                    if (error) {
+                        //sql error callback
+                        err(error);
+                    } else {
+                        //result callback
+                        success(success);
                     }
-                    this._vals = newvals;
-                    //result callback
-                    success(success);
                 }
-            }
-        );
+            );
+        }, err);
     }
 }
 
