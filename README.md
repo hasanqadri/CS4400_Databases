@@ -31,7 +31,7 @@ Next, run the following commands in order
  >
  >mysql -uroot -p${rootpasswd} -e "GRANT ALL PRIVILEGES ON SLS017.* TO 'SLS017'@'localhost';"
  >
- >mysql -uroot -p${rootpasswd} -e "FLUSH PRIVILEGES";
+ >mysql -uroot -p${rootpasswd} -e "FLUSH PRIVILEGES;"
  
  To populate the database, cd to the project directory and run
  >node bin/setup
@@ -45,7 +45,7 @@ Next, run the following commands in order
  >
  >mysql -uroot -p${rootpasswd} -e "GRANT ALL PRIVILEGES ON SLS017_TEST_ENV.* TO 'SLS017_TEST'@'localhost';"
  >
- >mysql -uroot -p${rootpasswd} -e "FLUSH PRIVILEGES";
+ >mysql -uroot -p${rootpasswd} -e "FLUSH PRIVILEGES;"
 
   
 ## Running the application

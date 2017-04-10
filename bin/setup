@@ -4,136 +4,115 @@
 global.log = require('loglevel');
 log.setLevel(log.levels.DEBUG);
 
-const mysql = require('mysql');
+var mysql = require('mysql');
 
 const host = process.env.con_HOST || 'localhost';
 const user = process.env.con_USER || 'SLS017';
 const password = process.env.con_PASS || 'GROUP17_SPR17';
 const database = process.env.con_con || 'SLS017';
 
-const con = mysql.createConnection({
+var con = mysql.createConnection({
     host: host,
     user: user,
     password: password,
-    database: database
+    database: database,
+    multipleStatements: true
 });
 
-con.connect(function (err) {
-    if (err) throw err;
-    log.debug('connected as id ' + con.threadId);
+con.connect(function (e) {
+    if (e) {
+        log.error('Error connecting to DB', e);
+    } else {
+        log.debug('DB connected successfully');
+    }
 });
 
-//Is only called from query success
-const setup = function (error, results, fields) {
+con.query("SELECT * " +
+    "FROM information_schema.tables " +
+    "WHERE table_schema='SLS017' " +
+    "AND table_name = 'Users' " +
+    "LIMIT 1", function (error, results, fields) {
     if (error) {
         throw error;
     } else if (results.length > 0) {
         throw "database is already populated";
-    } else {
-        const cb = function (err, result, rows) {
-            if (err) {
-                throw err;
-            }
-        };
-        con.query(
-            {
-                sql: "CREATE TABLE Users(  " +
-            "username VARCHAR(255) NOT NULL UNIQUE, " +
-            "email VARCHAR(255) NOT NULL UNIQUE, " +
-            "password VARCHAR(255) NOT NULL, " +
-            "usertype ENUM ('admin','official','scientist') NOT NULL, " +
-                "PRIMARY KEY (username));"
-            }, cb
-        );
-        con.query(
-            {
-                sql: "CREATE TABLE City_states( " +
-            "city VARCHAR(255) NOT NULL, " +
-            "state VARCHAR(255) NOT NULL, " +
-                "PRIMARY KEY (city, state));"
-            }, cb
-        );
-        con.query(
-            {
-                sql: "CREATE TABLE City_officials( " +
-            "username VARCHAR(255) NOT NULL UNIQUE, " +
-            "title VARCHAR(255) NOT NULL, " +
-            "approved TINYINT(1) DEFAULT 0 NOT NULL, " +
-            "city VARCHAR(255) NOT NULL, " +
-            "state VARCHAR(255) NOT NULL, " +
-            "PRIMARY KEY (username), " +
-            "FOREIGN KEY (username) REFERENCES Users(username) ON DELETE CASCADE ON UPDATE CASCADE, " +
-                "FOREIGN KEY (city, state) REFERENCES City_states(city, state) ON DELETE CASCADE ON UPDATE CASCADE);"
-            }, cb
-        );
-        con.query(
-            {
-                sql: "CREATE TABLE POIs( " +
-            "city VARCHAR(255) NOT NULL," +
-            " state VARCHAR(255) NOT NULL," +
-            " location_name VARCHAR(255) NOT NULL UNIQUE," +
-            " date_flagged DATE NOT NULL, " +
-            "flag TINYINT(1) DEFAULT 0 NOT NULL," +
-            " zip_code INTEGER(5) NOT NULL," +
-            " PRIMARY KEY(location_name)," +
-                " FOREIGN KEY (city,state) REFERENCES City_states(city,state) ON DELETE CASCADE ON UPDATE CASCADE);"
-            }, cb
-        );
-        con.query(
-            {
-                sql: "CREATE TABLE Data_Types ( " +
-            "type VARCHAR(255) NOT NULL, " +
-                "PRIMARY KEY (type));"
-            }, cb
-        );
-        con.query(
-            {sql: "INSERT INTO Data_Types (type) VALUES ('mold'), ('air_quality');"}, cb
-        );
-        con.query(
-            {
-                sql: "CREATE TABLE Data_Points( " +
-            "location_name VARCHAR(255) NOT NULL, " +
-            "date_time DATETIME NOT NULL, " +
-            "data_value BIGINT NOT NULL, " +
-            "data_type VARCHAR(255) NOT NULL, " +
-            "accepted TINYINT(1) DEFAULT 0 NOT NULL," +
-            "PRIMARY KEY(location_name, date_time), " +
-            "FOREIGN KEY (location_name) references POIs(location_name) ON DELETE CASCADE ON UPDATE CASCADE, " +
-                "FOREIGN KEY (data_type) references Data_Types(type) ON DELETE CASCADE ON UPDATE CASCADE);"
-            }, cb
-        );
-
-        //External triggers
-        con.query(
-            {
-                sql: "CREATE TRIGGER deny_username_change BEFORE UPDATE ON Users" +
-                "FOR EACH ROW BEGIN" +
-                "IF NEW.username != OLD.username THEN" +
-                "SIGNAL sqlstate '45000' SET message_text = 'Users.username cannot be edited!';" +
-                "END IF;" +
-                "END;"
-            }, cb
-        );
-
-        con.query(
-            {
-                sql: "CREATE TRIGGER deny_cityofficial_username_change BEFORE UPDATE ON City_officials" +
-                "FOR EACH ROW BEGIN" +
-                "IF NEW.username != OLD.username THEN" +
-                "SIGNAL sqlstate '45000' SET message_text = 'City_officials.username cannot be edited!';" +
-                "END IF;" +
-                "END;"
-            }, cb
-        );
-        log.debug("Tables added successfully");
     }
-    process.exit();
-};
+});
 
-con.query({
-    sql: "SELECT * " +
-    "FROM information_schema.tables " +
-    "WHERE table_schema='SLS017' " +
-    "AND table_name = 'Users' " +
-    "LIMIT 1"
-}, setup);
+con.query(
+    "CREATE TABLE Users(  " +
+    "username VARCHAR(255) NOT NULL UNIQUE, " +
+    "email VARCHAR(255) NOT NULL UNIQUE, " +
+    "password VARCHAR(255) NOT NULL, " +
+    "usertype ENUM ('admin','official','scientist') NOT NULL, " +
+    "PRIMARY KEY (username));"
+);
+
+con.query(
+    "CREATE TABLE City_states( " +
+    "city VARCHAR(255) NOT NULL, " +
+    "state VARCHAR(255) NOT NULL, " +
+    "PRIMARY KEY (city, state));"
+);
+con.query(
+    "CREATE TABLE City_officials( " +
+    "username VARCHAR(255) NOT NULL UNIQUE, " +
+    "title VARCHAR(255) NOT NULL, " +
+    "approved TINYINT(1) DEFAULT 0 NOT NULL, " +
+    "city VARCHAR(255) NOT NULL, " +
+    "state VARCHAR(255) NOT NULL, " +
+    "PRIMARY KEY (username), " +
+    "FOREIGN KEY (username) REFERENCES Users(username) ON DELETE CASCADE ON UPDATE CASCADE, " +
+    "FOREIGN KEY (city, state) REFERENCES City_states(city, state) ON DELETE CASCADE ON UPDATE CASCADE);"
+);
+con.query(
+    "CREATE TABLE POIs( " +
+    "city VARCHAR(255) NOT NULL," +
+    " state VARCHAR(255) NOT NULL," +
+    " location_name VARCHAR(255) NOT NULL UNIQUE," +
+    " date_flagged DATE NOT NULL, " +
+    "flag TINYINT(1) DEFAULT 0 NOT NULL," +
+    " zip_code INTEGER(5) NOT NULL," +
+    " PRIMARY KEY(location_name)," +
+    " FOREIGN KEY (city,state) REFERENCES City_states(city,state) ON DELETE CASCADE ON UPDATE CASCADE);"
+);
+con.query(
+    "CREATE TABLE Data_Types ( " +
+    "type VARCHAR(255) NOT NULL, " +
+    "PRIMARY KEY (type));"
+);
+con.query(
+    "INSERT INTO Data_Types (type) VALUES ('mold'), ('air_quality');"
+);
+con.query(
+    "CREATE TABLE Data_Points( " +
+    "location_name VARCHAR(255) NOT NULL, " +
+    "date_time DATETIME NOT NULL, " +
+    "data_value BIGINT NOT NULL, " +
+    "data_type VARCHAR(255) NOT NULL, " +
+    "accepted TINYINT(1) DEFAULT 0 NOT NULL," +
+    "PRIMARY KEY(location_name, date_time), " +
+    "FOREIGN KEY (location_name) references POIs(location_name) ON DELETE CASCADE ON UPDATE CASCADE, " +
+    "FOREIGN KEY (data_type) references Data_Types(type) ON DELETE CASCADE ON UPDATE CASCADE);"
+);
+
+// //External triggers
+// con.query("CREATE TRIGGER deny_username_change BEFORE UPDATE ON Users" +
+//     "FOR EACH ROW BEGIN" +
+//     "IF NEW.username != OLD.username THEN" +
+//     "SIGNAL sqlstate '45000' SET message_text = 'Users.username cannot be edited!';" +
+//     "END IF;" +
+//     "END;"
+//     , cb
+// );
+//
+// con.query("CREATE TRIGGER deny_cityofficial_username_change BEFORE UPDATE ON City_officials" +
+//     "FOR EACH ROW BEGIN" +
+//     "IF NEW.username != OLD.username THEN" +
+//     "SIGNAL sqlstate '45000' SET message_text = 'City_officials.username cannot be edited!';" +
+//     "END IF;" +
+//     "END;"
+//     , cb
+// );
+log.debug("Tables added successfully");
+con.end();

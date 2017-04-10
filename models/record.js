@@ -3,6 +3,7 @@
  */
 
 const db = require('../db.js');
+const stream = require('stream');
 
 class record {
     constructor(name, fields, vals) {
@@ -35,14 +36,20 @@ class record {
 
         let sql = 'INSERT INTO ' + this._name + ' SET ? ';
 
-        return db.query({sql: sql, values: values},
+        db.query({sql: sql, values: values},
             function (error, results, fields) {
                 if (error) {
-                    //sql error callback
-                    err(error);
+                    if (err) {
+                        //sql error callback
+                        err(error);
+                    } else {
+                        throw err;
+                    }
                 } else {
-                    //success callback
-                    success(results);
+                    if (success) {
+                        //success callback
+                        success(results);
+                    }
                 }
             });
     }
@@ -63,7 +70,7 @@ class record {
                     //sql error callback
                     err(error);
                 } else {
-                    //Now that changes are in db, we have to update identifying values
+                    //Now that changes are in db, we have to update identity values
                     let newvals = [];
                     for (let field in this._fields) {
                         newvals.append(this[field]);
@@ -74,6 +81,32 @@ class record {
                 }
             }
         );
+    }
+
+    static fetch(name, fields = ['*'], vals, limit = null) {
+        if (name === null) {
+            throw "name cannot be null"
+        }
+        let sql = 'SELECT ?? from ?';
+        if (vals.length > 0) {
+            sql += ' WHERE ';
+            for (var property in vals) {
+                if (vals.hasOwnProperty(property)) {
+                    sql += ' AND ' + db.mysql.escape(property) + '=' + db.mysql.escape(vals.property);
+                }
+            }
+        }
+        if (limit !== null && parseInt(limit, 10) > 1) {
+            sql += ' LIMIT ' + parseInt(limit, 10);
+        }
+
+        var res = [];
+        db.query({sql: sql, values: [fields, name]}).stream().pipe(function (err, res, fields) {
+            //make a new object and return it to res
+           log.debug(res);
+        });
+
+        //return res
     }
 
     //private helper methods
@@ -93,19 +126,5 @@ class record {
         }
     }
 }
-
-// var fetch = function fetch(name, fields = '*', condition = null, limit = null) {
-//     let sql = 'SELECT ' + fields + ' FROM ' + name + (condition ? condition : '') + (limit ? ' LIMIT ' + limit : '') + ';';
-//
-//     return db.query(sql,
-//         function (error, results, fields) {
-//             if (error) {
-//                 throw error;
-//             } else {
-//                 var objects = [];
-//             }
-//         }
-//     );
-// };
 
 module.exports = record;
