@@ -59,6 +59,4 @@ typings/
 # dotenv environment variables file
 .env
 
-# compiled scss files
-public/stylesheets/*
-.idea/
+.idea
