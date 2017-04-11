@@ -135,7 +135,7 @@ describe('Record', function () {
             db.query({sql: 'DELETE FROM Users'});
             db.query({sql: 'DELETE FROM POIs'});
             db.query({sql: 'DELETE FROM City_states'});
-            db.query({sql: 'DELETE FROM Data_Points'});
+            db.query({sql: 'DELETE FROM Data_points'});
             db.query({sql: 'DELETE FROM City_officials'});
         });
         it('should update the database when commit happens', function (done) {
