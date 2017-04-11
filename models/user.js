@@ -4,6 +4,11 @@ class user extends record {
     constructor(username, email, password, usertype) {
         super('Users', ['username', 'email', 'password', 'usertype'], [username, email, password, usertype]);
     }
+
+    static fetch(args, success, error) {
+        args['type'] = 'Users';
+        super.fetch(args, success, error);
+    }
 }
 
 module.exports = user;

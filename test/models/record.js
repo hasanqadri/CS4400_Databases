@@ -94,5 +94,89 @@ describe('Record', function () {
                 done();
             });
         });
+
+        it('should update the database when make happens', function (done) {
+            let type = 'Users';
+            let fields = ['username', 'email', 'password', 'usertype'];
+            let vals = ['john.doe', 'jd@example.com', 'password', 'admin'];
+            let myRecord = new record(type, fields, vals);
+            myRecord.make(function (res) {
+                assert(res !== null, true);
+                var fieldDict = {};
+                for (let i = 0; i < fields.length; i++) {
+                    fieldDict[fields[i]] = myRecord[fields[i]];
+                }
+
+                record.fetch({name: 'Users', vals: fieldDict, limit: 1}, function (res) {
+                    assert(res.length, 1, 'more than one result in db.fetch!');
+
+                    var db_result = res[0];
+
+                    assert(db_result.hasOwnProperty('username'), true, 'username not a property of new record!');
+                    assert(db_result.username, myRecord.username);
+
+                    assert(db_result.hasOwnProperty('email'), true, 'email not a property of new record!');
+                    assert(db_result.email, myRecord.email);
+
+                    assert(db_result.hasOwnProperty('password'), true, 'password not a property of new record!');
+                    assert(db_result.password, myRecord.password);
+
+                    assert(db_result.hasOwnProperty('usertype'), true, 'usertype not a property of new record!');
+                    assert(db_result.usertype, myRecord.usertype);
+                    done();
+                });
+            });
+        });
     });
+
+    describe('#commit', function () {
+        beforeEach(function () {
+            var db = require('../../db.js');
+            db.query({sql: 'DELETE FROM Users'});
+            db.query({sql: 'DELETE FROM POIs'});
+            db.query({sql: 'DELETE FROM City_states'});
+            db.query({sql: 'DELETE FROM Data_Points'});
+            db.query({sql: 'DELETE FROM City_officials'});
+        });
+        it('should update the database when commit happens', function (done) {
+            let type = 'Users';
+            let fields = ['username', 'email', 'password', 'usertype'];
+            let vals = ['john.doe', 'jd@example.com', 'password', 'admin'];
+            let myRecord = new record(type, fields, vals);
+            myRecord.make(function (res) {
+                assert(res !== null, true);
+            });
+
+            myRecord.email = 'john.doe@example.com';
+            myRecord.commit(function (success, err) {
+                record.fetch({
+                    name: 'Users',
+                    vals: {
+                        username: 'john.doe',
+                        email: 'john.doe@example.com',
+                        password: 'password',
+                        usertype: 'admin'
+                    },
+                    limit: 1
+                }, function (res) {
+                    assert(res.length, 1, 'more than one result in db.fetch!');
+
+                    var db_result = res[0];
+
+                    assert(db_result.hasOwnProperty('username'), true, 'username not a property of new record!');
+                    assert(db_result.username, myRecord.username);
+
+                    assert(db_result.hasOwnProperty('email'), true, 'email not a property of new record!');
+                    assert(db_result.email, myRecord.email);
+
+                    assert(db_result.hasOwnProperty('password'), true, 'password not a property of new record!');
+                    assert(db_result.password, myRecord.password);
+
+                    assert(db_result.hasOwnProperty('usertype'), true, 'usertype not a property of new record!');
+                    assert(db_result.usertype, myRecord.usertype);
+                    done();
+                });
+            });
+        })
+    })
 });
