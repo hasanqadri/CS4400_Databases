@@ -87,11 +87,12 @@ describe('Record', function () {
             let fields = ['username', 'email', 'password', 'usertype'];
             let vals = ['john.doe', 'jd@example.com', 'password', 'admin'];
             let myRecord = new record(type, fields, vals);
-            myRecord.make();
             myRecord.make(function (res) {
-            }, function (err) {
-                assert.equal(err.message, 'ER_DUP_ENTRY: Duplicate entry \'john.doe\' for key \'PRIMARY\'');
-                done();
+                myRecord.make(function (res) {
+                }, function (err) {
+                    assert.equal(err.message, 'ER_DUP_ENTRY: Duplicate entry \'john.doe\' for key \'PRIMARY\'');
+                    done();
+                });
             });
         });
 
