@@ -93,26 +93,7 @@ con.query(
     "accepted TINYINT(1) DEFAULT 0 NOT NULL," +
     "PRIMARY KEY(location_name, date_time), " +
     "FOREIGN KEY (location_name) references POIs(location_name) ON DELETE CASCADE ON UPDATE CASCADE, " +
-    "FOREIGN KEY (data_type) references Data_Types(type) ON DELETE CASCADE ON UPDATE CASCADE);"
-);
-
-//External triggers
-con.query("CREATE TRIGGER deny_username_change BEFORE UPDATE ON Users" +
-    "FOR EACH ROW BEGIN" +
-    "IF NEW.username != OLD.username THEN" +
-    "SIGNAL sqlstate '45000' SET message_text = 'Users.username cannot be edited!';" +
-    "END IF;" +
-    "END;"
-    , cb
-);
-
-con.query("CREATE TRIGGER deny_cityofficial_username_change BEFORE UPDATE ON City_officials" +
-    "FOR EACH ROW BEGIN" +
-    "IF NEW.username != OLD.username THEN" +
-    "SIGNAL sqlstate '45000' SET message_text = 'City_officials.username cannot be edited!';" +
-    "END IF;" +
-    "END;"
-    , cb
+    "FOREIGN KEY (data_type) references Data_types(type) ON DELETE CASCADE ON UPDATE CASCADE);"
 );
 
 log.debug("Tables added successfully");

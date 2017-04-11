@@ -35,7 +35,10 @@ Next, run the following commands in order
  
  To populate the database, cd to the project directory and run
  >node bin/setup
- 
+
+ Because triggers cannot be added from within a mysql client, they must be added at command line.  Run
+>mysql -uroot -p${rootpasswd} -e "source bin/triggers.sql;" SLS017
+
  To enable running tests on the database, these commands must also be run
  >mysql -uroot -p${rootpasswd} -e "CREATE DATABASE SLS017_TEST_ENV /*\\!40100 DEFAULT CHARACTER SET utf8 */;"
  >
