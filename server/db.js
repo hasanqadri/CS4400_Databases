@@ -26,7 +26,7 @@ module.exports = {
                 database: database
             });
             con.connect();
-            res = con.query(options, cb);
+            con.query(options, cb);
         } finally {
             con.end();
         }
