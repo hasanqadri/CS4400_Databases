@@ -11,10 +11,10 @@ to download the repo.
 
 Now you need to install the packages listed in the package.json dependencies.
 First cd into the new directory
-  >cd 4400-Phase3
+  >cd 4400-Phase3/server
   
-then use npm to install all of the required frameworks and extensions.  Use this command to do it in one line:
-  >npm i body-parser cookie-parser debug express mysql jade morgan serve-favicon node-sass-middleware loglevel mocha
+then use npm to install all of the required frameworks and extensions.
+  >npm install
   
 Now you're done and can run the application.  You need either setup MySQL or set the environment variables DB_HOST, DB_USER, DB_PASS to a valid MySQL installation.
 
