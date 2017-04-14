@@ -83,9 +83,9 @@ class record {
         );
     }
 
-    static fetch(args, success, error) {
+    static fetch(args, success_call, error_call) {
         var name = args['name'];
-        var vals = args['vals'];
+        var vals = args['vals'] | {};
         var limit = args['limit'];
         var fields = args['fields'];
 
@@ -111,18 +111,18 @@ class record {
             sql += ' LIMIT ' + parseInt(limit, 10);
         }
 
-        db.query({sql: sql, values: [fields, name]}, function (error, results, fields) {
-            if (error) {
-                if (err) {
+        db.query({sql: sql, values: [fields, name]}, function (err, results, fields) {
+            if (err) {
+                if (error_call) {
                     //sql error callback
-                    err(error);
+                    error_call(err);
                 } else {
                     throw err;
                 }
             } else {
-                if (success) {
+                if (success_call) {
                     //success callback
-                    success(results);
+                    success_call(results);
                 }
             }
         });

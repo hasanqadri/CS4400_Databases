@@ -6,7 +6,7 @@ class city_state extends record {
     }
 
     static fetch(args, success, error) {
-        args['type'] = 'City_states';
+        args['name'] = 'City_states';
         super.fetch(args, success, error);
     }
 }

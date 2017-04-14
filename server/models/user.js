@@ -6,7 +6,7 @@ class user extends record {
     }
 
     static fetch(args, success, error) {
-        args['type'] = 'Users';
+        args['name'] = 'Users';
         super.fetch(args, success, error);
     }
 }
