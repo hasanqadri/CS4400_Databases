@@ -4,12 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 var cors = require('cors');
 
 var app = express();
-
-var users = require('./api/users');
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,10 +19,22 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
+
+
+var cookiesign = process.env.SESSION_KEY || '11i3$H0cw:OWS)25iI25A`,e0@I>vR';
+app.use(session({
+    secret: cookiesign,
+    resave: false,
+    saveUninitialized: true,
+    cookie: {maxAge: 15000}
+}));
+
 app.use(cors());
 
 app.use(express.static(path.join(__dirname, 'dist')));
-app.use('/api/users', users);
+
+app.use('/api/login', require('./api/login'));
+app.use('/api/users', require('./api/users'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
