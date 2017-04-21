@@ -1,4 +1,5 @@
-<ion-view view-title = "Waterhound">
+
+<ion-view view-title = "4400">
 <content scroll="false">
   <ion-nav-bar class="bar-positive">
     <ion-nav-back-button></ion-nav-back-button>
@@ -6,7 +7,7 @@
   <ion-content class="padding">
       <div class="col center">
         <div class="row">
-          <img class = "center" src="../img/logoSmall.png" alt="Waterhound Logo" style="max-width: 100%, max-height: 100%">
+          <p>4400 Project Phase 3</p>
         </div>
         <div class="row">
             <div class="col card">
@@ -19,10 +20,47 @@
                 </label>
               </div>
               <button class="button button-block button-positive" ng-click="login(data)">Login</button>
-              <button class="button button-block button-calm" ng-click="showPopup()">Register</button>
+              <button class="button button-block button-calm" ng-click="openModal()">Register</button>
             </div>
         </div>
       </div>
-      
+
+    <script id="my-modal.html" type="text/ng-template">
+      <ion-modal-view>
+        <ion-header-bar>
+          <h1 class="title">Register</h1>
+        </ion-header-bar>
+
+        <ion-content >
+          <div id="forms" style="padding:50px">
+            <input type = "text" ng-model="registerData.user" placeholder="Username"> <hr>
+            <input type = "password" ng-model="registerData.pass" placeholder="Password"> <hr>
+            <input type = "password" ng-model="registerData.pass_confirm" placeholder="Confirm Password" > <hr>
+            <input type = "text" ng-model="registerData.email" placeholder="Email"> <hr>
+
+            <label style="padding-right:10px">User Type</label>
+            <select ng-model="registerData.type" > 
+                <option>City Official</option>
+                <option>City Scientist</option>
+                <option>Admin</option>
+                {{showStates = (registerData.type == "City Official")? 1 : 0}}
+            </select>
+             
+            <div ng-show="showStates">
+              <label style="padding-right:10px">City/State</label>
+              <select ng-model="registerData.city" ng-options="city for city in cities"></select>
+              <select ng-model="registerData.state" ng-options="state for state in states"></select> <hr>
+              <input type="text" ng-model="registerData.title" placeholder="Title"> 
+            </div>
+
+            <hr>
+
+            <div class="wrapper" style="text-align:center">
+              <button button ng-click="register()" style="border-radius:4px; font-size: 16px">Submit</button>
+            </div>
+        </ion-content>
+      </ion-modal-view>
+    </script>
   </ion-content>
 </ion-view>
+
