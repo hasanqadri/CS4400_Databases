@@ -1,6 +1,4 @@
 angular.module('starter')
-
-
 .service('userData', function () {
     var user_data = {};
     return {
@@ -19,11 +17,41 @@ angular.module('starter')
     };
 }])
 
-.controller('LoginCtrl', ['$scope', 'WaterApp','$state', '$ionicPopup', 'userData', function($scope, WaterApp, $state, $ionicPopup) {
+.controller('LoginCtrl', ['$scope', 'WaterApp','$state', '$ionicPopup', '$ionicModal', 'userData', function($scope, WaterApp, $state, $ionicPopup, $ionicModal) {
     $scope.data = {
         "user": "",
         "pass": ""
     }
+
+    $ionicModal.fromTemplateUrl('my-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+      }).then(function(modal) {
+        $scope.modal = modal;
+      });
+      $scope.openModal = function() {
+        $scope.modal.show();
+        $scope.registerData = {};
+        $scope.showStates = 0;
+        $scope.states = ["OH", "VA", "TN"];
+        $scope.cities = ["Cincinnati", "Columbus", "Atlanta"];
+
+      };
+      $scope.closeModal = function() {
+        $scope.modal.hide();
+      };
+      // Cleanup the modal when we're done with it!
+      $scope.$on('$destroy', function() {
+        $scope.modal.remove();
+      });
+      // Execute action on hide modal
+      $scope.$on('modal.hidden', function() {
+        // Execute action
+      });
+      // Execute action on remove modal
+      $scope.$on('modal.removed', function() {
+        // Execute action
+      });
 
     $scope.login = function() {
         WaterApp.login($scope.data).then(function(result) {
@@ -41,61 +69,16 @@ angular.module('starter')
 
     $scope.register = function() {
         if ($scope.registerData.user != "" && $scope.registerData.pass != "") {
-            WaterApp.registerUser($scope.registerData)
-            .then(function(result) {
-                console.log(result.data);
-                if (result.data == 1) {
-                    var alert = $ionicPopup.show({
-                        template: 'You have successfully registered, welcome to WaterHound!',
-                        title: 'Success',
-                        buttons: [{ text: 'Ok' }]
-                    });
-                } else {
-                    var alert = $ionicPopup.show({
-                        template: 'Username is taken, try again!',
-                        title: 'Try Again',
-                        buttons: [{ text: 'Ok' }]
-                    });
-                }
-            })
         } else {
             var alert = $ionicPopup.show({
-                template: 'Please fill in both fields',
+                template: 'Please fill in all fields',
                 title: 'Try Again',
                 buttons: [{ text: 'Ok' }]
             });
         }
     }
-    $scope.showPopup = function() {
-      $scope.registerData = {}
-    
-      // Custom popup
-      var myPopup = $ionicPopup.show({
-         template: '<input type = "text" ng-model = "registerData.user" placeholder="Username"> </br>' + 
-                    '<input type = "password" ng-model = "registerData.pass" placeholder="Password"> </br>' +
-                     '<select ng-model="registerData.type">' + 
-                        '<option selected>User</option>' +
-                        '<option>Worker</option>' +
-                        '<option>Manager</option>' +
-                        '<option>Admin</option>' +
-                    '</select>',
-         title: 'Register',
-         scope: $scope,
-         buttons: [
-            { text: 'Cancel' }, {
-               text: '<b>Submit</b>',
-               type: 'button-positive',
-                  onTap: function(e) {
-                     $scope.register();
-                  }
-            }
-         ]
-      });
 
-      myPopup.then(function(res) {
-         console.log('Tapped!', res);
-      });    
-   };
+       
 }])
 
 .controller('DashCtrl', ['$scope', 'WaterApp','$state', function($scope, WaterApp,$state) {
