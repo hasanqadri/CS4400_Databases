@@ -4,7 +4,7 @@ angular.module('starter')
     return {
         getUserData: function () {
             return user_data;
-        }, 
+        },
         setUserData: function (value) {
             user_data = value;
         }
@@ -17,7 +17,20 @@ angular.module('starter')
     };
 }])
 
-.controller('LoginCtrl', ['$scope', 'WaterApp','$state', '$ionicPopup', '$ionicModal', 'userData', function($scope, WaterApp, $state, $ionicPopup, $ionicModal) {
+
+  .controller('viewpoiCtrl', ['$rootScope', '$state', function($rootScope, $state) {
+    $rootScope.goBack = function() {
+      $state.go('main.dash');
+    };
+  }])
+
+  .controller('locationCtrl', ['$rootScope', '$state', function($rootScope, $state) {
+    $rootScope.goBack = function() {
+      $state.go('main.dash');
+    };
+  }])
+
+.controller('LoginCtrl', ['$scope', 'WaterApp','$state', '$ionicPopup', 'userData', function($scope, WaterApp, $state, $ionicPopup) {
     $scope.data = {
         "user": "",
         "pass": ""
@@ -78,7 +91,7 @@ angular.module('starter')
         }
     }
 
-       
+
 }])
 
 .controller('DashCtrl', ['$scope', 'WaterApp','$state', function($scope, WaterApp,$state) {
@@ -112,7 +125,7 @@ angular.module('starter')
 .controller('MapCtrl', ['$state', '$scope', 'WaterApp', '$ionicLoading', '$rootScope', function($state, $scope, WaterApp, $ionicLoading, $rootScope) {
     var options = {timeout: 10000, enableHighAccuracy: true};
     var latLng = new google.maps.LatLng(33.748995, -84.387982);
- 
+
     var mapOptions = {
       center: latLng,
       zoom: 7,
@@ -136,7 +149,7 @@ angular.module('starter')
     makeMap = function() {
         var infowindow = new google.maps.InfoWindow();
         for (var i = 0; i < $scope.sourceReports.length; i++) {
-            var mkrLatLng = new google.maps.LatLng($scope.sourceReports[i]['latitude'], 
+            var mkrLatLng = new google.maps.LatLng($scope.sourceReports[i]['latitude'],
                                                     $scope.sourceReports[i]['longitude']);
             var marker = new google.maps.Marker({
                 map: $scope.map,
@@ -146,21 +159,21 @@ angular.module('starter')
 
             google.maps.event.addListener(marker, 'click', (function (marker, i) {
                 return function () {
-                    infowindow.setContent("<p><h5>" + $scope.sourceReports[i]['type'] + "</h5>" + 
-                                            $scope.sourceReports[i]['cond'] + "<br />" + mkrLatLng.toString()  
-                                             + "<br />" + $scope.sourceReports[i]['timestamp'] + 
+                    infowindow.setContent("<p><h5>" + $scope.sourceReports[i]['type'] + "</h5>" +
+                                            $scope.sourceReports[i]['cond'] + "<br />" + mkrLatLng.toString()
+                                             + "<br />" + $scope.sourceReports[i]['timestamp'] +
                                             "</p>");
                     infowindow.open(map, marker);
                 }
-            })(marker, i)); 
+            })(marker, i));
         }
     }
 
-   
+
 }])
 
 .controller('sourceReportCtrl', ['$state', '$scope', 'WaterApp', '$ionicPopup', function($state, $scope, WaterApp, $ionicPopup) {
-    
+
     $scope.reportData = {
         'lat':"",
         'lng':"",
@@ -178,7 +191,7 @@ angular.module('starter')
                     template: 'Thank you!',
                     title: 'Successfully Submitted',
                     buttons: [{ text: 'Ok' }]
-                }); 
+                });
             } else {
                 var alert = $ionicPopup.show({
                     template: 'Something went wrong, please try again later :(',
@@ -202,8 +215,9 @@ angular.module('starter')
                 $rootScope.sourceReports = result.data;
                 console.log("Queried source reports");
             });
-    } 
-
+    }
 
 
 }]);
+
+

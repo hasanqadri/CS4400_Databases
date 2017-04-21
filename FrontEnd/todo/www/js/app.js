@@ -30,6 +30,18 @@ angular.module('starter', ['ionic'])
     templateUrl: 'templates/login.html',
     controller: 'LoginCtrl',
     cache:false
+})
+  .state('viewpoi', {
+    url: '/viewpoi',
+    templateUrl: 'templates/viewpoi.html',
+    controller: 'viewpoiCtrl',
+    cache:false
+  })
+  .state('location', {
+    url: '/location',
+    templateUrl: 'templates/location.html',
+    controller: 'locationCtrl',
+    cache:false
   })
   .state('POIdetail', {
     url: '/POIdetail',
@@ -67,6 +79,16 @@ angular.module('starter', ['ionic'])
         }
     }
   })
+
+  .state('main.location', {
+    url: 'main/location',
+    views: {
+      'dash-tab': {
+        templateUrl: 'templates/location.html'
+      }
+    }
+  })
+
   .state('main.public', {
     url: 'main/public',
     views: {
@@ -82,7 +104,7 @@ angular.module('starter', ['ionic'])
           templateUrl: 'templates/admin.html'
         }
     },
-   
+
   });
   $urlRouterProvider.otherwise(function ($injector, $location) {
     var $state = $injector.get("$state");
