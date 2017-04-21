@@ -1,0 +1,19 @@
+<ion-view view-title = "Source Reports">
+<ion-nav-buttons>
+    <button class="button icon ion-ios-arrow-back button-clear" ng-click="goBack()">Back</button>
+</ion-nav-buttons>
+  <ion-content>
+  
+
+  <div class = "card" ng-repeat="report in sourceReports"> 
+    <h3> {{report['sourceReportID']}} : {{report['type']}} </h3>
+    <p> {{report['timestamp']}} </p>
+    <p> {{report['cond']}} </p>
+    <p> Reported by {{report['username']}} </p>
+    <p> Coordinates: ({{report['latitude']}}, {{report['longitude']}}) </p>
+  </div>
+  
+  
+    
+  </ion-content>
+</ion-view>

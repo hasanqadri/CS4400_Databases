@@ -1,0 +1,55 @@
+<ion-view view-title="Water Source Report" name="cleanwaterreport-view">
+  <ion-nav-buttons>
+    <button class="button icon ion-ios-arrow-back button-clear" ng-click="goBack()">Back</button>
+  </ion-nav-buttons>
+  <ion-content>
+  <div class="list">
+    <div class="item item-input-inset">
+      <label class="item item-input-wrapper">   
+      <input type="text" placeholder="Latitude" ng-model="reportData.lat">
+      </label>
+      <label class="item item-input-wrapper">   
+      <input type="text" placeholder="Longitude" ng-model="reportData.lng">
+      </label>
+      <button class="button icon ion-location"></button>
+    </div>
+
+  </div>
+
+
+  <div class="list">
+  <label class="item item-input item-select">
+    <div class="input-label placeholder-text"> 
+     <i class="icon ion-waterdrop placeholder-icon"></i>
+      Source
+    </div>
+    <select ng-model="reportData.source">
+      <option selected>Stream</option>
+      <option>Bottled</option>
+      <option>Well</option>
+      <option>Lake</option>
+      <option>Spring</option>
+      <option>Other</option>
+    </select>
+  </label>
+  </div>
+
+  <div class="list">
+  <label class="item item-input item-select">
+    <div class="input-label"> 
+     <i class="icon ion-nuclear placeholder-icon"></i>
+      Condition
+    </div>
+    <select ng-model="reportData.condition">
+      <option selected>Potable</option>
+      <option>Treatable-Clear</option>
+      <option> Treatable-Muddy</option>
+      <option>Waste</option>
+    </select>
+  </label>
+
+  </div>
+
+  <button class="button button-block button-calm" ng-click="submit()">Submit</button>
+  </ion-content>
+</ion-view>
