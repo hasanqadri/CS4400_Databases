@@ -69,25 +69,6 @@ angular.module('starter')
 
     $scope.register = function() {
         if ($scope.registerData.user != "" && $scope.registerData.pass != "") {
-
-            //Data validation
-            WaterApp.registerUser($scope.registerData)
-            .then(function(result) {
-                console.log(result.data);
-                if (result.data == 1) {
-                    var alert = $ionicPopup.show({
-                        template: 'You have successfully registered!',
-                        title: 'Success',
-                        buttons: [{ text: 'Ok' }]
-                    });
-                } else {
-                    var alert = $ionicPopup.show({
-                        template: 'Username is taken, try again!',
-                        title: 'Try Again',
-                        buttons: [{ text: 'Ok' }]
-                    });
-                }
-            })
         } else {
             var alert = $ionicPopup.show({
                 template: 'Please fill in all fields',
@@ -96,10 +77,8 @@ angular.module('starter')
             });
         }
     }
-}
-    
 
-   
+       
 }])
 
 .controller('DashCtrl', ['$scope', 'WaterApp','$state', function($scope, WaterApp,$state) {
