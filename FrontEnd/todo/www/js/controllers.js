@@ -120,6 +120,12 @@ angular.module('starter')
 
 }])
 
+.controller('POIdetailCtrl', ['$rootScope', '$state', function($rootScope, $state) {
+    $rootScope.goBack = function() {
+           $state.go('main.dash');
+    };
+}])
+
 .controller('MapCtrl', ['$state', '$scope', 'WaterApp', '$ionicLoading', '$rootScope', function($state, $scope, WaterApp, $ionicLoading, $rootScope) {
     var options = {timeout: 10000, enableHighAccuracy: true};
     var latLng = new google.maps.LatLng(33.748995, -84.387982);

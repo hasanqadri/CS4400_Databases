@@ -31,6 +31,12 @@ angular.module('starter', ['ionic'])
     controller: 'LoginCtrl',
     cache:false
   })
+  .state('POIdetail', {
+    url: '/POIdetail',
+    templateUrl: 'templates/POIdetail.html',
+    controller: 'POIdetailCtrl',
+    cache:false
+  })
   .state('sourceReport', {
     url: '/sourceReport',
     templateUrl: 'templates/sourceReport.html',
