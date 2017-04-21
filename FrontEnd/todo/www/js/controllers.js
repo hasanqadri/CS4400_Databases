@@ -70,8 +70,7 @@ angular.module('starter')
     $scope.register = function() {
         if ($scope.registerData.user != "" && $scope.registerData.pass != "") {
 
-            //Data validation:
-          
+            //Data validation
             WaterApp.registerUser($scope.registerData)
             .then(function(result) {
                 console.log(result.data);
@@ -97,12 +96,9 @@ angular.module('starter')
             });
         }
     }
-
-    function validateEmail(email) {
-        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(email);
-    }
 }
+    
+
    
 }])
 
