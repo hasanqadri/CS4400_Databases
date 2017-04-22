@@ -36,6 +36,12 @@ angular.module('starter')
     };
   }])
 
+  .controller('adminCtrl', ['$rootScope', '$state', function($rootScope, $state) {
+    $rootScope.goBack = function() {
+      $state.go('main.dash');
+    };
+  }])
+
 .controller('LoginCtrl', ['$scope', 'WaterApp','$state', '$ionicPopup', '$ionicModal', 'userData', function($scope, WaterApp, $state, $ionicPopup, $ionicModal) {
     $scope.data = {
         "user": "",
@@ -110,10 +116,6 @@ angular.module('starter')
         $state.go('POIdetail');
     }
 
-     $scope.Admin = function() {
-        $state.go('Admin');
-    }
-
     $scope.logout = function() {
         WaterApp.setUserData(null);
         $state.go('login');
@@ -127,18 +129,23 @@ angular.module('starter')
         $state.go('viewPOI');
     }
 
+    $scope.pendingData = function() {
+        $state.go('adminPendingData');
+    }
+
+    $scope.pendingOfficials = function() {
+        $state.go('Admin');
+    }
+
+    $scope.viewReports = function() {
+        $state.go('POIreports');
+    }
+
 }])
 .controller('POIdetailCtrl', ['$rootScope', '$state', function($rootScope, $state) {
     $rootScope.goBack = function() {
            $state.go('main.dash');
     };
-    var request = $.post("http://localhost:3000/api/poi/list", {});
-
-    request.done(function( msg ) {
-      $state.officials = msg;
-    }).fail(function( msg ) {
-        alert("Could not get user list");
-    });
 }])
 
 .controller('addDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
@@ -147,14 +154,7 @@ angular.module('starter')
 
 .controller('adminCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
     $scope.officials = [];
-    var request = $.post("http://localhost:3000/api/users/list", {});
-
-    request.done(function( msg ) {
-      $state.officials = msg;
-    }).fail(function( msg ) {
-        alert("Could not get user list");
-    });
-
+    $scope.officials.push({"username" : "blah", "email" : "kevin", "city" : "kevin", "state" : "blah", "title" : "kevin"});
 }])
 
 .controller('adminPendingDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {

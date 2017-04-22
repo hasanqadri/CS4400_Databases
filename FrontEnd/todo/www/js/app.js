@@ -69,7 +69,7 @@ angular.module('starter', ['ionic'])
   .state('addData', {
     url: '/addData',
     templateUrl: 'templates/addData.html',
-    controller: 'addDataCtrls'
+    controller: 'addDataCtrl'
   })
   .state('main.dash', {
     url: 'main/dash',
