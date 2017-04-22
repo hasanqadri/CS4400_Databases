@@ -54,6 +54,21 @@ To
 <button class="item-input-inset button button-block button-calm">Reset Filter</button>
 </div>
 </div>
+
+<table align="center">
+<tr>
+<th class="text-center" colspan="1">Data Type</th>
+<th class="text-center" colspan="1">Data Value</th>
+<th class="text-center" colspan="1">Time and Date</th>
+</tr>
+<tr ng-repeat="i in data">
+<td>{{i.dataType}}</td>  
+<td>{{i.dataValue}}</td>  
+<td>{{i.timeDate}</td>           
+</tr>
+</table>
+
+
 <div class="list">
 <div class="item item-input-inset">
 <button class="item-input-inset button button-block button-calm">Back</button>

@@ -17,6 +17,12 @@ angular.module('starter')
     };
 }])
 
+.controller('POIreportsCtrl', ['$rootScope', '$state', function($rootScope, $state) {
+    $rootScope.goBack = function() {
+           $state.go('main.dash');
+    };
+}])
+
 
   .controller('viewPOICtrl', ['$rootScope', '$state', function($rootScope, $state) {
     $rootScope.goBack = function() {

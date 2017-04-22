@@ -1,0 +1,35 @@
+<ion-view view-title="POIreports" name="POIreports-view">
+  <ion-content class="padding">
+      <table align="center">
+        <tr>
+        <th class="text-center" colspan="1">POI Location</th>
+        <th class="text-center" colspan="1">City</th>
+        <th class="text-center" colspan="1">State</th>
+        <th class="text-center" colspan="1">Mold Min</th>
+        <th class="text-center" colspan="1">Mold Avg</th>
+        <th class="text-center" colspan="1">Mold Max</th>
+        <th class="text-center" colspan="1">AQ Min</th>
+        <th class="text-center" colspan="1">AQ Avg</th>
+        <th class="text-center" colspan="1">AQ Max</th>
+        <th class="text-center" colspan="1"># of data points</th>
+        <th class="text-center" colspan="1">Flagged?</th>
+        </tr>
+      <tr ng-repeat="i in pendingData">
+        <td>test</td>
+        <td>{{i.location}}</td>  
+        <td>{{i.city}}</td>  
+        <td>{{i.state}}</td>  
+        <td>{{i.moldMin}}</td>
+        <td>{{i.moldAvg}}</td> 
+        <td>{{i.moldMax}}</td> 
+        <td>{{i.aqMin}}</td>  
+        <td>{{i.aqAvg}}</td>  
+        <td>{{i.aqMax}}</td> 
+        <td>{{i.numData}}</td> 
+        <td>{{i.flagged}}</td>           
+      </tr>
+        </table>
+      <button class="button button-block button-positive" ng-click="goBack()">Back</button>
+
+  </ion-content>
+</ion-view>

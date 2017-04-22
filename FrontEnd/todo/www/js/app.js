@@ -30,7 +30,13 @@ angular.module('starter', ['ionic'])
     templateUrl: 'templates/login.html',
     controller: 'LoginCtrl',
     cache:false
-})
+  })
+   .state('POIreports', {
+    url: '/POIreports',
+    templateUrl: 'templates/POIreports.html',
+    controller: 'POIreportsCtrl',
+    cache:false
+  })
   .state('viewPOI', {
     url: '/viewPOI',
     templateUrl: 'templates/viewPOI.html',
