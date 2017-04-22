@@ -157,15 +157,13 @@ angular.module('starter')
     $rootScope.goBack = function() {
            $state.go('main.dash');
     };
-<<<<<<< HEAD
-=======
+
     var request = $.post("http://localhost:3000/api/data/list", {});
     request.done(function( msg ) {
       $scope.data = msg;
     }).fail(function( msg ) {
         alert("Could not get poi list");
     });
->>>>>>> eb9c8b721e96314893ac6bc3b9241f43efaf7aea
 }])
 
 .controller('addDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
@@ -174,16 +172,14 @@ angular.module('starter')
 
 .controller('adminCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
     $scope.officials = [];
-<<<<<<< HEAD
-    $scope.officials.push({"username" : "blah", "email" : "kevin", "city" : "kevin", "state" : "blah", "title" : "kevin"});
-=======
+
     var request = $.post("http://localhost:3000/api/users/list", {vals: {'approved': '0'}});
     request.done(function( msg ) {
       $scope.officials = msg;
     }).fail(function( msg ) {
         alert("Could not get user list");
     });
->>>>>>> eb9c8b721e96314893ac6bc3b9241f43efaf7aea
+
 }])
 
 .controller('adminPendingDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
