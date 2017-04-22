@@ -30,7 +30,7 @@ angular.module('starter')
     };
   }])
 
-.controller('LoginCtrl', ['$scope', 'WaterApp','$state', '$ionicPopup', 'userData', function($scope, WaterApp, $state, $ionicPopup) {
+.controller('LoginCtrl', ['$scope', 'WaterApp','$state', '$ionicPopup', '$ionicModal', 'userData', function($scope, WaterApp, $state, $ionicPopup, $ionicModal) {
     $scope.data = {
         "user": "",
         "pass": ""
