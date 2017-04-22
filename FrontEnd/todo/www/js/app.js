@@ -68,13 +68,11 @@ angular.module('starter', ['ionic'])
         }
     }
   })
-  .state('main.location', {
-    url: 'main/location',
-    views: {
-      'dash-tab': {
-        templateUrl: 'templates/location.html'
-      }
-    }
+  .state('Admin', {
+    url: '/admin',
+    templateUrl: 'templates/Admin.html',
+    controller: 'adminCtrl',
+    cache:false
   });
   $urlRouterProvider.otherwise(function ($injector, $location) {
     var $state = $injector.get("$state");

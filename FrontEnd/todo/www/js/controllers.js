@@ -130,6 +130,10 @@ angular.module('starter')
     
 }])
 
+.controller('adminCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
+    
+}])
+
 .controller('sourceReportCtrl', ['$state', '$scope', 'WaterApp', '$ionicPopup', function($state, $scope, WaterApp, $ionicPopup) {
 
     $scope.reportData = {

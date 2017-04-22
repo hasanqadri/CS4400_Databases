@@ -1,5 +1,21 @@
 <ion-view view-title="Admin" name="dashboard-view">
   <ion-content class="padding">
-      Admin tools coming soon!
+      <table align="center" ng-show="didQuery">
+        <tr>
+        <th class="text-center" colspan="1">Select</th>
+        <th class="text-center" colspan="1">Username</th>
+        <th class="text-center" colspan="1">Email</th>
+        <th class="text-center" colspan="1">City</th>
+        <th class="text-center" colspan="1">State</th>
+        <th class="text-center" colspan="1">Title</th>
+        </tr>
+      <tr ng-repeat="i in officials">
+        <td>{{i.username}}</td>  
+        <td>{{i.email}}</td>  
+        <td>{{i.city}}</td>  
+        <td>{{i.state}}</td>  
+        <td>{{i.title}}</td>        
+      </tr>
+        </table>
   </ion-content>
 </ion-view>
