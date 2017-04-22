@@ -126,6 +126,13 @@ angular.module('starter')
     $rootScope.goBack = function() {
            $state.go('main.dash');
     };
+    var request = $.post("http://localhost:3000/api/poi/list", {});
+
+    request.done(function( msg ) {
+      $state.officials = msg;
+    }).fail(function( msg ) {
+        alert("Could not get user list");
+    });
 }])
 
 .controller('addDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
