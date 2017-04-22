@@ -72,7 +72,9 @@ angular.module('starter')
         var request = $.post("http://localhost:3000/api/login", { username : $scope.data.user, password : $scope.data.pass });
  
         request.done(function( msg ) {
-          console.log(msg);
+          $state.go("main.dash");
+        }).fail(function( msg ) {
+            alert("Username or password incorrect");
         });
     
     }
