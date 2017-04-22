@@ -29,9 +29,9 @@
           <h1 class="title">Register</h1>
         </ion-header-bar>
 
-        <ion-content >
-          <div id="forms" style="padding:50px">
-            <input type = "text" ng-model="registerData.user" placeholder="Username"> <hr>
+        <ion-content>
+          <div id="forms" style="padding:50px"">
+            <input type = "text" ng-model="registerData.user" placeholder="Username" style="font-size:30px"> <hr>
             <input type = "password" ng-model="registerData.pass" placeholder="Password"> <hr>
             <input type = "password" ng-model="registerData.pass_confirm" placeholder="Confirm Password" > <hr>
             <input type = "text" ng-model="registerData.email" placeholder="Email"> <hr>
@@ -54,8 +54,9 @@
             <hr>
 
             <div class="wrapper" style="text-align:center">
-              <button button ng-click="register()" style="border-radius:4px; font-size: 16px">Submit</button>
+              <button button ng-click="register()" style="border-radius:4px">Submit</button>
             </div>
+          </div>
         </ion-content>
       </ion-modal-view>
     </script>

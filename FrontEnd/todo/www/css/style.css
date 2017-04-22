@@ -16,3 +16,8 @@
 .frame_look_feel {
 background-color: red;
 }
+
+input
+{
+    font-size:24px;
+}
