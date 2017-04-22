@@ -1,4 +1,7 @@
+const db = require('../db.js');
+
 const record = require('./record.js');
+
 const user = require('./user.js');
 
 class city_official extends user {

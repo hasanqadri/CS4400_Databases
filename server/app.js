@@ -26,7 +26,7 @@ app.use(session({
     secret: cookiesign,
     resave: false,
     saveUninitialized: true,
-    cookie: {maxAge: 15000}
+    cookie: {maxAge: 300000}
 }));
 
 app.use(cors());
@@ -35,6 +35,9 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use('/api/login', require('./api/login'));
 app.use('/api/users', require('./api/users'));
+app.use('/api/citystate', require('./api/citystate'));
+app.use('/api/poi', require('./api/poi'));
+app.use('/api/datapoint', require('./api/datapoint'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

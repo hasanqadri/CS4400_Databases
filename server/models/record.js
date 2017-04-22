@@ -68,7 +68,11 @@ class record {
             function (error, results, fields) {
                 if (error) {
                     //sql error callback
-                    err(error);
+                    if (err) {
+                        err(error);
+                    } else {
+                        throw error;
+                    }
                 } else {
                     //Now that changes are in db, we have to update identity values
                     let newvals = [];
@@ -77,7 +81,23 @@ class record {
                     }
                     this._vals = newvals;
                     //result callback
-                    success(success);
+                    if (success) {
+                        success(results);
+                    }
+                }
+            }
+        );
+    }
+
+    destroy(success, err) {
+        let sql = 'DELETE FROM ' + this._name + ' WHERE ';
+        sql += this._identity();
+        db.query({sql: sql},
+            function (error, results, fields) {
+                if (error) {
+                    err(error);
+                } else {
+                    success(results);
                 }
             }
         );
@@ -88,6 +108,8 @@ class record {
         var vals = args['vals'] || {};
         var limit = args['limit'];
         var fields = args['fields'];
+        var like = args['like'] || {};
+        var order = args['order'] || null;
 
         if (name === null) {
             throw "name cannot be null"
@@ -98,17 +120,27 @@ class record {
             sql = 'SELECT * from ' + db.mysql.escapeId(name);
         }
 
-        if (Object.keys(vals).length > 0) {
+        if (Object.keys(vals).length > 0 || Object.keys(like).length > 0) {
             sql += ' WHERE ';
-            for (var property in vals) {
+            for (let property in vals) {
                 if (vals.hasOwnProperty(property)) {
                     sql += db.mysql.escapeId(property) + '=' + db.mysql.escape(vals[property]) + ' AND ';
                 }
             }
+            for (let property in like) {
+                if (like.hasOwnProperty(property)) {
+                    sql += db.mysql.escapeId(property) + ' LIKE ' + db.mysql.escape(like[property]) + ' AND ';
+                }
+            }
             sql = sql.slice(0, -5);
         }
+
         if (limit !== null && parseInt(limit, 10) > 1) {
             sql += ' LIMIT ' + parseInt(limit, 10);
+        }
+
+        if (order) {
+            sql += ' ORDER BY ' + db.mysql.escapeId(order);
         }
 
         db.query({sql: sql, values: [fields, name]}, function (err, results, fields) {
