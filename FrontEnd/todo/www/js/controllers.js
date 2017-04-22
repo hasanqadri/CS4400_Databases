@@ -104,8 +104,7 @@ angular.module('starter')
     $scope.login = function() {
         console.log($scope.data.user);
         console.log($scope.data.pass);
-        var request = $.post("http://localhost:3000/api/login", { username : $scope.data.username, password : $scope.data.password });
- 
+        var request = $.post("http://localhost:3000/api/login/", { username : $scope.data.username, password : $scope.data.password });
         request.done(function( msg ) {
           $state.go("main.dash");
         }).fail(function( msg ) {
@@ -142,42 +141,35 @@ angular.module('starter')
 }])
 
 .controller('DashCtrl', ['$scope', 'WaterApp','$state', function($scope, WaterApp,$state) {
-    $scope.user_data = WaterApp.getUserData();
 
     $scope.addData = function() {
         $state.go('addData');
     }
-
-     $scope.poiDetail = function() {
+    $scope.poiDetail = function() {
         $state.go('POIdetail');
     }
-
     $scope.logout = function() {
         WaterApp.setUserData(null);
         $state.go('login');
     }
-
     $scope.addPOI = function() {
         $state.go('location');
     }
-
     $scope.viewPOI = function() {
         $state.go('viewPOI');
     }
-
     $scope.pendingData = function() {
         $state.go('adminPendingData');
     }
-
     $scope.pendingOfficials = function() {
         $state.go('Admin');
     }
-
     $scope.viewReports = function() {
         $state.go('POIreports');
     }
 
 }])
+
 .controller('POIdetailCtrl', ['$rootScope', '$state', '$scope', function($rootScope, $state, $scope) {
     $rootScope.goBack = function() {
            $state.go('main.dash');

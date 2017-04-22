@@ -3,34 +3,33 @@
     <button class="button icon-left ion-log-out button-clear" ng-click="logout()">Logout</button>
   </ion-nav-buttons>
   <ion-content class="padding">
-
-    <div class="row"><div class="col text-center">
-      <h3 class="title">Choose functionality</h3>
-      <br><br><br>
-      <!--  ADD METHOD CALLS FOR BUTTONS -->
-
-      <button class="button button-full button-positive" ng-click="poiDetail()">
-        POI Detail
-      </button>
-      <button class="button button-full button-calm" ng-click="viewPOI()">
-        View POI
-      </button>
-       <button class="button button-full button-calm" ng-click="addData()">
-        Add Data Point
-      </button>
-      <button class="button button-full button-calm" ng-click="addPOI()">
-        Add POI Location
-      </button>
-      <button class="button button-full button-positive" ng-click="pendingData()">
-        Pending Data Points
-      </button>
-      <button class="button button-full button-positive" ng-click="pendingOfficials()">
-        Pending City Officials
-      </button>
-      <button class="button button-full button-positive" ng-click="viewReports()">
-        POI Reports
-      </button>
-      <br><br>
-    </div></div>
+    <div class="row">
+      <div class="col text-center center" style="max-width:30%">
+        <h3 class="title" style="padding-top:20px">Choose Functionality</h3>
+        <!--  ADD METHOD CALLS FOR BUTTONS -->
+        <button class="button button-full button-positive" ng-click="poiDetail()">
+          POI Detail
+        </button>
+        <button class="button button-full button-calm" ng-click="viewPOI()">
+          View POI
+        </button>
+         <button class="button button-full button-calm" ng-click="addData()">
+          Add Data Point
+        </button>
+        <button class="button button-full button-calm" ng-click="addPOI()">
+          Add POI Location
+        </button>
+        <button class="button button-full button-positive" ng-click="pendingData()">
+          Pending Data Points
+        </button>
+        <button class="button button-full button-positive" ng-click="pendingOfficials()">
+          Pending City Officials
+        </button>
+        <button class="button button-full button-positive" ng-click="viewReports()">
+          POI Reports
+        </button>
+        <br><br>
+      </div>
+    </div>
   </ion-content>
 </ion-view>
