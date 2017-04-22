@@ -85,7 +85,7 @@ class record {
 
     static fetch(args, success_call, error_call) {
         var name = args['name'];
-        var vals = args['vals'] | {};
+        var vals = args['vals'] || {};
         var limit = args['limit'];
         var fields = args['fields'];
 
