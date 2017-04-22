@@ -61,8 +61,14 @@ angular.module('starter')
 
 .controller('LoginCtrl', ['$scope', 'WaterApp','$state', '$ionicPopup', '$ionicModal', 'userData', function($scope, WaterApp, $state, $ionicPopup, $ionicModal) {
     $scope.data = {
-        "user": "",
-        "pass": ""
+        "username": "",
+        "password": "",
+        "pass_confirm": "",
+        "email": "",
+        "usertype": "",
+        "city":"",
+        "state":"",
+        "title":""
     }
 
     $ionicModal.fromTemplateUrl('my-modal.html', {
@@ -73,11 +79,17 @@ angular.module('starter')
       });
       $scope.openModal = function() {
         $scope.modal.show();
-        $scope.registerData = {};
         $scope.showStates = 0;
-        $scope.states = ["OH", "VA", "TN"];
-        $scope.cities = ["Cincinnati", "Columbus", "Atlanta"];
+        //$scope.states = ["OH", "VA", "TN"];
+        //$scope.cities = ["Cincinnati", "Columbus", "Atlanta"];
 
+        var request = $.post("http://localhost:3000/api/citystate/list", $scope.data);
+          request.done(function( msg ) {
+          $scope.states = msg.state;
+          $scope.cities = msg.cities;
+        }).fail(function( msg ) {
+            console.log("Could not access DB for city states");
+        });
       };
       $scope.closeModal = function() {
         $scope.modal.hide();
@@ -98,8 +110,7 @@ angular.module('starter')
     $scope.login = function() {
         console.log($scope.data.user);
         console.log($scope.data.pass);
-        var request = $.post("http://localhost:3000/api/login", { username : $scope.data.user, password : $scope.data.pass });
- 
+        var request = $.post("http://localhost:3000/api/login/", { username : $scope.data.username, password : $scope.data.password });
         request.done(function( msg ) {
           $state.go("main.dash");
         }).fail(function( msg ) {
@@ -109,67 +120,81 @@ angular.module('starter')
     }
 
     $scope.register = function() {
-        if ($scope.registerData.user != "" && $scope.registerData.pass != "") {
-        } else {
+      //Check if all fields are filled out, very brute forcy but..
+      for (var key in $scope.data) {
+        if ($scope.data.hasOwnProperty(key)) {
+          if ($scope.data[usertype] != "City official") {
+            if (key == "state" || key == "title" || key == "city") 
+              continue;
+          }
+          if ($scope.data[key] == "") {
             var alert = $ionicPopup.show({
-                template: 'Please fill in all fields',
-                title: 'Try Again',
-                buttons: [{ text: 'Ok' }]
+              template: 'Please fill in all fields',
+              title: 'Try Again',
+              buttons: [{ text: 'Ok' }]
             });
+          }
         }
+      }
+      //Send the request
+      var request = $.post("http://localhost:3000/api/user/new", $scope.data);
+        request.done(function( msg ) {
+        alert("Successfully registered, please wait for approval!");
+      }).fail(function( msg ) {
+          alert("Registration error, please try again!");
+      });
     }
-
-
 }])
 
 .controller('DashCtrl', ['$scope', 'WaterApp','$state', function($scope, WaterApp,$state) {
-    $scope.user_data = WaterApp.getUserData();
 
-     $scope.addData = function() {
+    $scope.addData = function() {
         $state.go('addData');
     }
-
-     $scope.poiDetail = function() {
+    $scope.poiDetail = function() {
         $state.go('POIdetail');
     }
-
     $scope.logout = function() {
         WaterApp.setUserData(null);
         $state.go('login');
     }
-
     $scope.addPOI = function() {
         $state.go('location');
     }
-
     $scope.viewPOI = function() {
         $state.go('viewPOI');
     }
-
     $scope.pendingData = function() {
         $state.go('adminPendingData');
     }
-
     $scope.pendingOfficials = function() {
         $state.go('Admin');
     }
-
     $scope.viewReports = function() {
         $state.go('POIreports');
     }
 
 }])
-.controller('POIdetailCtrl', ['$rootScope', '$state', function($rootScope, $state) {
+
+.controller('POIdetailCtrl', ['$rootScope', '$state', '$scope', function($rootScope, $state, $scope) {
     $rootScope.goBack = function() {
            $state.go('main.dash');
     };
+    $scope.dataType;
+    $scope.dataValueLow;
+    $scope.dataValueHigh;
+    $scope.start;
+    $scope.end;
 
-    var request = $.post("http://localhost:3000/api/data/list", {});
-    request.done(function( msg ) {
-      $scope.data = msg;
-    }).fail(function( msg ) {
-        alert("Could not get poi list");
-    });
+    $scope.applyFilter = function () {
+        var request = $.post("http://localhost:3000/api/data/list", {});
+        request.done(function( msg ) {
+          $scope.data = msg;
+        }).fail(function( msg ) {
+            alert("Could not get poi list");
+        });
+    }
+    
 }])
 
 .controller('addDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
