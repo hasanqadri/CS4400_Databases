@@ -18,7 +18,7 @@ angular.module('starter')
 }])
 
 
-  .controller('viewpoiCtrl', ['$rootScope', '$state', function($rootScope, $state) {
+  .controller('viewPOICtrl', ['$rootScope', '$state', function($rootScope, $state) {
     $rootScope.goBack = function() {
       $state.go('main.dash');
     };
@@ -116,7 +116,7 @@ angular.module('starter')
     }
 
     $scope.viewPOI = function() {
-        $state.go('viewpoi');
+        $state.go('viewPOI');
     }
 
 }])
@@ -131,7 +131,14 @@ angular.module('starter')
 }])
 
 .controller('adminCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
-    
+    $scope.officials = [];
+    $scope.officials.push({"username" : "blah", "email" : "kevin", "city" : "kevin", "state" : "blah", "title" : "kevin"});
+}])
+
+.controller('adminPendingDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
+    $scope.pendingData = [];
+    $scope.pendingData.push({"location" : "blah", "dataType" : "hi", "dataValue" : "kevin", "timeDate" : "hi"});
+    console.log($scope.pendingData)
 }])
 
 .controller('sourceReportCtrl', ['$state', '$scope', 'WaterApp', '$ionicPopup', function($state, $scope, WaterApp, $ionicPopup) {

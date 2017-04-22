@@ -48,8 +48,29 @@
 
         <!--  ADD METHOD CALLS FOR BACK AND SUBMIT -->
 
-        <button class="button button-block button-calm" ng-click="">Submit</button>
-        <button class="button button-block button-positive" ng-click="">Back</button>
+        <button class="button button-block button-calm" ng-click="">Apply Filter</button>
+        <button class="button button-block button-positive" ng-click="">Reset Filter</button>
+
+        <table align="center">
+        <tr>
+        <th class="text-center" colspan="1">Location Name</th>
+        <th class="text-center" colspan="1">City</th>
+        <th class="text-center" colspan="1">State</th>
+        <th class="text-center" colspan="1">Zip code</th>
+        <th class="text-center" colspan="1">Flagged?</th>
+        <th class="text-center" colspan="1">Date Flagged</th>
+        </tr>
+      <tr ng-repeat="i in pendingData">
+        <td>{{i.location}}</td>  
+        <td>{{i.city}}</td>  
+        <td>{{i.state}}</td>  
+        <td>{{i.zipCode}}</td> 
+        <td>{{i.flagged}}</td> 
+        <td>{{i.dateFlagged}}</td>          
+      </tr>
+        </table>
+
+        <button class="button button-block button-calm" ng-click="goBack()">Back</button>
 
       </div>
     </div>

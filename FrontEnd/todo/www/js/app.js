@@ -31,10 +31,16 @@ angular.module('starter', ['ionic'])
     controller: 'LoginCtrl',
     cache:false
 })
-  .state('viewpoi', {
-    url: '/viewpoi',
-    templateUrl: 'templates/viewpoi.html',
-    controller: 'viewpoiCtrl',
+  .state('viewPOI', {
+    url: '/viewPOI',
+    templateUrl: 'templates/viewPOI.html',
+    controller: 'viewPOICtrl',
+    cache:false
+  })
+  .state('adminPendingData', {
+    url: '/adminPendingData',
+    templateUrl: 'templates/adminPendingData.html',
+    controller: 'adminPendingDataCtrl',
     cache:false
   })
   .state('location', {
@@ -70,7 +76,7 @@ angular.module('starter', ['ionic'])
   })
   .state('Admin', {
     url: '/admin',
-    templateUrl: 'templates/Admin.html',
+    templateUrl: 'templates/admin.html',
     controller: 'adminCtrl',
     cache:false
   });
