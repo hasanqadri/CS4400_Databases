@@ -5,22 +5,22 @@
       <div class="col card">
         <div class="list list-inset">
           <label class="item item-input">
-            <input type="text" placeholder="POI Location Name">
+            <input ng-model="location" type="text" placeholder="POI Location Name">
           </label>
           <label class="item">
             City:
-            <select ng-model="TODO" ng-options="val for val in methodThatQueriesAllCities">
+            <select ng-model="city" ng-options="val for val in methodThatQueriesAllCities">
               <option value="">Select</option>
             </select>
 
           </label>
           <label class="item ">
             State:
-            <select ng-model="TODO" ng-options="val for val in methodThatQueriesAllStates">
+            <select ng-model="state" ng-options="val for val in methodThatQueriesAllStates">
               <option value="">Select</option>
             </select>
           </label>
-          <label class="item item-input">
+          <label ng-model="zip" class="item item-input">
             <input type="text" placeholder="Zip Code">
           </label>
         </div>

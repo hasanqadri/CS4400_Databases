@@ -41,10 +41,16 @@ angular.module('starter')
 
   }])
 
-  .controller('locationCtrl', ['$rootScope', '$state', function($rootScope, $state) {
+  .controller('locationCtrl', ['$rootScope', '$state', '$scope', function($rootScope, $state, $scope) {
     $rootScope.goBack = function() {
       $state.go('main.dash');
     };
+
+    $scope.location;
+    $scope.city;
+    $scope.state;
+    $scope.zip;
+
   }])
 
   .controller('adminCtrl', ['$rootScope', '$state', function($rootScope, $state) {
@@ -167,7 +173,10 @@ angular.module('starter')
 }])
 
 .controller('addDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
-    
+    $scope.locationName;
+    $scope.date;
+    $scope.dataType;
+    $scope.dataValue;
 }])
 
 .controller('adminCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
