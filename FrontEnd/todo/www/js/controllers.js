@@ -67,17 +67,14 @@ angular.module('starter')
       });
 
     $scope.login = function() {
-        WaterApp.login($scope.data).then(function(result) {
-            if (!(result.data == 0)) {
-                $state.go('main.dash');
-            } else {
-                var alert = $ionicPopup.show({
-                    template: 'Check the username and password',
-                    title: 'Login Failed',
-                    buttons: [{ text: 'Ok' }]
-                })
-            }
-        })
+        console.log($scope.data.user);
+        console.log($scope.data.pass);
+        var request = $.post("http://localhost:9000/", { user : $scope.data.user, pass : $scope.data.pass });
+ 
+        request.done(function( msg ) {
+          console.log(msg);
+        });
+    
     }
 
     $scope.register = function() {
@@ -123,7 +120,6 @@ angular.module('starter')
     }
 
 }])
-
 .controller('POIdetailCtrl', ['$rootScope', '$state', function($rootScope, $state) {
     $rootScope.goBack = function() {
            $state.go('main.dash');
