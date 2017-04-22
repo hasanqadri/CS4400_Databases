@@ -139,7 +139,7 @@ angular.module('starter')
     request.done(function( msg ) {
       $state.officials = msg;
     }).fail(function( msg ) {
-        alert("Username or password incorrect");
+        alert("Could not get user list");
     });
 
 }])
