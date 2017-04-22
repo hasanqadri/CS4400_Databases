@@ -18,9 +18,12 @@ angular.module('starter')
 }])
 
 .controller('POIreportsCtrl', ['$rootScope', '$state', function($rootScope, $state) {
-    $rootScope.goBack = function() {
-           $state.go('main.dash');
-    };
+    var request = $.post("http://localhost:3000/api/poi/list", {});
+    request.done(function( msg ) {
+      $scope.pendingData = msg;
+    }).fail(function( msg ) {
+        alert("Could not get poi list");
+    });
 }])
 
 
@@ -28,6 +31,14 @@ angular.module('starter')
     $rootScope.goBack = function() {
       $state.go('main.dash');
     };
+
+    var request = $.post("http://localhost:3000/api/poi/list", {});
+    request.done(function( msg ) {
+      $scope.pendingData = msg;
+    }).fail(function( msg ) {
+        alert("Could not get poi list");
+    });
+
   }])
 
   .controller('locationCtrl', ['$rootScope', '$state', function($rootScope, $state) {
@@ -146,6 +157,15 @@ angular.module('starter')
     $rootScope.goBack = function() {
            $state.go('main.dash');
     };
+<<<<<<< HEAD
+=======
+    var request = $.post("http://localhost:3000/api/data/list", {});
+    request.done(function( msg ) {
+      $scope.data = msg;
+    }).fail(function( msg ) {
+        alert("Could not get poi list");
+    });
+>>>>>>> eb9c8b721e96314893ac6bc3b9241f43efaf7aea
 }])
 
 .controller('addDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
@@ -154,61 +174,26 @@ angular.module('starter')
 
 .controller('adminCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
     $scope.officials = [];
+<<<<<<< HEAD
     $scope.officials.push({"username" : "blah", "email" : "kevin", "city" : "kevin", "state" : "blah", "title" : "kevin"});
+=======
+    var request = $.post("http://localhost:3000/api/users/list", {vals: {'approved': '0'}});
+    request.done(function( msg ) {
+      $scope.officials = msg;
+    }).fail(function( msg ) {
+        alert("Could not get user list");
+    });
+>>>>>>> eb9c8b721e96314893ac6bc3b9241f43efaf7aea
 }])
 
 .controller('adminPendingDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
     $scope.pendingData = [];
-    $scope.pendingData.push({"location" : "blah", "dataType" : "hi", "dataValue" : "kevin", "timeDate" : "hi"});
-    console.log($scope.pendingData)
-}])
-
-.controller('sourceReportCtrl', ['$state', '$scope', 'WaterApp', '$ionicPopup', function($state, $scope, WaterApp, $ionicPopup) {
-
-    $scope.reportData = {
-        'lat':"",
-        'lng':"",
-        'source':"",
-        'condition':"",
-        'user': WaterApp.getUserData()['user']
-    }
-
-    $scope.submit = function() {
-        console.log($scope.reportData );
-        WaterApp.sendSourceReport($scope.reportData)
-        .then(function(result) {
-            if (result.data != "Failed to update") {
-                var alert = $ionicPopup.show({
-                    template: 'Thank you!',
-                    title: 'Successfully Submitted',
-                    buttons: [{ text: 'Ok' }]
-                });
-            } else {
-                var alert = $ionicPopup.show({
-                    template: 'Something went wrong, please try again later :(',
-                    title: 'Error',
-                    buttons: [{ text: 'Ok' }]
-                });
-            }
-        })
-        .catch(function(reason) {
-           console.log(reason);
-        });
-    }
-
-}])
-
-.controller('sourceReportListCtrl', ['$state', '$scope', 'WaterApp', '$ionicPopup', '$rootScope', function($state, $scope, WaterApp, $ionicPopup, $rootScope) {
-
-
-     if (typeof $scope.sourceReports === 'undefined' ) {
-            WaterApp.getSourceReports().then(function(result) {
-                $rootScope.sourceReports = result.data;
-                console.log("Queried source reports");
-            });
-    }
-
-
+    var request = $.post("http://localhost:3000/api/datapoint/list", {vals: {'pending': '1'}});
+    request.done(function( msg ) {
+      $scope.pendingData = msg;
+    }).fail(function( msg ) {
+        console.log("Could not get data list");
+    })
 }]);
 
 
