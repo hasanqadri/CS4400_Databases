@@ -134,7 +134,14 @@ angular.module('starter')
 
 .controller('adminCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
     $scope.officials = [];
-    $scope.officials.push({"username" : "blah", "email" : "kevin", "city" : "kevin", "state" : "blah", "title" : "kevin"});
+    var request = $.post("http://localhost:3000/api/users/list", {});
+
+    request.done(function( msg ) {
+      $state.officials = msg;
+    }).fail(function( msg ) {
+        alert("Username or password incorrect");
+    });
+
 }])
 
 .controller('adminPendingDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
