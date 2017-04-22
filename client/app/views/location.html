@@ -1,0 +1,35 @@
+<ion-view view-title="location" name="location-view">
+  <ion-content class="padding">
+    <h3 class = "title row-center"> Add a  New Location  </h3>
+    <div class="row">
+      <div class="col card">
+        <div class="list list-inset">
+          <label class="item item-input">
+            <input type="text" placeholder="POI Location Name">
+          </label>
+          <label class="item">
+            City:
+            <select ng-model="TODO" ng-options="val for val in methodThatQueriesAllCities">
+              <option value="">Select</option>
+            </select>
+
+          </label>
+          <label class="item ">
+            State:
+            <select ng-model="TODO" ng-options="val for val in methodThatQueriesAllStates">
+              <option value="">Select</option>
+            </select>
+          </label>
+          <label class="item item-input">
+            <input type="text" placeholder="Zip Code">
+          </label>
+        </div>
+        <!--  ADD METHOD CALLS FOR BACK AND SUBMIT -->
+
+        <button class="button button-block button-calm" ng-click="">Submit</button>
+        <button class="button button-block button-positive" ng-click="">Back</button>
+
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

@@ -49,26 +49,15 @@ angular.module('starter', ['ionic'])
     controller: 'POIdetailCtrl',
     cache:false
   })
-  .state('sourceReport', {
-    url: '/sourceReport',
-    templateUrl: 'templates/sourceReport.html',
-    controller: 'sourceReportCtrl',
-    cache:false
-  })
   .state('main', {
     url: '/',
     abstract: true,
     templateUrl: 'templates/main.html'
   })
-  .state('sourceReportList', {
-    url: '/sourceReportList',
-    templateUrl: 'templates/sourceReportList.html',
-    controller: 'sourceReportListCtrl',
-  })
-  .state('map', {
-    url: '/map',
-    templateUrl: 'templates/map.html',
-    controller: 'MapCtrl'
+  .state('addData', {
+    url: '/addData',
+    templateUrl: 'templates/addData.html',
+    controller: 'addDataCtrls'
   })
   .state('main.dash', {
     url: 'main/dash',
@@ -79,7 +68,6 @@ angular.module('starter', ['ionic'])
         }
     }
   })
-
   .state('main.location', {
     url: 'main/location',
     views: {
@@ -87,24 +75,6 @@ angular.module('starter', ['ionic'])
         templateUrl: 'templates/location.html'
       }
     }
-  })
-
-  .state('main.public', {
-    url: 'main/public',
-    views: {
-        'public-tab': {
-          templateUrl: 'templates/public.html'
-        }
-    }
-  })
-  .state('main.admin', {
-    url: 'main/admin',
-    views: {
-        'admin-tab': {
-          templateUrl: 'templates/admin.html'
-        }
-    },
-
   });
   $urlRouterProvider.otherwise(function ($injector, $location) {
     var $state = $injector.get("$state");

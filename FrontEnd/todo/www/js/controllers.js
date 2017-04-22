@@ -97,8 +97,16 @@ angular.module('starter')
 .controller('DashCtrl', ['$scope', 'WaterApp','$state', function($scope, WaterApp,$state) {
     $scope.user_data = WaterApp.getUserData();
 
-    $scope.loadMap = function() {
-        $state.go('map');
+     $scope.addData = function() {
+        $state.go('addData');
+    }
+
+     $scope.poiDetail = function() {
+        $state.go('POIdetail');
+    }
+
+     $scope.Admin = function() {
+        $state.go('Admin');
     }
 
     $scope.logout = function() {
@@ -106,12 +114,12 @@ angular.module('starter')
         $state.go('login');
     }
 
-    $scope.sourceReport = function() {
-        $state.go('sourceReport');
+    $scope.addPOI = function() {
+        $state.go('location');
     }
 
-    $scope.viewSourceReports = function() {
-        $state.go('sourceReportList');
+    $scope.viewPOI = function() {
+        $state.go('viewpoi');
     }
 
 }])
@@ -122,54 +130,8 @@ angular.module('starter')
     };
 }])
 
-.controller('MapCtrl', ['$state', '$scope', 'WaterApp', '$ionicLoading', '$rootScope', function($state, $scope, WaterApp, $ionicLoading, $rootScope) {
-    var options = {timeout: 10000, enableHighAccuracy: true};
-    var latLng = new google.maps.LatLng(33.748995, -84.387982);
-
-    var mapOptions = {
-      center: latLng,
-      zoom: 7,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    $scope.map = new google.maps.Map(document.getElementById("map"), mapOptions);
-    google.maps.event.addListenerOnce($scope.map, 'idle', function(){
-        console.log($scope.sourceReports);
-        if (typeof $scope.sourceReports === 'undefined' ) {
-            WaterApp.getSourceReports().then(function(result) {
-                $rootScope.sourceReports = result.data;
-
-                makeMap();
-            });
-        } else {
-            makeMap();
-        }
-     });
-
-
-    makeMap = function() {
-        var infowindow = new google.maps.InfoWindow();
-        for (var i = 0; i < $scope.sourceReports.length; i++) {
-            var mkrLatLng = new google.maps.LatLng($scope.sourceReports[i]['latitude'],
-                                                    $scope.sourceReports[i]['longitude']);
-            var marker = new google.maps.Marker({
-                map: $scope.map,
-                animation: google.maps.Animation.DROP,
-                position: mkrLatLng
-            });
-
-            google.maps.event.addListener(marker, 'click', (function (marker, i) {
-                return function () {
-                    infowindow.setContent("<p><h5>" + $scope.sourceReports[i]['type'] + "</h5>" +
-                                            $scope.sourceReports[i]['cond'] + "<br />" + mkrLatLng.toString()
-                                             + "<br />" + $scope.sourceReports[i]['timestamp'] +
-                                            "</p>");
-                    infowindow.open(map, marker);
-                }
-            })(marker, i));
-        }
-    }
-
-
+.controller('addDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
+    
 }])
 
 .controller('sourceReportCtrl', ['$state', '$scope', 'WaterApp', '$ionicPopup', function($state, $scope, WaterApp, $ionicPopup) {

@@ -1,0 +1,50 @@
+<ion-view view-title="location" name="location-view">
+  <ion-content class="padding">
+    <h3 class = "title row-center"> View POIs </h3>
+    <div class="row">
+      <div class="col card">
+        <div class="list list-inset">
+          <label class="item">
+            POI Location Name:
+            <select class = "menu-left"ng-model="" ng-options="val for val in someMethod()">
+              <option value="">Select</option>
+            </select>
+
+          </label>
+          <label class="item ">
+            City:
+            <select class = "icon-left" ng-model="" ng-options="val for val in someMethod()">
+              <option value="">Select</option>
+            </select>
+          </label>
+
+          <label class="item ">
+            State:
+            <select class = "icon-left" ng-model="" ng-options="val for val in someMethod()">
+              <option value="">Select</option>
+            </select>
+          </label>
+
+          <label class="item item-input">
+            <input type="text" placeholder="Zip Code">
+          </label>
+
+          <label class="item item-input">
+            <ion-item>
+              Flagged<ion-checkbox [(ngModel)]="flagged"></ion-checkbox>
+         ]="flagged">
+
+          </label>
+
+        </div>
+
+
+        <!--  ADD METHOD CALLS FOR BACK AND SUBMIT -->
+
+        <button class="button button-block button-calm" ng-click="">Submit</button>
+        <button class="button button-block button-positive" ng-click="">Back</button>
+
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
