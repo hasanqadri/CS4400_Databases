@@ -31,13 +31,13 @@
 
         <ion-content>
           <div id="forms" style="padding:50px"">
-            <input type = "text" ng-model="registerData.user" placeholder="Username"> <hr>
-            <input type = "password" ng-model="registerData.pass" placeholder="Password"> <hr>
-            <input type = "password" ng-model="registerData.pass_confirm" placeholder="Confirm Password" > <hr>
-            <input type = "text" ng-model="registerData.email" placeholder="Email"> <hr>
+            <input type = "text" ng-model="data.username" placeholder="Username"> <hr>
+            <input type = "password" ng-model="data.password" placeholder="Password"> <hr>
+            <input type = "password" ng-model="data.pass_confirm" placeholder="Confirm Password" > <hr>
+            <input type = "text" ng-model="data.email" placeholder="Email"> <hr>
 
             <label style="padding-right:10px">User Type</label>
-            <select ng-model="registerData.type" > 
+            <select ng-model="data.type" > 
                 <option>City Official</option>
                 <option>City Scientist</option>
                 <option>Admin</option>
@@ -46,9 +46,9 @@
              
             <div ng-show="showStates">
               <label style="padding-right:10px">City/State</label>
-              <select ng-model="registerData.city" ng-options="city for city in cities"></select>
-              <select ng-model="registerData.state" ng-options="state for state in states"></select> <hr>
-              <input type="text" ng-model="registerData.title" placeholder="Title"> 
+              <select ng-model="data.city" ng-options="city for city in cities"></select>
+              <select ng-model="data.state" ng-options="state for state in states"></select> <hr>
+              <input type="text" ng-model="data.title" placeholder="Title"> 
             </div>
 
             <hr>

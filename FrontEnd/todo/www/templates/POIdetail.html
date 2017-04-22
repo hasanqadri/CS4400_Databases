@@ -8,7 +8,7 @@
 <label class="item">
 Data Type
 </label>
-<select class="item item-input-wrapper">
+<select class="item item-input-wrapper" ng-model="dataType">
 <option value=""> 1 </option>
 <option value=""> 2 </option>
 <option value=""> 3 </option>
@@ -21,13 +21,13 @@ Data Type
 Data Value
 </label>
 <label class="item item-input-wrapper">
-<input type="text">
+<input type="text"  ng-model="dataValueLow">
 </label>
 <label class="item">
 To
 </label>
 <label class="item item-input-wrapper">
-<input type="text">
+<input type="text"  ng-model="dataValueHigh">
 </label>
 </div>
 </div>
@@ -37,13 +37,13 @@ To
 Time and Date
 </label>
 <label class="item item-input-wrapper">
-<input type="text">
+<input type="text" ng-model="start">
 </label>
 <label class="item">
 To
 </label>
 <label class="item item-input-wrapper">
-<input type="text">
+<input type="text" ng-model="end">
 </label>
 </div>
 </div>
