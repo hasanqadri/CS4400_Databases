@@ -1,0 +1,5 @@
+INSERT INTO POIs VALUES('Georgia Tech', 'Atlanta', 'Georgia', 30332, 1, 02/23/2017);
+INSERT INTO POIs VALUES('GSU', 'Atlanta', 'Georgia', 30303, 0);
+INSERT INTO POIs VALUES('Emory', 'Atlanta', 'Georgia', 30322, 0);
+INSERT INTO POIs VALUES('Uchicago', 'Chicago', 'Illinois', 60637, 1, 02/24/2017);
+

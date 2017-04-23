@@ -4,7 +4,7 @@
 
 </ion-nav-buttons>
   <ion-content class="padding">
-    <div class="row center half_wide">
+    <div class="row center half_size">
       <div class="col card"> 
         <h3 class = "title row-center" style="text-align:center"> View POI </h3>
         <div class="list list-inset">
@@ -52,9 +52,10 @@
 
 
         <!--  ADD METHOD CALLS FOR BACK AND SUBMIT -->
-
-        <button class="button button-block button-calm half_size center" ng-click="applyFilter()" style="max-width:50%">Apply Filter</button>
-        <button class="button button-block button-positive half_size center" ng-click="resetFilter()" style="max-width:50%">Reset Filter</button>
+        <div align="center">
+          <button class="button button-block button-calm half_size " ng-click="applyFilter()" style="max-width:50%">Apply Filter</button>
+          <button class="button button-block button-positive half_size " ng-click="resetFilter()" style="max-width:50%">Reset Filter</button>
+        </div>
         <div align="center" ng-show="querySuccess">
           <hr>
           <table align="center">

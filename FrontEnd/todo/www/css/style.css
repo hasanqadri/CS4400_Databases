@@ -1,18 +1,16 @@
 .scroll {
     height: 100%;
 }
- 
+
+.half_size {
+max-width:50%;
+}
+
 .center {
     margin-left: auto;
     margin-right: auto;
     display: block;
 }
-
-.frame_look_feel {
-background-color: red;
-}
-
-
 .scroll-content {
 background: url('../img/bg.jpg');
 -webkit-background-size: cover;
@@ -20,8 +18,8 @@ background: url('../img/bg.jpg');
 background-size: cover;
 }
 
-.half_size {
-max-width:50%;
+.right-margin {
+    margin-right: 15px;
 }
 
 table{
@@ -42,5 +40,11 @@ th {
     background-color: #0066ff;
     color: white;
     text-align: center;
-    
+
+}
+
+.inline {
+    display:inline-block;
+    margin-right:15px;
+
 }

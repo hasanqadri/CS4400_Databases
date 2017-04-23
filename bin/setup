@@ -58,7 +58,7 @@ con.query(
     "CREATE TABLE City_officials( " +
     "username VARCHAR(255) NOT NULL UNIQUE, " +
     "title VARCHAR(255) NOT NULL, " +
-    "approved TINYINT(1) DEFAULT 0 NOT NULL, " +
+    "approved TINYINT(1) DEFAULT 0, " +
     "city VARCHAR(255) NOT NULL, " +
     "state VARCHAR(255) NOT NULL, " +
     "PRIMARY KEY (username), " +
@@ -70,8 +70,8 @@ con.query(
     "city VARCHAR(255) NOT NULL," +
     " state VARCHAR(255) NOT NULL," +
     " location_name VARCHAR(255) NOT NULL UNIQUE," +
-    " date_flagged DATE NOT NULL, " +
-    "flag TINYINT(1) DEFAULT 0 NOT NULL," +
+    " date_flagged DATE, " +
+    "flag TINYINT(1) DEFAULT 0," +
     " zip_code INTEGER(5) NOT NULL," +
     " PRIMARY KEY(location_name)," +
     " FOREIGN KEY (city,state) REFERENCES City_states(city,state) ON DELETE CASCADE ON UPDATE CASCADE);"
@@ -90,7 +90,7 @@ con.query(
     "date_time DATETIME NOT NULL, " +
     "data_value BIGINT NOT NULL, " +
     "data_type VARCHAR(255) NOT NULL, " +
-    "accepted TINYINT(1) DEFAULT 0 NOT NULL," +
+    "accepted TINYINT(1) DEFAULT 0," +
     "PRIMARY KEY(location_name, date_time), " +
     "FOREIGN KEY (location_name) references POIs(location_name) ON DELETE CASCADE ON UPDATE CASCADE, " +
     "FOREIGN KEY (data_type) references Data_types(type) ON DELETE CASCADE ON UPDATE CASCADE);"
