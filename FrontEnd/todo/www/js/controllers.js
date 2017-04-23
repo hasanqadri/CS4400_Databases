@@ -127,8 +127,7 @@
       });
 
     $scope.login = function() {
-        console.log($scope.data.user);
-        console.log($scope.data.pass);
+        console.log($scope.data);
         var request = $.post("http://localhost:3000/api/login/", { username : $scope.data.username, password : $scope.data.password });
         request.done(function( msg ) {
           $state.go("dash");
