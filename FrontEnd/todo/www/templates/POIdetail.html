@@ -1,84 +1,67 @@
 <ion-view view-title="CS4400 Project Phase 3">
 <ion-nav-buttons>
 <button class="button icon ion-ios-arrow-back button-clear" ng-click="goBack()">Back</button>
+
 </ion-nav-buttons>
-
-<ion-content>
-<div class="row half_wide">
-<div class="card center">
-<div class="list">
-<div class="item item-input-inset">
-<label class="item">
-Data Type
-</label>
-<select class="item item-input-wrapper" ng-model="dataType">
-<option value=""> 1 </option>
-<option value=""> 2 </option>
-<option value=""> 3 </option>
-</select>
-</div>
-</div>
-<div class="list">
-<div class="item item-input-inset">
-<label class="item">
-Data Value
-</label>
-<label class="item item-input-wrapper">
-<input type="text"  ng-model="dataValueLow">
-</label>
-<label class="item">
-To
-</label>
-<label class="item item-input-wrapper">
-<input type="text"  ng-model="dataValueHigh">
-</label>
-</div>
-</div>
-<div class="list">
-<div class="item item-input-inset">
-<label class="item">
-Time and Date
-</label>
-<label class="item item-input-wrapper">
-<input type="text" ng-model="start">
-</label>
-<label class="item">
-To
-</label>
-<label class="item item-input-wrapper">
-<input type="text" ng-model="end">
-</label>
-</div>
-</div>
-<div class="list">
-<div class="item item-input-inset">
-<button class="item-input-inset button button-block button-calm" ng-click="applyFilter()">Apply Filter</button>
-<div class="item-input-inset"></div>
-<button class="item-input-inset button button-block button-calm" ng-click="resetFilter()">Reset Filter</button>
-</div>
-</div>
-<div align="center">
-<table align="center">
-<tr>
-<th class="text-center" colspan="1">Data Type</th>
-<th class="text-center" colspan="1">Data Value</th>
-<th class="text-center" colspan="1">Time and Date</th>
-</tr>
-<tr ng-repeat="i in data">
-<td>{{i.dataType}}</td>  
-<td>{{i.dataValue}}</td>  
-<td>{{i.timeDate}</td>           
-</tr>
-</table>
-</div>
+    <ion-content>
+        <div class="row center half_size">
+            <div class="col card"> 
 
 
-<div class="list">
-<div class="item item-input-inset">
-<button class="item-input-inset button button-block button-calm" ng-click="flag()">Flag</button>
-</div>
-</div>
-</div>
-</div>
-</ion-content>
+
+                <h3 class = "title row-center" style="text-align:center"> POI Detail </h3>
+         
+                <label class="item item-input-inset">
+                        Data Type
+                    <select class="item item-input" ng-model="formData.data_type">
+                        <option value=""> 1 </option>
+                        <option value=""> 2 </option>
+                        <option value=""> 3 </option>
+                    </select>
+                </label>
+
+                <div class="item-input-inset">
+                    <label class="inline">
+                            Data Value
+                    </label>
+                    <input class="right-margin inline" type="text" placeholder="Min" ng-model="formData.dataValueLow" style="max-width:40px">
+                    <input class="right-margin inline" type="text" placeholder="Max" ng-model="formData.dataValueHigh" style="max-width:40px">
+                </div>
+                <label class=" item item-input-inset">
+                    Time and Date
+                    <input type="date" ng-model="formData.start" style="padding-left:10px">
+                    <lable style="padding:15px"> to </lable>
+                    <input class="right-margin" type="date" ng-model="formData.end">
+                </label>
+
+
+
+                <div class="item-input-inset">
+                    <button class="button button-block button-calm" ng-click="applyFilter()">Apply Filter</button>
+                <div class="item-input-inset"></div>
+                    <button class="button button-block button-calm" ng-click="resetFilter()">Reset Filter</button>
+                </div>
+
+                <div align="center" ng-show="didQuery">
+                    <table align="center">
+                    <tr>
+                        <th class="text-center" colspan="1">Data Type</th>
+                        <th class="text-center" colspan="1">Data Value</th>
+                        <th class="text-center" colspan="1">Time and Date</th>
+                    </tr>
+                    <tr ng-repeat="i in data" align="center">
+                        <td>{{i.dataType}}</td>  
+                        <td>{{i.dataValue}}</td>  
+                        <td>{{i.timeDate}}</td>           
+                    </tr>
+                    </table>
+                </div>
+
+                <div class="item-input-inset">
+                <button class="item-input-inset button button-block button-calm" ng-click="flag()">Flag</button>
+                </div>
+                
+            </div>
+        </div>
+    </ion-content>
 </ion-view>
