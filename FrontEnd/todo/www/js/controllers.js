@@ -63,6 +63,14 @@
     $scope.city;
     $scope.state;
     $scope.zip;
+    $scope.submit = function() {
+        var request = $.post("http://localhost:3000/api/poi/new", {vals: {'location_name' : $scope.location, 'city' : $scope.city, 'state' : $scope.state, 'zip' : $scope.zip}});
+          request.done(function( msg ) {
+          alert("success!");
+        }).fail(function( msg ) {
+          alert("could not add data");
+        });
+    };  
   }])
 
   .controller('adminCtrl', ['$rootScope', '$state', function($rootScope, $state) {
@@ -193,6 +201,10 @@
     $scope.start;
     $scope.end;
 
+    $scope.resetFilter = function() {
+        alert("reset");
+    }; 
+
     $scope.applyFilter = function () {
         var request = $.post("http://localhost:3000/api/data/list", {});
         request.done(function( msg ) {
@@ -200,6 +212,10 @@
         }).fail(function( msg ) {
             alert("Could not get poi list");
         });
+    }
+
+    $scope.flag = function () {
+        alert("flag");
     }
     
 }])
@@ -209,6 +225,15 @@
     $scope.date;
     $scope.dataType;
     $scope.dataValue;
+
+    $scope.submit = function() {
+      var request = $.post("http://localhost:3000/api/datapoint/new", {vals: {'location_name' : $scope.locationName, 'date_time' : $scope.date, 'data_value' : $scope.dataValue, 'data_type' : $scope.dataType}});
+        request.done(function( msg ) {
+        alert("success!");
+      }).fail(function( msg ) {
+        alert("could not add data");
+      });
+    };  
 }])
 
 .controller('adminCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
