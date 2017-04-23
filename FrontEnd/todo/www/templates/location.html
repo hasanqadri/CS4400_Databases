@@ -9,23 +9,21 @@
 
         <div class="list list-inset">
           <label class="item item-input">
-            <input ng-model="location" type="text" placeholder="POI Location Name">
+            <input ng-model="data.location_name" type="text" placeholder="POI Location Name">
           </label>
           <label class="item">
             City:
-            <select ng-model="city" ng-options="val for val in methodThatQueriesAllCities">
-              <option value="">Select</option>
+            <select class = "icon-left" ng-model="data.city" ng-options="poi.city as poi.city for poi in poiInfo | unique:'city' ">
             </select>
 
           </label>
           <label class="item ">
             State:
-            <select ng-model="state" ng-options="val for val in methodThatQueriesAllStates">
-              <option value="">Select</option>
+            <select class = "icon-left" ng-model="data.state" ng-options="poi.state as poi.state for poi in poiInfo | unique:'state' ">
             </select>
           </label>
-          <label ng-model="zip" class="item item-input">
-            <input type="text" placeholder="Zip Code">
+          <label class="item item-input">
+            <input ng-model="data.zip" type="text" placeholder="Zip Code">
           </label>
         </div>
         <!--  ADD METHOD CALLS FOR BACK AND SUBMIT -->
