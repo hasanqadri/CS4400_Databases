@@ -7,10 +7,10 @@
             <div class="col card">
               <div class="list list-inset">
                 <label class="item item-input">
-                  <input type="text" placeholder="Username" ng-model="data.username">
+                  <input type="text" placeholder="Username" ng-model="login_data.username">
                 </label>
                 <label class="item item-input">
-                  <input type="password" placeholder="Password" ng-model="data.password">
+                  <input type="password" placeholder="Password" ng-model="login_data.password">
                 </label>
               </div>
 
@@ -45,8 +45,8 @@
              
             <div ng-show="showStates">
               <label style="padding-right:10px">City/State</label>
-              <select ng-model="data.city" ng-options="city for city in cities"></select>
-              <select ng-model="data.state" ng-options="state for state in states"></select> <hr>
+              <select ng-model="data.city" ng-options="location.city as location.city for location in citystates"></select>
+              <select ng-model="data.state" ng-options="location.state as location.state for location in citystates"></select> <hr>
               <input type="text" ng-model="data.title" placeholder="Title"> 
             </div>
 

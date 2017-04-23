@@ -35,11 +35,10 @@
       "city": null ,
       "state": "poo" ,
       "zip": null ,
-      "flagged": null ,
+      "flag": false,
       "date_flagged_start" :null ,
       "date_flagged_end" : null 
     }
-    $scope.state = "fuck";
     var request = $.post("http://" + host + ":3000/api/poi/list", {});
         request.done(function( msg ) {
         //console.log( JSON.stringify(msg));
@@ -50,15 +49,17 @@
           console.log("*********************");
     });
 
-    $scope.flagged = 0;
     $scope.querySuccess = 0;
     $scope.applyFilter = function() {
       console.log({vals: $scope.data});
       var request = $.post("http://" + host + ":3000/api/poi/list", {vals: $scope.data});
         request.done(function( msg ) {
+
+        $scope.querySuccess = 1;
+        console.log( $scope.querySuccess);
         console.log(msg);
         $scope.poiInfo = msg;
-        $scope.querySuccess = 1;
+       
       }).fail(function( msg ) {
           console.log("fail");
       });
@@ -69,7 +70,7 @@
         if ($scope.data.hasOwnProperty(key)) {
           $scope.data[key] = null;
         }
-        $scope.flagged = 0;
+        $scope.flag = false;
       }
     }
   }])
@@ -95,14 +96,19 @@
 
   .controller('LoginCtrl', ['$scope', 'WaterApp','$state', '$ionicPopup', '$ionicModal', 'userData', function($scope, WaterApp, $state, $ionicPopup, $ionicModal) {
     $scope.data = {
-        "username": "",
-        "password": "",
-        "pass_confirm": "",
-        "email": "",
-        "usertype": "",
-        "city":"",
-        "state":"",
-        "title":""
+        "username": null,
+        "password": null,
+        "pass_confirm": null,
+        "email": null,
+        "usertype": null,
+        "city": null,
+        "state": null,
+        "title": null
+    }
+
+    $scope.login_data = {
+      "username": null,
+      "password": null
     }
 
     $ionicModal.fromTemplateUrl('my-modal.html', {
@@ -119,8 +125,7 @@
 
         var request = $.post("http://" + host + ":3000/api/citystate/list", {});
           request.done(function( msg ) {
-          $scope.states = msg.state;
-          $scope.cities = msg.cities;
+          $scope.city_states = msg;
         }).fail(function( msg ) {
             console.log("Could not access DB for city states");
         });
@@ -143,7 +148,7 @@
 
     $scope.login = function() {
         console.log($scope.data);
-        var request = $.post("http://" + host + ":3000/api/login/", $scope.data);
+        var request = $.post("http://" + host + ":3000/api/login/", $scope.login_data);
         request.done(function( msg ) {
           $state.go("dash");
           console.log(msg);
@@ -167,6 +172,7 @@
               title: 'Try Again',
               buttons: [{ text: 'Ok' }]
             });
+            return;
           }
         }
       }
@@ -228,10 +234,7 @@
     "start":null,
     "end":null
   }
-  
   $scope.didQuery = 0;
-
-
   var request = $.post("http://" + host + ":3000/api/poi/list", {});
         request.done(function( msg ) {
           $scope.data = msg;
