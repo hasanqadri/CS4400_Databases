@@ -1,65 +1,69 @@
-
-<ion-view view-title = "4400 Project Phase 3">
-<content scroll="false">
-  <ion-content class="padding">
-      <div class="col center" style="max-width:30%"">
+<ion-view view-title="4400 Project Phase 3">
+  <content scroll="false">
+    <ion-content class="padding">
+      <div class="col center" style="max-width:30%">
         <div class="row" style="margin-top:100px">
-            <div class="col card">
-              <div class="list list-inset">
-                <label class="item item-input">
-                  <input type="text" placeholder="Username" ng-model="login_data.username">
-                </label>
-                <label class="item item-input">
-                  <input type="password" placeholder="Password" ng-model="login_data.password">
-                </label>
-              </div>
-
-              <button class="button button-block button-positive" ng-click="login()">Login</button>
-              <button class="button button-block button-calm" ng-click="openModal()">Register</button>
+          <div class="col card">
+            <div class="list list-inset">
+              <label class="item item-input">
+                <input type="text" placeholder="Username" ng-model="login_data.username">
+              </label>
+              <label class="item item-input">
+                <input type="password" placeholder="Password" ng-model="login_data.password">
+              </label>
             </div>
+
+            <button class="button button-block button-positive" ng-click="login()">Login</button>
+            <button class="button button-block button-calm" ng-click="openModal()">Register</button>
+          </div>
         </div>
       </div>
 
-    <script id="my-modal.html" type="text/ng-template">
+      <script id="my-modal.html" type="text/ng-template">
 
-      <ion-modal-view style="max-width:350px;background-color: white" class="center" >
-        <ion-header-bar>
-          <h1 class="title">Register</h1>
-        </ion-header-bar>
+        <ion-modal-view style="max-width:350px;background-color: white" class="center">
+          <ion-header-bar>
+            <h1 class="title">Register</h1>
+          </ion-header-bar>
 
-        <ion-content>
-        <div style="background-color: white">
-          <div id="forms" style="padding:50px"">
-            <input type = "text" ng-model="data.username" placeholder="Username"> <hr>
-            <input type = "password" ng-model="data.password" placeholder="Password"> <hr>
-            <input type = "password" ng-model="data.pass_confirm" placeholder="Confirm Password" > <hr>
-            <input type = "text" ng-model="data.email" placeholder="Email"> <hr>
+          <ion-content>
+            <div style="background-color: white">
+              <div id="forms" style="padding:50px">
+                <input type="text" ng-model="data.username" placeholder="Username">
+                <hr>
+                <input type="password" ng-model="data.password" placeholder="Password">
+                <hr>
+                <input type="password" ng-model="data.pass_confirm" placeholder="Confirm Password">
+                <hr>
+                <input type="text" ng-model="data.email" placeholder="Email">
+                <hr>
 
-            <label style="padding-right:10px">User Type</label>
-            <select ng-model="data.usertype" > 
-                <option>Official</option>
-                <option>Scientist</option>
-                <option>Admin</option>
-                {{showStates = (data.usertype == "Official")? 1 : 0}}
-            </select>
-             
-            <div ng-show="showStates">
-              <label style="padding-right:10px">City/State</label>
-              <select ng-model="data.city" ng-options="location.city as location.city for location in city_states"></select>
-              <select ng-model="data.state" ng-options="location.state as location.state for location in city_states"></select> <hr>
-              <input type="text" ng-model="data.title" placeholder="Title"> 
+                <label style="padding-right:10px">User Type</label>
+                <select ng-model="data.usertype">
+                  <option>Official</option>
+                  <option>Scientist</option>
+                  {{showStates = (data.usertype == "Official")? 1 : 0}}
+                </select>
+
+                <div ng-show="showStates">
+                  <label style="padding-right:10px">City/State</label>
+                  <select ng-model="data.city"
+                          ng-options="location.city as location.city for location in city_states"></select>
+                  <select ng-model="data.state"
+                          ng-options="location.state as location.state for location in city_states"></select>
+                  <hr>
+                  <input type="text" ng-model="data.title" placeholder="Title">
+                </div>
+                <hr>
+                <div class="wrapper" style="text-align:center">
+                  <button button ng-click="register()" style="border-radius:4px">Submit</button>
+                </div>
+              </div>
             </div>
-
-            <hr>
-
-            <div class="wrapper" style="text-align:center">
-              <button button ng-click="register()" style="border-radius:4px">Submit</button>
-            </div>
-          </div>
-        </div>
-        </ion-content>
-      </ion-modal-view>
-    </script>
-  </ion-content>
+          </ion-content>
+        </ion-modal-view>
+      </script>
+    </ion-content>
+    </content>
 </ion-view>
 
