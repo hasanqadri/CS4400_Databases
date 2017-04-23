@@ -44,7 +44,7 @@
         request.done(function( msg ) {
         $scope.poiInfo = msg;
       }).fail(function( msg ) {
-          alert("Could not get poi list");
+          console.log(msg);
       });
     }
 

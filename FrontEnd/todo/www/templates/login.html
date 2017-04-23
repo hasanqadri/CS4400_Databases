@@ -34,11 +34,11 @@
             <input type = "text" ng-model="data.email" placeholder="Email"> <hr>
 
             <label style="padding-right:10px">User Type</label>
-            <select ng-model="data.type" > 
+            <select ng-model="data.usertype" > 
                 <option>City Official</option>
                 <option>City Scientist</option>
                 <option>Admin</option>
-                {{showStates = (registerData.type == "City Official")? 1 : 0}}
+                {{showStates = (data.usertype == "City Official")? 1 : 0}}
             </select>
              
             <div ng-show="showStates">
