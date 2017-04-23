@@ -61,24 +61,16 @@ angular.module('starter', ['ionic'])
     controller: 'POIdetailCtrl',
     cache:false
   })
-  .state('main', {
-    url: '/',
-    abstract: true,
-    templateUrl: 'templates/main.html'
-  })
   .state('addData', {
     url: '/addData',
     templateUrl: 'templates/addData.html',
     controller: 'addDataCtrl'
   })
-  .state('main.dash', {
-    url: 'main/dash',
-    views: {
-        'dash-tab': {
-          templateUrl: 'templates/dashboard.html',
-          controller: 'DashCtrl'
-        }
-    }
+  .state('dash', {
+    url: '/dash',
+    templateUrl: 'templates/dashboard.html',
+    controller: 'DashCtrl',
+    cache:false
   })
   .state('Admin', {
     url: '/admin',
