@@ -25,7 +25,7 @@ INSERT INTO Data_points VALUES('Georgia Tech','2017-03-10 02:11:00',31,'mold',0)
 INSERT INTO Data_points VALUES('Georgia Tech','2017-01-09 04:05:31',36,'mold',0);
 INSERT INTO Data_points VALUES('Georgia Tech','2017-01-10 03:33:04',15,'air_quality',0);
 
-INSERT INTO Data_points VALUES('Emory','2017-02-18 05:53:00',,17,'air_quality',0);
+INSERT INTO Data_points VALUES('Emory','2017-02-18 05:53:00',17,'air_quality',0);
 INSERT INTO Data_points VALUES('Georgia Tech','2017-01-11 05:43:02',41,'air_quality',0);
 INSERT INTO Data_points VALUES('Georgia Tech','2017-02-25 03:22:21',4,'mold',0);
 INSERT INTO Data_points VALUES('Emory','2017-01-18 01:54:30',42,'air_quality',0);

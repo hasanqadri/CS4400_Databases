@@ -5,12 +5,12 @@
 </ion-nav-buttons>
     <ion-content>
         <div class="row center half_size">
-            <div class="col card"> 
+            <div class="col card">
 
 
 
                 <h3 class = "title row-center" style="text-align:center"> POI Detail </h3>
-         
+
                 <label class="item item-input-inset">
                         Data Type
                     <select class="item item-input" ng-model="formData.data_type">
@@ -29,9 +29,9 @@
                 </div>
                 <label class=" item item-input-inset">
                     Time and Date
-                    <input type="date" ng-model="formData.start" style="padding-left:10px">
-                    <lable style="padding:15px"> to </lable>
-                    <input class="right-margin" type="date" ng-model="formData.end">
+                    <input type="datetime-local" ng-model="formData.start" style="padding-left:10px">
+                    <lable style="padding-right:15px"> to </lable>
+                    <input class="right-margin" type="datetime-local" ng-model="formData.end">
                 </label>
 
 
@@ -50,9 +50,9 @@
                         <th class="text-center" colspan="1">Time and Date</th>
                     </tr>
                     <tr ng-repeat="i in data" align="center">
-                        <td>{{i.dataType}}</td>  
-                        <td>{{i.dataValue}}</td>  
-                        <td>{{i.timeDate}}</td>           
+                        <td>{{i.dataType}}</td>
+                        <td>{{i.dataValue}}</td>
+                        <td>{{i.timeDate}}</td>
                     </tr>
                     </table>
                 </div>
@@ -60,7 +60,7 @@
                 <div class="item-input-inset">
                 <button class="item-input-inset button button-block button-calm" ng-click="flag()">Flag</button>
                 </div>
-                
+
             </div>
         </div>
     </ion-content>
