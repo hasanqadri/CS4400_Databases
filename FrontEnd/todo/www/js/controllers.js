@@ -29,7 +29,7 @@
   }])
 
 
-  .controller('viewPOICtrl', ['$state', '$scope', function($$state,  $scope) {
+  .controller('viewPOICtrl', ['$state', '$scope', function($state,  $scope) {
     $scope.data = {
       "location_name": null ,
       "city": null ,
