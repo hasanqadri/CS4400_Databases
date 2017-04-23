@@ -63,8 +63,6 @@
     $scope.city;
     $scope.state;
     $scope.zip;
-
-
   }])
 
   .controller('adminCtrl', ['$rootScope', '$state', function($rootScope, $state) {

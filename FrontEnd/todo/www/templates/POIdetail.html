@@ -1,8 +1,11 @@
-<ion-view view-title="POI Detail" name="cleanwaterreport-view">
+<ion-view view-title="CS4400 Project Phase 3">
 <ion-nav-buttons>
 <button class="button icon ion-ios-arrow-back button-clear" ng-click="goBack()">Back</button>
 </ion-nav-buttons>
+
 <ion-content>
+<div class="row half_wide">
+<div class="card center">
 <div class="list">
 <div class="item item-input-inset">
 <label class="item">
@@ -54,7 +57,7 @@ To
 <button class="item-input-inset button button-block button-calm">Reset Filter</button>
 </div>
 </div>
-
+<div align="center">
 <table align="center">
 <tr>
 <th class="text-center" colspan="1">Data Type</th>
@@ -67,11 +70,14 @@ To
 <td>{{i.timeDate}</td>           
 </tr>
 </table>
+</div>
 
 
 <div class="list">
 <div class="item item-input-inset">
 <button class="item-input-inset button button-block button-calm">Flag</button>
+</div>
+</div>
 </div>
 </div>
 </ion-content>
