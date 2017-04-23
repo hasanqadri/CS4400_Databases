@@ -6643,7 +6643,9 @@ button.item.item-button-right {
   overflow: hidden;
   margin: 20px 10px;
   border-radius: 2px;
-  background-color: #fff; }
+  background-color: #fff;
+  opacity:.75;
+  }
 
 .card {
   padding-top: 1px;
@@ -6655,7 +6657,8 @@ button.item.item-button-right {
   .card .item:first-child {
     border-top: 0; }
   .card .item:last-child {
-    border-bottom: 0; }
+    border-bottom: 0;
+  }
 
 .padding .card, .padding .list-inset {
   margin-left: 0;
