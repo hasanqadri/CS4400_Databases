@@ -212,17 +212,13 @@
       //Send the request
       var request = $.post("http://" + host + ":3000/api/users/new", $scope.data);
       request.done(function( msg ) {
-
         $scope.modal.remove();
       }).fail(function( msg ) {
-           if ($scope.data[key] == "") {
             var alert = $ionicPopup.show({
-              template: 'Register failed!',
+              template: 'Registration failed!',
               title: 'Try Again',
               buttons: [{ text: 'Ok' }]
-            });
-          }
-
+            })
       });
     }
 }])
