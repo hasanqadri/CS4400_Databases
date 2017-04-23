@@ -20,9 +20,10 @@
   .controller('POIreportsCtrl', ['$rootScope', '$state', function($rootScope, $state) {
     var request = $.post("http://localhost:3000/api/poi/list", {});
     request.done(function( msg ) {
+      console.log(msg);
       $scope.pendingData = msg;
     }).fail(function( msg ) {
-        alert("Could not get poi list");
+        console.log(msg);
     });
   }])
 
