@@ -33,30 +33,34 @@
     $scope.data = {
       "location_name": null ,
       "city": null ,
-      "state": null ,
+      "state": "poo" ,
       "zip": null ,
       "flagged": null ,
       "date_flagged_start" :null ,
       "date_flagged_end" : null 
     }
+    $scope.state = "fuck";
     var request = $.post("http://" + host + ":3000/api/poi/list", {});
         request.done(function( msg ) {
-        
-        console.log( JSON.stringify(msg));
+        //console.log( JSON.stringify(msg));
         $scope.poiInfo = msg;
       }).fail(function( msg ) {
+          console.log("Failed.");
           console.log(msg);
+          console.log("*********************");
     });
 
     $scope.flagged = 0;
     $scope.querySuccess = 0;
     $scope.applyFilter = function() {
-      var request = $.post("http://" + host + ":3000/api/poi/list", $scope.data);
+      console.log({vals: $scope.data});
+      var request = $.post("http://" + host + ":3000/api/poi/list", {vals: $scope.data});
         request.done(function( msg ) {
         console.log(msg);
         $scope.poiInfo = msg;
+        $scope.querySuccess = 1;
       }).fail(function( msg ) {
-          console.log(msg);
+          console.log("fail");
       });
     }
 

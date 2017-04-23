@@ -6,8 +6,12 @@
    max-width:50%;
  }
 
+
 .three_quarter_size {
   max-width:65%;
+}
+.padding-right-custom {
+  padding-right: 20px;
 }
 
 .table_size {

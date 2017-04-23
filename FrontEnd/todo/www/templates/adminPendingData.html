@@ -1,6 +1,15 @@
 <ion-view view-title="Admin" name="dashboard-view">
+  <ion-nav-buttons>
+    <button class="button icon ion-ios-arrow-back button-clear" ng-click="goBack()">Back</button>
+  </ion-nav-buttons>
+
   <ion-content class="padding">
-      <table align="center">
+
+    <div class="row center table_size">
+      <div class="col card" align = "center">
+        <h3 class = "title row-center" style="text-align:center"> View Pending Data Points</h3>
+
+    <table align="center">
         <tr>
         <th class="text-center" colspan="1">Select</th>
         <th class="text-center" colspan="1">POI Location</th>
@@ -10,11 +19,13 @@
         </tr>
       <tr ng-repeat="i in pendingData">
         <td>test</td>
-        <td>{{i.location}}</td>  
-        <td>{{i.dataType}}</td>  
-        <td>{{i.dataValue}}</td>  
-        <td>{{i.timeDate}}</td>          
+        <td>{{i.location}}</td>
+        <td>{{i.dataType}}</td>
+        <td>{{i.dataValue}}</td>
+        <td>{{i.timeDate}}</td>
       </tr>
         </table>
+        </div>
+      </div>
   </ion-content>
 </ion-view>

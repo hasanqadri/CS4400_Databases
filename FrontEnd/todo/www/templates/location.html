@@ -1,8 +1,12 @@
 <ion-view view-title="location" name="location-view">
+  <ion-nav-buttons>
+    <button class="button icon ion-ios-arrow-back button-clear" ng-click="goBack()">Back</button>
+  </ion-nav-buttons>
   <ion-content class="padding">
-    <h3 class = "title row-center"> Add a  New Location  </h3>
     <div class="row">
       <div class="col card">
+        <h3 class = "title row-center" style="text-align:center"> Add a  New Location</h3>
+
         <div class="list list-inset">
           <label class="item item-input">
             <input ng-model="data.location_name" type="text" placeholder="POI Location Name">
@@ -23,10 +27,9 @@
           </label>
         </div>
         <!--  ADD METHOD CALLS FOR BACK AND SUBMIT -->
-
-        <button class="button button-block button-calm" ng-click="submit()">Submit</button>
-        <button class="button button-block button-positive" ng-click="goBack()">Back</button>
-
+        <div class = "three_quarter_size" style="margin: 0 auto; width: 656px; text-align: center;">
+        <button class="button button-block button-calm"  ng-click="submit()">Submit</button>
+          </div>
       </div>
     </div>
   </ion-content>

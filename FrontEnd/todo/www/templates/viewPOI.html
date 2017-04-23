@@ -1,29 +1,29 @@
 <ion-view view-title="CS4400 Project Phase 3">
 <ion-nav-buttons>
 <button class="button icon ion-ios-arrow-back button-clear" ng-click="goBack()">Back</button>
-
 </ion-nav-buttons>
   <ion-content class="padding">
     <div class="row center half_size">
-      <div class="col card"> 
+      <div class="col card">
         <h3 class = "title row-center" style="text-align:center"> View POI </h3>
 
             <div class="list list-inset">
           <label class="item">
             POI Location Name: 
-            <select class="menu-left" ng-model="data.location_name" ng-options="poi.id as poi.location_name for poi in poiInfo "></select>
+            <select class="menu-left" ng-model="data.location_name" ng-options="poi.location_name as poi.location_name for poi in poiInfo"></select>
           </label>
           <label class="item ">
             City:
-            <select class = "icon-left" ng-model="data.city" ng-options="poi.id as poi.city for poi in poiInfo | unique:'city' ">
+            <select class = "icon-left" ng-model="data.city" ng-options="poi.city as poi.city for poi in poiInfo | unique:'city' ">
             </select>
           </label>
 
           <label class="item ">
-            State:
-            <select class = "icon-left" ng-model="data.state" ng-options="poi.id as poi.state for poi in poiInfo | unique:'state' ">
+          State:
+            <select  ng-model="data.state" ng-options="poi.state as poi.state for poi in poiInfo | unique:'state' ">
             </select>
           </label>
+
 
 
 
@@ -39,7 +39,7 @@
           </label>
 
           <label class="item item-input">
-            Date Flagged:     
+            Date Flagged:
             <input type="date" ng-model="data.date_flagged_start" style="padding-left:10px">
             to
             <input type="date" ng-model="data.date_flagged_end" style="padding-left:20px">
@@ -63,7 +63,7 @@
             <th class="text-center" colspan="1">Flagged?</th>
             <th class="text-center" colspan="1">Date Flagged</th>
           </tr>
-          <tr ng-repeat="i in pendingData">
+          <tr ng-repeat="i in poiInfo">
             <td>{{i.location}}</td>  
             <td>{{i.city}}</td>  
             <td>{{i.state}}</td>  

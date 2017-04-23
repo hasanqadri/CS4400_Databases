@@ -1,8 +1,9 @@
-<ion-view view-title="Water Source Report" name="cleanwaterreport-view">
+<ion-view view-title="Data Points" name="addDataPoint-view">
   <ion-nav-buttons>
     <button class="button icon ion-ios-arrow-back button-clear" ng-click="goBack()">Back</button>
   </ion-nav-buttons>
   <ion-content>
+<<<<<<< HEAD
   <div class="list">
     <div class="item item-input-inset">
       <label class="item">   
@@ -10,48 +11,63 @@
       </label>
       <select class="item item-input-wrapper" ng-model="locationName" ng-options="poi.id as poi.location_name for poi in poiInfo"></select>
       <button class="button" ng-click="addLocation()">Add a new location</button>
+=======
+    <div class="row center table_size">
+      <div class="col card" align="center">
+        <h3 class = "title row-center" style="text-align:center"> Add Data Point </h3>
+
+        <div class="list">
+          <div class="item-input-inset">
+            <label class="item">
+              POI location name
+            </label>
+            <select class="item item-input-wrapper" ng-model="locationName"
+                    ng-options="poi.id as poi.location_name for poi in poiInfo"></select>
+            <button class="button button-balanced">Add a new location</button>
+          </div>
+
+        </div>
+
+        <div class="list">
+          <div class="item item-input-inset">
+            <label class="item">
+              Enter Date
+            </label>
+            <label class="item item-input-wrapper">
+              <input ng-model="date" type="text" ng-model="reportData.lat">
+            </label>
+          </div>
+
+        </div>
+
+
+        <div class="list">
+          <div class="item item-input-inset">
+            <label class="item">
+              Data Type
+            </label>
+            <select ng-model="dataType" class="item item-input-wrapper" ng-model="reportData.lat">
+              <option value=""> 1</option>
+              <option value=""> 2</option>
+              <option value=""> 3</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="list">
+          <div class="item item-input-inset">
+            <label class="item">
+              Data Value
+            </label>
+            <label class="item item-input-wrapper">
+              <input ng-model="dataValue" type="text" ng-model="reportData.lat">
+            </label>
+          </div>
+
+        </div>
+        <button class="button button-block button-calm" ng-click="submit()">Submit</button>
+      </div>
+>>>>>>> ea15232f08c8ae1a4602dec4190e029721e4887d
     </div>
-
-  </div>
-
-  <div class="list">
-    <div class="item item-input-inset">
-      <label class="item">   
-      Enter Date
-      </label>
-      <label class="item item-input-wrapper">   
-      <input ng-model="date" type="text" ng-model="reportData.lat">
-      </label>
-    </div>
-
-  </div>
-
-
-  <div class="list">
-    <div class="item item-input-inset">
-      <label class="item">   
-      Data Type
-      </label>
-      <select ng-model="dataType" class="item item-input-wrapper" ng-model="reportData.lat">
-        <option value=""> 1 </option>
-        <option value=""> 2 </option>
-        <option value=""> 3 </option>
-      </select>
-    </div> 
-  </div>
-
- <div class="list">
-    <div class="item item-input-inset">
-      <label class="item">   
-      Data Value
-      </label>
-      <label class="item item-input-wrapper">   
-      <input ng-model="dataValue" type="text" ng-model="reportData.lat">
-      </label>
-    </div>
-
-  </div>
-
-  <button class="button button-block button-calm" ng-click="submit()">Submit</button>
   </ion-content>
 </ion-view>
