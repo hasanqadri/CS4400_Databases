@@ -11,19 +11,20 @@
             <div class="list list-inset">
           <label class="item">
             POI Location Name: 
-            <select class="menu-left" ng-model="data.location_name" ng-options="poi.id as poi.location_name for poi in poiInfo "></select>
+            <select class="menu-left" ng-model="data.location_name" ng-options="poi.location_name as poi.location_name for poi in poiInfo"></select>
           </label>
           <label class="item ">
             City:
-            <select class = "icon-left" ng-model="data.city" ng-options="poi.id as poi.city for poi in poiInfo | unique:'city' ">
+            <select class = "icon-left" ng-model="data.city" ng-options="poi.city as poi.city for poi in poiInfo | unique:'city' ">
             </select>
           </label>
 
           <label class="item ">
-            State:
-            <select class = "icon-left" ng-model="data.state" ng-options="poi.id as poi.state for poi in poiInfo | unique:'state' ">
+          State:
+            <select  ng-model="data.state" ng-options="poi.state as poi.state for poi in poiInfo | unique:'state' ">
             </select>
           </label>
+
 
 
 
@@ -63,7 +64,7 @@
             <th class="text-center" colspan="1">Flagged?</th>
             <th class="text-center" colspan="1">Date Flagged</th>
           </tr>
-          <tr ng-repeat="i in pendingData">
+          <tr ng-repeat="i in poiInfo">
             <td>{{i.location}}</td>  
             <td>{{i.city}}</td>  
             <td>{{i.state}}</td>  
