@@ -17,8 +17,8 @@
       };
   }])
 
-  .controller('POIreportsCtrl', ['$rootScope', '$state', function($rootScope, $state) {
-    var request = $.post("http://localhost:3000/api/poi/list", {});
+  .controller('POIreportsCtrl', ['$rootScope', '$state', '$scope', function($rootScope, $state, $scope) {
+    var request = $.post("http://localhost:3000/api/datapoint/list", {});
     request.done(function( msg ) {
       console.log(msg);
       $scope.pendingData = msg;
