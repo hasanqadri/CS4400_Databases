@@ -1,76 +1,77 @@
-<ion-view view-title="location" name="location-view">
+<ion-view view-title="CS4400 Project Phase 3">
   <ion-content class="padding">
-    <h3 class = "title row-center"> View POIs </h3>
-    <div class="row">
-      <div class="col card">
+    <div class="row center" style="max-width:50%">
+      <div class="col card"> 
+        <h3 class = "title row-center" style="text-align:center"> View POI </h3>
         <div class="list list-inset">
           <label class="item">
             POI Location Name:
-            <select class = "menu-left"ng-model="" ng-options="val for val in someMethod()">
+            <select class="menu-left" ng-model="data.location_name" ng-options="val for val in someMethod()">
               <option value="">Select</option>
             </select>
 
           </label>
           <label class="item ">
             City:
-            <select class = "icon-left" ng-model="" ng-options="val for val in someMethod()">
+            <select class = "icon-left" ng-model="data.city" ng-options="val for val in someMethod()">
               <option value="">Select</option>
             </select>
           </label>
 
           <label class="item ">
             State:
-            <select class = "icon-left" ng-model="" ng-options="val for val in someMethod()">
+            <select class = "icon-left" ng-model="data.state" ng-options="val for val in someMethod()">
               <option value="">Select</option>
             </select>
           </label>
 
+
+
           <label class="item item-input">
-            <input type="text" placeholder="Zip Code">
+            <input type="text" ng-model="data.zip" placeholder="Zip Code">
           </label>
 
           <label class="item item-input">
+            Flagged?
             <ion-item>
-              Flagged<ion-checkbox [(ngModel)]="flagged"></ion-checkbox>
-
+              <ion-checkbox ng-model="data.flag"/>
+            </ion-item>
           </label>
 
-
           <label class="item item-input">
-            Date Flagged   =
-            <input type="date" name="date_flagged">
-            To   =
-            <input type="date" name="date_flagged">
-
+            Date Flagged:     
+            <input type="date" ng-model="data.date_flagged_start" style="padding-left:10px">
+            to
+            <input type="date" ng-model="data.date_flagged_end" style="padding-left:20px">
           </label>
         </div>
 
 
         <!--  ADD METHOD CALLS FOR BACK AND SUBMIT -->
 
-        <button class="button button-block button-calm" ng-click="">Apply Filter</button>
-        <button class="button button-block button-positive" ng-click="">Reset Filter</button>
-
-        <table align="center">
-        <tr>
-        <th class="text-center" colspan="1">Location Name</th>
-        <th class="text-center" colspan="1">City</th>
-        <th class="text-center" colspan="1">State</th>
-        <th class="text-center" colspan="1">Zip code</th>
-        <th class="text-center" colspan="1">Flagged?</th>
-        <th class="text-center" colspan="1">Date Flagged</th>
-        </tr>
-      <tr ng-repeat="i in pendingData">
-        <td>{{i.location}}</td>  
-        <td>{{i.city}}</td>  
-        <td>{{i.state}}</td>  
-        <td>{{i.zipCode}}</td> 
-        <td>{{i.flagged}}</td> 
-        <td>{{i.dateFlagged}}</td>          
-      </tr>
+        <button class="button button-block button-calm half_size center" ng-click="applyFilter()" style="max-width:50%">Apply Filter</button>
+        <button class="button button-block button-positive half_size center" ng-click="resetFilter()" style="max-width:50%">Reset Filter</button>
+        <div align="center" ng-show="querySuccess">
+          <table align="center">
+            <tr>
+            <th class="text-center" colspan="1">Location Name</th>
+            <th class="text-center" colspan="1">City</th>
+            <th class="text-center" colspan="1">State</th>
+            <th class="text-center" colspan="1">Zip code</th>
+            <th class="text-center" colspan="1">Flagged?</th>
+            <th class="text-center" colspan="1">Date Flagged</th>
+          </tr>
+          <tr ng-repeat="i in pendingData">
+            <td>{{i.location}}</td>  
+            <td>{{i.city}}</td>  
+            <td>{{i.state}}</td>  
+            <td>{{i.zipCode}}</td> 
+            <td>{{i.flagged}}</td> 
+            <td>{{i.dateFlagged}}</td>          
+          </tr>
         </table>
-
-        <button class="button button-block button-calm" ng-click="goBack()">Back</button>
+        </div>
+        <button class="button button-block button-calm half_size center" ng-click="goBack()">Back</button>
 
       </div>
     </div>

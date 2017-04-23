@@ -1,51 +1,64 @@
-angular.module('starter')
-.service('userData', function () {
-    var user_data = {};
-    return {
-        getUserData: function () {
-            return user_data;
-        },
-        setUserData: function (value) {
-            user_data = value;
+  angular.module('starter')
+  .service('userData', function () {
+      var user_data = {};
+      return {
+          getUserData: function () {
+              return user_data;
+          },
+          setUserData: function (value) {
+              user_data = value;
+          }
+      };
+
+  })
+  .controller('AppCtrl', ['$rootScope', '$state', function($rootScope, $state) {
+      $rootScope.goBack = function() {
+             $state.go('dash');
+      };
+  }])
+
+  .controller('POIreportsCtrl', ['$rootScope', '$state', function($rootScope, $state) {
+    var request = $.post("http://localhost:3000/api/poi/list", {});
+    request.done(function( msg ) {
+      $scope.pendingData = msg;
+    }).fail(function( msg ) {
+        alert("Could not get poi list");
+    });
+  }])
+
+
+  .controller('viewPOICtrl', ['$state', '$scope', function($$state,  $scope) {
+    $scope.data = {
+      "location_name": null ,
+      "city": null ,
+      "state": null ,
+      "zip": null ,
+      "flagged": null ,
+      "date_flagged_start" :null ,
+      "date_flagged_end" : null 
+    }
+    $scope.flagged = 0;
+    $scope.querySuccess = 0;
+    $scope.applyFilter = function() {
+      var request = $.post("http://localhost:3000/api/poi/list", $scope.data);
+        request.done(function( msg ) {
+        $scope.poiInfo = msg;
+      }).fail(function( msg ) {
+          alert("Could not get poi list");
+      });
+    }
+
+    $scope.resetFilter = function() {
+      for (var key in $scope.data) {
+        if ($scope.data.hasOwnProperty(key)) {
+          $scope.data[key] = null;
         }
-    };
-
-})
-.controller('AppCtrl', ['$rootScope', '$state', function($rootScope, $state) {
-    $rootScope.goBack = function() {
-           $state.go('main.dash');
-    };
-}])
-
-.controller('POIreportsCtrl', ['$rootScope', '$state', function($rootScope, $state) {
-    var request = $.post("http://localhost:3000/api/poi/list", {});
-    request.done(function( msg ) {
-      $scope.pendingData = msg;
-    }).fail(function( msg ) {
-        alert("Could not get poi list");
-    });
-}])
-
-
-  .controller('viewPOICtrl', ['$rootScope', '$state', function($rootScope, $state) {
-    $rootScope.goBack = function() {
-      $state.go('main.dash');
-    };
-
-    var request = $.post("http://localhost:3000/api/poi/list", {});
-    request.done(function( msg ) {
-      $scope.pendingData = msg;
-    }).fail(function( msg ) {
-        alert("Could not get poi list");
-    });
-
+        $scope.flagged = 0;
+      }
+    }
   }])
 
   .controller('locationCtrl', ['$rootScope', '$state', '$scope', function($rootScope, $state, $scope) {
-    $rootScope.goBack = function() {
-      $state.go('main.dash');
-    };
-
     $scope.location;
     $scope.city;
     $scope.state;
@@ -63,12 +76,10 @@ angular.module('starter')
   }])
 
   .controller('adminCtrl', ['$rootScope', '$state', function($rootScope, $state) {
-    $rootScope.goBack = function() {
-      $state.go('main.dash');
-    };
+
   }])
 
-.controller('LoginCtrl', ['$scope', 'WaterApp','$state', '$ionicPopup', '$ionicModal', 'userData', function($scope, WaterApp, $state, $ionicPopup, $ionicModal) {
+  .controller('LoginCtrl', ['$scope', 'WaterApp','$state', '$ionicPopup', '$ionicModal', 'userData', function($scope, WaterApp, $state, $ionicPopup, $ionicModal) {
     $scope.data = {
         "username": "",
         "password": "",
@@ -121,7 +132,7 @@ angular.module('starter')
         console.log($scope.data.pass);
         var request = $.post("http://localhost:3000/api/login/", { username : $scope.data.username, password : $scope.data.password });
         request.done(function( msg ) {
-          $state.go("main.dash");
+          $state.go("dash");
         }).fail(function( msg ) {
             alert("Username or password incorrect");
         });
@@ -186,9 +197,6 @@ angular.module('starter')
 }])
 
 .controller('POIdetailCtrl', ['$rootScope', '$state', '$scope', function($rootScope, $state, $scope) {
-    $rootScope.goBack = function() {
-           $state.go('main.dash');
-    };
     $scope.dataType;
     $scope.dataValueLow;
     $scope.dataValueHigh;
