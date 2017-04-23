@@ -6643,7 +6643,9 @@ button.item.item-button-right {
   overflow: hidden;
   margin: 20px 10px;
   border-radius: 2px;
-  background-color: #fff; }
+  background-color: #fff;
+  opacity:.8;
+}
 
 .card {
   padding-top: 1px;

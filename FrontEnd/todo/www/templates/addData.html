@@ -8,11 +8,7 @@
       <label class="item">   
       POI location name
       </label>
-      <select class="item item-input-wrapper" ng-model="locationName">
-        <option value=""> 1 </option>
-        <option value=""> 2 </option>
-        <option value=""> 3 </option>
-      </select>
+      <select class="item item-input-wrapper" ng-model="locationName" ng-options="poi.id as poi.location_name for poi in poiInfo"></select>
       <button class="button">Add a new location</button>
     </div>
 
