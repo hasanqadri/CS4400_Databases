@@ -1,4 +1,4 @@
-  host = "143.215.26.78";
+  host = "128.61.35.128";
   angular.module('starter')
   .service('userData', function () {
       var user_data = {};
