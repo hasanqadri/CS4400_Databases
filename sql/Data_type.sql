@@ -1,1 +1,1 @@
-INSERT INTO Data_Types (type) VALUES ('mold'), ('air_quality');
+INSERT INTO Data_types (type) VALUES ('mold'), ('air_quality');
