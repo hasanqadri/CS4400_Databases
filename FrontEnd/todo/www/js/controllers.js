@@ -58,7 +58,12 @@
     }
   }])
 
-  .controller('locationCtrl', ['$rootScope', '$state', function($rootScope, $state) {
+  .controller('locationCtrl', ['$rootScope', '$state', '$scope', function($rootScope, $state, $scope) {
+    $scope.location;
+    $scope.city;
+    $scope.state;
+    $scope.zip;
+
 
   }])
 
@@ -202,7 +207,10 @@
 }])
 
 .controller('addDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
-    
+    $scope.locationName;
+    $scope.date;
+    $scope.dataType;
+    $scope.dataValue;
 }])
 
 .controller('adminCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {

@@ -8,7 +8,7 @@
       <label class="item">   
       POI location name
       </label>
-      <select class="item item-input-wrapper" ng-model="reportData.lat">
+      <select class="item item-input-wrapper" ng-model="locationName">
         <option value=""> 1 </option>
         <option value=""> 2 </option>
         <option value=""> 3 </option>
@@ -24,7 +24,7 @@
       Enter Date
       </label>
       <label class="item item-input-wrapper">   
-      <input type="text" ng-model="reportData.lat">
+      <input ng-model="date" type="text" ng-model="reportData.lat">
       </label>
     </div>
 
@@ -36,7 +36,7 @@
       <label class="item">   
       Data Type
       </label>
-      <select class="item item-input-wrapper" ng-model="reportData.lat">
+      <select ng-model="dataType" class="item item-input-wrapper" ng-model="reportData.lat">
         <option value=""> 1 </option>
         <option value=""> 2 </option>
         <option value=""> 3 </option>
@@ -50,7 +50,7 @@
       Data Value
       </label>
       <label class="item item-input-wrapper">   
-      <input type="text" ng-model="reportData.lat">
+      <input ng-model="dataValue" type="text" ng-model="reportData.lat">
       </label>
     </div>
 
