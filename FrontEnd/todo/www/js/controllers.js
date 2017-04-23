@@ -39,11 +39,21 @@
       "date_flagged_start" :null ,
       "date_flagged_end" : null 
     }
+    var request = $.post("http://" + host + ":3000/api/poi/list", {});
+        request.done(function( msg ) {
+        
+        console.log( JSON.stringify(msg));
+        $scope.poiInfo = msg;
+      }).fail(function( msg ) {
+          console.log(msg);
+    });
+
     $scope.flagged = 0;
     $scope.querySuccess = 0;
     $scope.applyFilter = function() {
       var request = $.post("http://" + host + ":3000/api/poi/list", $scope.data);
         request.done(function( msg ) {
+        console.log(msg);
         $scope.poiInfo = msg;
       }).fail(function( msg ) {
           console.log(msg);
@@ -217,32 +227,39 @@
   
   $scope.didQuery = 0;
 
-    $scope.resetFilter = function() {
-      for (var key in $scope.formData) {
-        if ($scope.formData.hasOwnProperty(key)) {
-          $scope.formData[key] = null;
-        }
+  var request = $.post("http://" + host + ":3000/api/poi/list", {});
+        request.done(function( msg ) {
+          $scope.data = msg;
+        }).fail(function( msg ) {
+            alert("Could not get poi list");
+  });
+
+  $scope.resetFilter = function() {
+    for (var key in $scope.formData) {
+      if ($scope.formData.hasOwnProperty(key)) {
+        $scope.formData[key] = null;
       }
     }
+  }
 
-    $scope.applyFilter = function () {
-      //Need value and time endpoints
-        var request = $.post("http://" + host + ":3000/api/data/list", {});
-        request.done(function( msg ) {
-          $scope.data = msg;
-        }).fail(function( msg ) {
-            alert("Could not get poi list");
-        });
-    }
-    //Need endpoint for updating flag
-    $scope.flag = function () {
-        var request = $.post("http://" + host + ":3000/api/poi/list", {});
-        request.done(function( msg ) {
-          $scope.data = msg;
-        }).fail(function( msg ) {
-            alert("Could not get poi list");
-        });
-    }
+  $scope.applyFilter = function () {
+    //Need value and time endpoints
+      var request = $.post("http://" + host + ":3000/api/data/list", {});
+      request.done(function( msg ) {
+        $scope.data = msg;
+      }).fail(function( msg ) {
+          alert("Could not get poi list");
+      });
+  }
+  //Need endpoint for updating flag
+  $scope.flag = function () {
+      var request = $.post("http://" + host + ":3000/api/poi/list", {});
+      request.done(function( msg ) {
+        $scope.data = msg;
+      }).fail(function( msg ) {
+          alert("Could not get poi list");
+      });
+  }
     
 }])
 
