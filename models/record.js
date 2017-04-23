@@ -109,18 +109,19 @@ class record {
         var limit = args['limit'];
         var fields = args['fields'];
         var like = args['like'] || {};
-        var order = args['order'] || null;
+        var order = args['order'];
+        var between = args['between'];
 
         if (name === null) {
             throw "name cannot be null"
         }
 
         let sql = 'SELECT ?? from ' + db.mysql.escapeId(name);
-        if (!args.hasOwnProperty('fields')) {
+        if (!fields) {
             sql = 'SELECT * from ' + db.mysql.escapeId(name);
         }
 
-        if (Object.keys(vals).length > 0 || Object.keys(like).length > 0) {
+        if (Object.keys(vals).length > 0 || Object.keys(like).length > 0 || Object.keys(between).length > 0) {
             sql += ' WHERE ';
             for (let property in vals) {
                 if (vals.hasOwnProperty(property)) {
@@ -130,6 +131,11 @@ class record {
             for (let property in like) {
                 if (like.hasOwnProperty(property)) {
                     sql += db.mysql.escapeId(property) + ' LIKE ' + db.mysql.escape(like[property]) + ' AND ';
+                }
+            }
+            for (let property in between) {
+                if (between.hasOwnProperty(property)) {
+                    sql += db.mysql.escapeId(property) + ' BETWEEN ' + db.mysql.escape(between[property]['min']) + ' AND ' + db.mysql.escape(between[property]['max']);
                 }
             }
             sql = sql.slice(0, -5);
