@@ -29,7 +29,7 @@
   }])
 
 
-  .controller('viewPOICtrl', ['$state', '$scope', function($state,  $scope) {
+  .controller('viewPOICtrl', ['$state', '$scope', function($$state,  $scope) {
     $scope.data = {
       "location_name": null ,
       "city": null ,
@@ -71,17 +71,32 @@
   }])
 
   .controller('locationCtrl', ['$rootScope', '$state', '$scope', function($rootScope, $state, $scope) {
-    $scope.location;
-    $scope.city;
-    $scope.state;
-    $scope.zip;
+
+    $scope.data = {
+        "location_name": "",
+        "city": "",
+        "state": "",
+        "zip": ""
+    }
+
+    var request = $.post("http://" + host + ":3000/api/poi/list", {});
+        request.done(function( msg ) {
+        
+        $scope.poiInfo = msg;
+      }).fail(function( msg ) {
+          console.log(msg);
+    });
+
+    
+
     $scope.submit = function() {
-        var request = $.post("http://" + host + ":3000/api/poi/new", {vals: {'location_name' : $scope.location, 'city' : $scope.city, 'state' : $scope.state, 'zip' : $scope.zip}});
-          request.done(function( msg ) {
-          alert("success!");
-        }).fail(function( msg ) {
-          alert("could not add data");
-        });
+      var request = $.post("http://" + host + ":3000/api/poi/new", $scope.data);
+      console.log($scope.data);
+        request.done(function( msg ) {
+          alert("done")
+      }).fail(function( msg ) {
+          alert("Could not add location.")
+      });
     };  
   }])
 
@@ -196,9 +211,7 @@
         WaterApp.setUserData(null);
         $state.go('login');
     }
-    $scope.addPOI = function() {
-        $state.go('location');
-    }
+    
     $scope.viewPOI = function() {
         $state.go('viewPOI');
     }
@@ -269,6 +282,10 @@
     $scope.date;
     $scope.dataType;
     $scope.dataValue;
+
+    $scope.addLocation = function() {
+        $state.go('location');
+    }
 
     var request = $.post("http://" + host + ":3000/api/poi/list", {});
         request.done(function( msg ) {

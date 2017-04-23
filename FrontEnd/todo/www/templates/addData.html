@@ -6,10 +6,10 @@
   <div class="list">
     <div class="item item-input-inset">
       <label class="item">   
-      POI location name
+      POI Location Name
       </label>
       <select class="item item-input-wrapper" ng-model="locationName" ng-options="poi.id as poi.location_name for poi in poiInfo"></select>
-      <button class="button">Add a new location</button>
+      <button class="button" ng-click="addLocation()">Add a new location</button>
     </div>
 
   </div>
