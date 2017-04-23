@@ -160,8 +160,10 @@
       var request = $.post("http://" + host + ":3000/api/users/new", $scope.data);
         request.done(function( msg ) {
         alert("Successfully registered, please wait for approval!");
+        $scope.closeModal();
       }).fail(function( msg ) {
           alert("Registration error, please try again!");
+
       });
     }
 }])
