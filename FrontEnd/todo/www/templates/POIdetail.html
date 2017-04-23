@@ -1,6 +1,6 @@
 <ion-view view-title="CS4400 Project Phase 3">
 <ion-nav-buttons>
-<button class="button icon ion-ios-arrow-back button-clear" ng-click="goBack()">Back</button>
+<button class="button icon ion-ios-arrow-back button-clear" ng-click="goBack('viewPOI')">Back</button>
 
 </ion-nav-buttons>
     <ion-content>
@@ -9,10 +9,7 @@
 
 
 
-                <h3 class = "title row-center" style="text-align:center"> POI Detail </h3>
-
-            
-
+                <h3 class = "title row-center" style="text-align:center"> POI Detail for {{formData.location_name}} </h3>
                  <div class="list">
                     <label class="item item-input">
                       <div class="input-label" style="width:20px; padding-right:40px">

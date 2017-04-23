@@ -74,25 +74,27 @@
           <button class="button button-block button-positive half_size " ng-click="resetFilter()" style="max-width:50%">Reset Filter</button>
         </div>
        
-        <div align="center" ng-show="querySuccess">
+        <div align="center" ng-show="1">
           <hr>
           <table align="center">
-            <tr>
-            <th class="text-center" colspan="1">Location Name</th>
-            <th class="text-center" colspan="1">City</th>
-            <th class="text-center" colspan="1">State</th>
-            <th class="text-center" colspan="1">Zip code</th>
-            <th class="text-center" colspan="1">Flagged?</th>
-            <th class="text-center" colspan="1">Date Flagged</th>
-          </tr>
-          <tr ng-repeat="i in poiInfo" ng-click="viewPOIDetail(i.location_name)">
-            <td>{{i.location_name}}</td>  
-            <td>{{i.city}}</td>  
-            <td>{{i.state}}</td>  
-            <td>{{i.zip}}</td> 
-            <td>{{i.flag}}</td> 
-            <td>{{i.date_flagged}}</td>          
-          </tr>
+            <tr ng-click="viewPOIDetail('Atlanta')">
+              <th class="text-center" colspan="1">Location Name</th>
+              <th class="text-center" colspan="1">City</th>
+              <th class="text-center" colspan="1">State</th>
+              <th class="text-center" colspan="1">Zip code</th>
+              <th class="text-center" colspan="1">Flagged?</th>
+              <th class="text-center" colspan="1">Date Flagged</th>
+            </tr>
+
+            <tr ng-repeat="i in poiInfo" ng-click="viewPOIDetail(i.location_name)">
+              <td>{{i.location_name}}</td>  
+              <td>{{i.city}}</td>  
+              <td>{{i.state}}</td>  
+              <td>{{i.zip}}</td> 
+              <td>{{i.flag}}</td> 
+              <td>{{i.date_flagged}}</td>          
+            </tr>
+
         </table>
         </div>
       </div>

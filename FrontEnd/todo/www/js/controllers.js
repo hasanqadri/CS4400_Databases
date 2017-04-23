@@ -14,8 +14,11 @@
 
   })
   .controller('AppCtrl', ['$rootScope', '$state', function($rootScope, $state) {
-      $rootScope.goBack = function() {
-             $state.go('dash');
+      $rootScope.goBack = function(view) {
+        if(!view) {
+          $state.go('dash');
+        }
+        $state.go(view);
       };
   }])
 
@@ -25,16 +28,16 @@
       console.log(msg);
       $scope.pendingData = msg;
     }).fail(function( msg ) {
-        console.log(msg);
+        console.log("Failed to get POI reports");
     });
   }])
 
 
-  .controller('viewPOICtrl', ['$state', '$scope', function($$state,  $scope) {
+  .controller('viewPOICtrl', ['$state', '$scope', function($state,  $scope) {
     $scope.data = {
       "location_name": null ,
       "city": null ,
-      "state": "poo" ,
+      "state": null ,
       "zip": null ,
       "flag": false,
       "date_flagged_start" :null ,
@@ -77,8 +80,9 @@
 
     $scope.viewPOIDetail = function(location) {
       current_poi_location = location;
-      if (!current_poi_location) {
-        state.go('POIdetail');
+      console.log(location);
+      if (current_poi_location) {
+        $state.go('POIdetail');
       }
     }
 
@@ -218,7 +222,7 @@
               template: 'Registration failed!',
               title: 'Try Again',
               buttons: [{ text: 'Ok' }]
-            })
+            });
       });
     }
 }])
@@ -253,14 +257,16 @@
 
 .controller('POIdetailCtrl', ['$rootScope', '$state', '$scope', function($rootScope, $state, $scope) {
 
+  console.log(current_poi_location);
   $scope.formData = {
-    "location_name": null,
+    "location_name": current_poi_location,
     "data_type":null,
     "dataValueLow":null,
     "dataValueHigh":null,
     "start":null,
     "end":null
   }
+  
 
   $scope.didQuery = 0;
   var request = $.post("http://" + host + ":3000/api/datapoints/datatype", {});
