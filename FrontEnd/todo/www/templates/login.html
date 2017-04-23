@@ -37,10 +37,10 @@
 
             <label style="padding-right:10px">User Type</label>
             <select ng-model="data.usertype" > 
-                <option>City Official</option>
-                <option>City Scientist</option>
+                <option>Official</option>
+                <option>Scientist</option>
                 <option>Admin</option>
-                {{showStates = (data.usertype == "City Official")? 1 : 0}}
+                {{showStates = (data.usertype == "Official")? 1 : 0}}
             </select>
              
             <div ng-show="showStates">
