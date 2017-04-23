@@ -99,7 +99,7 @@
         request.done(function( msg ) {
           alert("done")
       }).fail(function( msg ) {
-          alert("Could not add location.")
+          console.log(msg);
       });
     };  
   }])
