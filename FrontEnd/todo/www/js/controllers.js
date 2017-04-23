@@ -1,4 +1,4 @@
-  host = "143.215.26.78";
+  host = "0.0.0.0";
   angular.module('starter')
   .service('userData', function () {
       var user_data = {};
@@ -19,7 +19,7 @@
   }])
 
   .controller('POIreportsCtrl', ['$rootScope', '$state', '$scope', function($rootScope, $state, $scope) {
-    var request = $.post("http://localhost:3000/api/datapoint/list", {});
+    var request = $.post("http://" + host + ":3000/api/datapoint/list", {});
     request.done(function( msg ) {
       console.log(msg);
       $scope.pendingData = msg;
@@ -143,7 +143,7 @@
       //Check if all fields are filled out, very brute forcy but..
       for (var key in $scope.data) {
         if ($scope.data.hasOwnProperty(key)) {
-          if ($scope.data[usertype] != "City official") {
+          if ($scope.data["usertype"] != "Official") {
             if (key == "state" || key == "title" || key == "city") 
               continue;
           }
@@ -157,7 +157,7 @@
         }
       }
       //Send the request
-      var request = $.post("http://" + host + ":3000/api/user/new", $scope.data);
+      var request = $.post("http://" + host + ":3000/api/users/new", $scope.data);
         request.done(function( msg ) {
         alert("Successfully registered, please wait for approval!");
       }).fail(function( msg ) {
