@@ -3,15 +3,6 @@
     <button class="button icon ion-ios-arrow-back button-clear" ng-click="goBack()">Back</button>
   </ion-nav-buttons>
   <ion-content>
-<<<<<<< HEAD
-  <div class="list">
-    <div class="item item-input-inset">
-      <label class="item">   
-      POI Location Name
-      </label>
-      <select class="item item-input-wrapper" ng-model="locationName" ng-options="poi.id as poi.location_name for poi in poiInfo"></select>
-      <button class="button" ng-click="addLocation()">Add a new location</button>
-=======
     <div class="row center table_size">
       <div class="col card" align="center">
         <h3 class = "title row-center" style="text-align:center"> Add Data Point </h3>
@@ -23,7 +14,7 @@
             </label>
             <select class="item item-input-wrapper" ng-model="locationName"
                     ng-options="poi.id as poi.location_name for poi in poiInfo"></select>
-            <button class="button button-balanced">Add a new location</button>
+            <button class="button button-balanced" ng-click="addLocation()">Add a new location</button>
           </div>
 
         </div>
@@ -67,7 +58,6 @@
         </div>
         <button class="button button-block button-calm" ng-click="submit()">Submit</button>
       </div>
->>>>>>> ea15232f08c8ae1a4602dec4190e029721e4887d
     </div>
   </ion-content>
 </ion-view>
