@@ -1,0 +1,1 @@
+INSERT INTO Data_Types (type) VALUES ('mold'), ('air_quality');
