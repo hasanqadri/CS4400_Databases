@@ -3,7 +3,16 @@
 }
 
 .half_size {
-max-width:50%;
+   max-width:50%;
+ }
+
+.three_quarter_size {
+  max-width:65%;
+}
+
+.table_size {
+  max-width:700px;
+  min-width:500px;
 }
 
 .center {
@@ -30,7 +39,7 @@ table{
 }
 
 th, td {
-    
+
     padding: 8px;
 }
 
