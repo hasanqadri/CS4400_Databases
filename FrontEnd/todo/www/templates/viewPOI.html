@@ -1,54 +1,73 @@
+
 <ion-view view-title="CS4400 Project Phase 3">
+
 <ion-nav-buttons>
 <button class="button icon ion-ios-arrow-back button-clear" ng-click="goBack()">Back</button>
 </ion-nav-buttons>
+
   <ion-content class="padding">
     <div class="row center half_size">
       <div class="col card">
         <h3 class = "title row-center" style="text-align:center"> View POI </h3>
-
-          <div class="list list-inset">
-            <label class="item">
-              POI Location Name: 
-              <select class="menu-left" ng-model="data.location_name" ng-options="poi.location_name as poi.location_name for poi in poiInfo"></select>
-            </label>
-            <label class="item ">
-              City:
-              <select class = "icon-left" ng-model="data.city" ng-options="poi.city as poi.city for poi in poiInfo | unique:'city' ">
+        
+        <div class="list">
+            <label class="item item-input item-select">
+              <div class="input-label">
+                POI Location Name: 
+              </div>
+              <select ng-model="data.location_name" ng-options="poi.location_name as poi.location_name for poi in poiInfo">
               </select>
             </label>
-
-            <label class="item ">
-            State:
-              <select  ng-model="data.state" ng-options="poi.state as poi.state for poi in poiInfo | unique:'state' ">
-              </select>
-            </label>
-
-
-
-
-            <label class="item item-input">
-              <input type="text" ng-model="data.zip" placeholder="Zip Code">
-            </label>
-
-            <label class="item item-input">
-              Flagged?
-              <ion-item>
-                <ion-checkbox ng-model="data.flag"/>
-                 {{data.flag}}
-              </ion-item>
-            </label>
-
-            <label class="item item-input">
-              Date Flagged:
-              <input id="date" type="date" ng-model="data.date_flagged_start" style="padding-left:10px">
-              to
-              <input type="date" ng-model="data.date_flagged_end" style="padding-left:20px">
-            </label>
-            {{data.date_flagged_start}}
         </div>
 
+        <div class="list">
+            <label class="item item-input item-select">
+              <div class="input-label">
+                City: 
+              </div>
+              <select ng-model="data.city" ng-options="poi.city as poi.city for poi in poiInfo | unique:'city' ">
+              </select>
+            </label>
+        </div>
 
+        <div class="list">
+            <label class="item item-input item-select">
+              <div class="input-label">
+                State: 
+              </div>
+              <select ng-model="data.state" ng-options="poi.state as poi.state for poi in poiInfo | unique:'state' "">
+              </select>
+            </label>
+        </div>
+
+        <label class="item item-input">
+          <span class="input-label">ZIP Code</span>
+          <input type="text" ng-model="data.zip">
+        </label>
+
+        <label class="item item-input">
+          Flagged?
+          <ion-item>
+            <ion-checkbox ng-model="data.flag"/>
+          </ion-item>
+        </label>
+
+        <div class="list">
+          <div class="item item-input-inset">
+            <label class="right-margin"> Date Flagged: </label>
+            <label class="right-margin">
+              <input type="datetime-local" ng-model="data.date_flagged_start">
+            </label>
+            <label class="right-margin"> to </label>
+            <label class="right-margin">
+              <input  class="right-margin"type="datetime-local" ng-model="data.date_flagged_end">
+            </label>
+          </div>
+        </div>
+        {{data.date_flagged_start}}
+        {{data.date_flagged_end}}
+
+            
         <!--  ADD METHOD CALLS FOR BACK AND SUBMIT -->
         <div align="center">
           <button class="button button-block button-calm half_size" ng-click="applyFilter()" ng-model="querySuccess" style="max-width:50%">Apply Filter</button>
@@ -66,7 +85,7 @@
             <th class="text-center" colspan="1">Flagged?</th>
             <th class="text-center" colspan="1">Date Flagged</th>
           </tr>
-          <tr ng-repeat="i in poiInfo">
+          <tr ng-repeat="i in poiInfo" ng-click="viewPOIDetail(i.location_name)">
             <td>{{i.location_name}}</td>  
             <td>{{i.city}}</td>  
             <td>{{i.state}}</td>  

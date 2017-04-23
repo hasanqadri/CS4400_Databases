@@ -11,28 +11,46 @@
 
                 <h3 class = "title row-center" style="text-align:center"> POI Detail </h3>
 
-                <label class="item item-input-inset">
-                        Data Type
-                    <select class="item item-input" ng-model="formData.data_type">
-                        <option value=""> 1 </option>
-                        <option value=""> 2 </option>
-                        <option value=""> 3 </option>
-                    </select>
-                </label>
+            
 
-                <div class="item-input-inset">
-                    <label class="inline">
-                            Data Value
+                 <div class="list">
+                    <label class="item item-input">
+                      <div class="input-label" style="width:20px; padding-right:40px">
+                        Data Type
+                      </div>
+                      <select ng-model="formData.data_type" ng-options="poi.location_name as poi.location_name for poi in poiInfo">
+                      </select>
                     </label>
-                    <input class="right-margin inline" type="text" placeholder="Min" ng-model="formData.dataValueLow" style="max-width:40px">
-                    <input class="right-margin inline" type="text" placeholder="Max" ng-model="formData.dataValueHigh" style="max-width:40px">
                 </div>
-                <label class=" item item-input-inset">
-                    Time and Date
-                    <input type="datetime-local" ng-model="formData.start" style="padding-left:10px">
-                    <lable style="padding-right:15px"> to </lable>
-                    <input class="right-margin" type="datetime-local" ng-model="formData.end">
-                </label>
+
+                <div class="list">
+                  <div class="item item-input-inset">
+                    <div class="input-label" style="width:20px; padding-right:40px">
+                             Data Value
+                    </div>
+                    <label class="input-label form_size">
+                       <input type="text" placeholder="Min" ng-model="formData.dataValueLow" style="max-width:40px">
+                    </label>
+                    <label class="input-label form_size">
+                        <input type="text" placeholder="Max" ng-model="formData.dataValueHigh" style="max-width:40px">
+                    </label>
+                  </div>
+                </div>
+
+                 <div class="list">
+                  <div class="item item-input-inset">
+                   <div class="input-label" style="width:20px; padding-right:40px">
+                             Time/Date Range 
+                    </div>
+                    <label>
+                      <input type="datetime-local" ng-model="formData.start">
+                    </label>
+                    <label class="right-margin"> to </label>
+                    <label>
+                      <input type="datetime-local" ng-model="formData.end">
+                    </label>
+                  </div>
+                </div>
 
 
 

@@ -3,9 +3,13 @@
 }
 
 .half_size {
-   max-width:50%;
+   max-width:700px;
+    min-width:400px;
  }
 
+.form_size {
+    width:10px;
+}
 
 .three_quarter_size {
   max-width:65%;

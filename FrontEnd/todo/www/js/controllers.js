@@ -1,4 +1,5 @@
   host = "128.61.35.128";
+  current_poi_location = null; 
   angular.module('starter')
   .service('userData', function () {
       var user_data = {};
@@ -73,6 +74,14 @@
         $scope.flag = false;
       }
     }
+
+    $scope.viewPOIDetail = function(location) {
+      current_poi_location = location;
+      if (!current_poi_location) {
+        state.go('POIdetail');
+      }
+    }
+
   }])
 
   .controller('locationCtrl', ['$rootScope', '$state', '$scope', function($rootScope, $state, $scope) {
@@ -86,7 +95,6 @@
 
     var request = $.post("http://" + host + ":3000/api/poi/list", {});
         request.done(function( msg ) {
-        
         $scope.poiInfo = msg;
       }).fail(function( msg ) {
           console.log(msg);
@@ -141,6 +149,7 @@
         var request = $.post("http://" + host + ":3000/api/citystate/list", {});
           request.done(function( msg ) {
           $scope.city_states = msg;
+          console.log(msg);
         }).fail(function( msg ) {
             console.log("Could not access DB for city states");
         });
@@ -162,7 +171,7 @@
       });
 
     $scope.login = function() {
-        console.log($scope.data);
+        console.log($scope.login_data);
         var request = $.post("http://" + host + ":3000/api/login/", $scope.login_data);
         request.done(function( msg ) {
           $state.go("dash");
@@ -182,7 +191,7 @@
               continue;
           }
           if ($scope.data[key] == "") {
-            var alert = $ionicPopup.show({
+            var error = $ionicPopup.show({
               template: 'Please fill in all fields',
               title: 'Try Again',
               buttons: [{ text: 'Ok' }]
@@ -190,6 +199,15 @@
             return;
           }
         }
+      }
+
+      if($scope.data.password != $scope.data.pass_confirm) {
+         var error = $ionicPopup.show({
+            template: "Passwords don't match.",
+            title: 'Try Again',
+            buttons: [{ text: 'Ok' }]
+          });
+          return;
       }
       //Send the request
       var request = $.post("http://" + host + ":3000/api/users/new", $scope.data);
@@ -247,12 +265,13 @@
     "start":null,
     "end":null
   }
+
   $scope.didQuery = 0;
-  var request = $.post("http://" + host + ":3000/api/poi/list", {});
+  var request = $.post("http://" + host + ":3000/api/datapoints/datatype", {});
         request.done(function( msg ) {
           $scope.data = msg;
         }).fail(function( msg ) {
-            alert("Could not get poi list");
+            console.log("Could not get datatypes");
   });
 
   $scope.resetFilter = function() {
@@ -265,7 +284,7 @@
 
   $scope.applyFilter = function () {
     //Need value and time endpoints
-      var request = $.post("http://" + host + ":3000/api/data/list", {});
+      var request = $.post("http://" + host + ":3000/api/data/list", $scope.formData);
       request.done(function( msg ) {
         $scope.data = msg;
       }).fail(function( msg ) {
@@ -274,11 +293,11 @@
   }
   //Need endpoint for updating flag
   $scope.flag = function () {
-      var request = $.post("http://" + host + ":3000/api/poi/list", {});
+      var request = $.post("http://" + host + ":3000/api/poi/update", {"location_name": $scope.formData.location_name, "flag": 1});
       request.done(function( msg ) {
         $scope.data = msg;
       }).fail(function( msg ) {
-          alert("Could not get poi list");
+          console.log("Could not flag POI location");
       });
   }
     
