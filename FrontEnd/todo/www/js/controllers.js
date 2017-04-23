@@ -29,7 +29,7 @@
   }])
 
 
-  .controller('viewPOICtrl', ['$state', '$scope', function($$state,  $scope) {
+  .controller('viewPOICtrl', ['$state', '$scope', function($state,  $scope) {
     $scope.data = {
       "location_name": null ,
       "city": null ,
@@ -227,6 +227,7 @@
   
   $scope.didQuery = 0;
 
+
   var request = $.post("http://" + host + ":3000/api/poi/list", {});
         request.done(function( msg ) {
           $scope.data = msg;
@@ -268,6 +269,13 @@
     $scope.date;
     $scope.dataType;
     $scope.dataValue;
+
+    var request = $.post("http://" + host + ":3000/api/poi/list", {});
+        request.done(function( msg ) {
+        $scope.poiInfo = msg;
+      }).fail(function( msg ) {
+          console.log(msg);
+  });
 
     $scope.submit = function() {
       var request = $.post("http://" + host + ":3000/api/datapoint/new", {vals: {'location_name' : $scope.locationName, 'date_time' : $scope.date, 'data_value' : $scope.dataValue, 'data_type' : $scope.dataType}});
