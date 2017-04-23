@@ -158,11 +158,17 @@
       }
       //Send the request
       var request = $.post("http://" + host + ":3000/api/users/new", $scope.data);
-        request.done(function( msg ) {
-        alert("Successfully registered, please wait for approval!");
-        $scope.closeModal();
+      request.done(function( msg ) {
+
+        $scope.modal.remove();
       }).fail(function( msg ) {
-          alert("Registration error, please try again!");
+           if ($scope.data[key] == "") {
+            var alert = $ionicPopup.show({
+              template: 'Register failed!',
+              title: 'Try Again',
+              buttons: [{ text: 'Ok' }]
+            });
+          }
 
       });
     }
