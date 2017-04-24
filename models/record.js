@@ -142,9 +142,14 @@ class record {
                     sql += db.mysql.escapeId(property) + ' LIKE ' + db.mysql.escape(like[property]) + ' AND ';
                 }
             }
-            if (between) {
-                sql += db.mysql.escapeId(between.name) + ' BETWEEN ' + db.mysql.escape(between.min) + ' AND ' + db.mysql.escape(between.max) + ' AND ';
+            for (let property in between) {
+                if (between.hasOwnProperty(property) && between[property]) {
+                    sql += db.mysql.escapeId(property) + ' BETWEEN ' + db.mysql.escape(between[property]['min']) + ' AND ' + db.mysql.escape(between[property]['max']) + ' AND ';
+                }
             }
+            // if (between) {
+            //     sql += db.mysql.escapeId(between.name) + ' BETWEEN ' + db.mysql.escape(between.min) + ' AND ' + db.mysql.escape(between.max) + ' AND ';
+            // }
             sql = sql.slice(0, -5);
         }
 
