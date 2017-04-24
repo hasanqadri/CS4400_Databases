@@ -432,8 +432,8 @@
 }])
 
 .controller('adminCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
-    $scope.officials = [];
-   $scope.query();
+      $scope.officials = [];
+   
    $scope.query = function() {
      $.ajax({
             type: "POST",
@@ -455,6 +455,7 @@
             }
       });
    }
+   $scope.query();
 
     $scope.submit = function(action) {
       var updateVal = (action == "Reject")? 0 : 1;
@@ -482,26 +483,8 @@
 
 .controller('adminPendingDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
     $scope.pendingData = [];
-      $scope.query();
-   
-
-    $scope.submit = function(action) {
-      var updateVal = (action == "Reject")? "rejected" : "approved";
-      for (i = 0; i < $scope.pendingData.length; i++) {
-        if ($scope.pendingData[i].checked) {
-          $scope.pendingData[i].accepted = updateVal;
-          var request = $.post("http://" + host + "/api/datapoint/update",  $scope.pendingData[i]);
-              request.done(function( msg ) {
-              console.log("updated datapoint");
-            }).fail(function( msg ) {
-              console.log("Could not updated datapoint");
-            });
-          }
-      }
-      $scope.query();
-    };  
-
-    $scope.query = function() {
+      
+   $scope.query = function() {
             $.ajax({
             type: "POST",
             url: "http://" + host + "/api/datapoint/list",
@@ -522,6 +505,24 @@
             }
           });
     }
+$scope.query();
+    $scope.submit = function(action) {
+      var updateVal = (action == "Reject")? "rejected" : "approved";
+      for (i = 0; i < $scope.pendingData.length; i++) {
+        if ($scope.pendingData[i].checked) {
+          $scope.pendingData[i].accepted = updateVal;
+          var request = $.post("http://" + host + "/api/datapoint/update",  $scope.pendingData[i]);
+              request.done(function( msg ) {
+              console.log("updated datapoint");
+            }).fail(function( msg ) {
+              console.log("Could not updated datapoint");
+            });
+          }
+      }
+      $scope.query();
+    };  
+
+    
 
 }]);
 
