@@ -426,8 +426,7 @@
 
 .controller('adminPendingDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
     $scope.pendingData = [];
-    console.log(JSON.stringify({"vals":{"accepted":null}}));
-    var request = $.post("http://" + host + "/api/datapoint/list", JSON.stringify({"vals":{"accepted":null}}));
+    var request = $.post("http://" + host + "/api/datapoint/list", JSON.stringify({"vals":{"accepted": "pending"}}));
     request.done(function( msg ) {
       $scope.pendingData = msg;
       console.log($scope.pendingData);
