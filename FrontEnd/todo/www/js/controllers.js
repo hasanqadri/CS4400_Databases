@@ -432,9 +432,9 @@
 }])
 
 .controller('adminCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
-      $scope.officials = [];
+  $scope.officials = [];
    
-   $scope.query = function() {
+  $scope.query = function() {
      $.ajax({
             type: "POST",
             url: "http://" + host + "/api/users/list_officials",
@@ -458,7 +458,7 @@
    $scope.query();
 
     $scope.submit = function(action) {
-      var updateVal = (action == "Reject")? 0 : 1;
+      var updateVal = (action == "Reject")? "rejected" : "accepted";
   
       console.log("updateVal:" + updateVal);
       console.log($scope.officials);
