@@ -10,10 +10,11 @@
         <div class="list">
           <div class="item-input-inset">
             <label class="item">
-              POI location name
+              POI location name {{data.location_name}}
             </label>
-            <select class="item item-input-wrapper" ng-model="locationName"
-                    ng-options="poi.id as poi.location_name for poi in poiInfo"></select>
+
+            <select class="item item-input-wrapper" ng-model="data.location_name"
+                    ng-options="poi.location_name as poi.location_name for poi in poiInfo"></select>
             <button class="button button-balanced" ng-click="addLocation()">Add a new location</button>
           </div>
 
@@ -22,10 +23,10 @@
         <div class="list">
           <div class="item item-input-inset">
             <label class="item">
-              Enter Date
+              Enter Date {{data.date}}
             </label>
             <label class="item item-input-wrapper">
-              <input ng-model="date" type="datetime-local" ng-model="reportData.lat">
+              <input ng-model="data.date" type="datetime-local">
             </label>
           </div>
 
@@ -37,11 +38,8 @@
             <label class="item">
               Data Type
             </label>
-            <select ng-model="dataType" class="item item-input-wrapper" ng-model="reportData.lat">
-              <option value=""> 1</option>
-              <option value=""> 2</option>
-              <option value=""> 3</option>
-            </select>
+                       <select class="item item-input-wrapper" ng-model="data.data_type"
+                    ng-options="t.type as t.type for t in data_list"></select>
           </div>
         </div>
 
@@ -51,7 +49,7 @@
               Data Value
             </label>
             <label class="item item-input-wrapper">
-              <input ng-model="dataValue" type="text" ng-model="reportData.lat">
+              <input ng-model="data.data_value" type="text">
             </label>
           </div>
 

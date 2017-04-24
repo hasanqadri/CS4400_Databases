@@ -1,4 +1,4 @@
-  host = "128.61.35.128";
+  host = "54.85.86.111:80";
   current_poi_location = null; 
   angular.module('starter')
   .service('userData', function () {
@@ -271,9 +271,10 @@
   
 
   $scope.didQuery = 0;
-  var request = $.post("http://" + host + ":3000/api/datapoints/datatype", {});
+  var request = $.post("http://" + host + ":3000/api/datapoint/datatypes", {});
         request.done(function( msg ) {
           $scope.data = msg;
+          console.log($scope.data);
         }).fail(function( msg ) {
             console.log("Could not get datatypes");
   });
@@ -308,24 +309,33 @@
 }])
 
 .controller('addDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
-    $scope.locationName;
-    $scope.date;
-    $scope.dataType;
-    $scope.dataValue;
-
+    $scope.data = {
+        "location_name": null,
+        "date":null,
+        "date_time": null,
+        "data_value": null,
+        "data_type": null
+    }
     $scope.addLocation = function() {
         $state.go('location');
     }
-
     var request = $.post("http://" + host + ":3000/api/poi/list", {});
         request.done(function( msg ) {
         $scope.poiInfo = msg;
       }).fail(function( msg ) {
           console.log(msg);
-  });
-
+      });
+    request = $.get("http://" + host + ":3000/api/datapoint/datatypes");
+        request.done(function( msg ) {
+        $scope.data_list = msg;
+        console.log($scope.data_list);
+      }).fail(function( msg ) {
+          console.log(msg);
+      });
     $scope.submit = function() {
-      var request = $.post("http://" + host + ":3000/api/datapoint/new", {vals: {'location_name' : $scope.locationName, 'date_time' : $scope.date, 'data_value' : $scope.dataValue, 'data_type' : $scope.dataType}});
+      console.log(($scope.data.date).toMysqlFormat());
+      $scope.data.date_time = ($scope.data.date).toMysqlFormat();
+      var request = $.post("http://" + host + ":3000/api/datapoint/new",  $scope.data);
         request.done(function( msg ) {
         alert("success!");
       }).fail(function( msg ) {
@@ -357,3 +367,21 @@
 }]);
 
 
+/**
+ * You first need to create a formatting function to pad numbers to two digits…
+ **/
+function twoDigits(d) {
+    if(0 <= d && d < 10) return "0" + d.toString();
+    if(-10 < d && d < 0) return "-0" + (-1*d).toString();
+    return d.toString();
+}
+
+/**
+ * …and then create the method to output the date string as desired.
+ * Some people hate using prototypes this way, but if you are going
+ * to apply this to more than one Date object, having it as a prototype
+ * makes sense.
+ **/
+Date.prototype.toMysqlFormat = function() {
+    return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) + " " + twoDigits(this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
+};
