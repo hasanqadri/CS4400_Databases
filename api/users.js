@@ -66,24 +66,25 @@ router.post('/update', [
                 user_update.password = req.body.password || user_update.password;
 
                 if (user_update.usertype === 'official') {
-                    let official_data = cityofficial.fetch({vals: {username: req.body.username}});
-                    let official = new cityofficial(official_data.username, official_data.email, official_data.password,
-                        official_data.usertype, official_data.approved, official_data.city, official_data.state, official_data.title);
-                    if (req.usertype === 'admin') {
-                        //we need to delete the city_official record first
-                        official.destroy(function (success) {
-                            },
-                            function (err) {
-                                log.debug(err);
-                                res.status(500).end();
-                            });
-                    } else {
-                        official.approved = req.body.approved || official.approved;
-                        official.city = req.body.city || official.city;
-                        official.state = req.body.state || official.state;
-                        official.title = req.body.title || official.title;
-                        official.commit();
-                    }
+                    let official_data = cityofficial.fetch({vals: {username: req.body.username}}, function(res) {
+                        let official = new cityofficial(official_data.username, official_data.email, official_data.password,
+                            official_data.usertype, official_data.approved, official_data.city, official_data.state, official_data.title);
+                        if (req.usertype === 'admin') {
+                            //we need to delete the city_official record first
+                            official.destroy(function (success) {
+                                },
+                                function (err) {
+                                    log.debug(err);
+                                    res.status(500).end();
+                                });
+                        } else {
+                            official.approved = req.body.approved || official.approved;
+                            official.city = req.body.city || official.city;
+                            official.state = req.body.state || official.state;
+                            official.title = req.body.title || official.title;
+                            official.commit();
+                        }
+                    });
                 }
                 user_update.usertype = req.body.usertype || user_update.usertype;
                 user_update.commit();
