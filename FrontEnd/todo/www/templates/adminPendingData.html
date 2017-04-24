@@ -34,7 +34,7 @@
               </a>
             </th>
           </tr>
-          <tr ng-repeat="i in pendingData">
+          <tr ng-repeat="i in pendingData|orderBy:orderByField:reverseSort">
             <td class="text-center padding-right-custom" colspan="1"><input type="checkbox" ng-model="i.checked">{{i.checked}}</td>
             <td class="text-center padding-right-custom" colspan="1">{{i.location_name}}</td>
             <td class="text-center padding-right-custom" colspan="1">{{i.data_type}}</td>

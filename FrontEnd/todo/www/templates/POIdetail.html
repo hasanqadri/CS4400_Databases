@@ -57,14 +57,15 @@
                 <div align="center" ng-show="1">
                     <table align="center">
                     <tr>
-                        <th class="text-center" colspan="1">Data Type</th>
-                        <th class="text-center" colspan="1">Data Value</th>
-                        <th class="text-center" colspan="1">Time and Date</th>
+                        <th class="text-center padding-right-custom" colspan="1">Data Type</th>
+                        <th class="text-center padding-right-custom" colspan="1">Data Value</th>
+                        <th class="text-center padding-right-custom" colspan="1">Time and Date of Reading</th>
                     </tr>
-                    <tr ng-repeat="i in table_data" align="center">
+                    <tr ng-repeat="i in table_data|orderBy:date_time" align="center">
                         <td>{{i.dataType}}</td>
                         <td>{{i.dataValue}}</td>
                         <td>{{i.timeDate}}</td>
+
                     </tr>
                     </table>
                 </div>
