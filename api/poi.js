@@ -9,7 +9,7 @@ router.post('/new', [
     function (req, res, next) {
         let our_poi = new poi(req.body.location_name, req.body.city, req.body.state, null, null, req.body.zip);
         our_poi.make(
-            function (res) {
+            function (results) {
                 res.status(200).end();
             },
             function (err) {
