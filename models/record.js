@@ -130,7 +130,7 @@ class record {
             sql += ' WHERE ';
             for (let property in vals) {
                 if (vals.hasOwnProperty(property)) {
-                    if (vals[property] === "null") {
+                    if (vals[property] == null || vals[property] == 'NULL') {
                         sql += db.mysql.escapeId(property) + '= NULL AND ';
                     } else {
                         sql += db.mysql.escapeId(property) + '=' + db.mysql.escape(vals[property]) + ' AND ';
