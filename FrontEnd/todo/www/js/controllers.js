@@ -272,6 +272,10 @@
 .controller('DashCtrl', ['$scope', '$rootScope','$state', function($scope, $rootScope, $state) {
     
     console.log($rootScope.usertype);
+    if($rootScope.usertype == undefined) {
+        alert("Your session was reset, please log in again.")
+         $state.go('login');
+    }
     $scope.addData = function() {
         $state.go('addData');
     }
@@ -429,7 +433,9 @@
 
 .controller('adminCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
     $scope.officials = [];
-    $.ajax({
+   $scope.query();
+   $scope.query = function() {
+     $.ajax({
             type: "POST",
             url: "http://" + host + "/api/users/list_officials",
             data: JSON.stringify({"vals":{"approved":"pending"}}),
@@ -448,6 +454,7 @@
                 console.log(msg);
             }
       });
+   }
 
     $scope.submit = function(action) {
       var updateVal = (action == "Reject")? 0 : 1;
@@ -469,13 +476,33 @@
               });
         }
       }
+       $scope.query();
     };  
 }])
 
 .controller('adminPendingDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
     $scope.pendingData = [];
+      $scope.query();
+   
 
-     $.ajax({
+    $scope.submit = function(action) {
+      var updateVal = (action == "Reject")? "rejected" : "approved";
+      for (i = 0; i < $scope.pendingData.length; i++) {
+        if ($scope.pendingData[i].checked) {
+          $scope.pendingData[i].accepted = updateVal;
+          var request = $.post("http://" + host + "/api/datapoint/update",  $scope.pendingData[i]);
+              request.done(function( msg ) {
+              console.log("updated datapoint");
+            }).fail(function( msg ) {
+              console.log("Could not updated datapoint");
+            });
+          }
+      }
+      $scope.query();
+    };  
+
+    $scope.query = function() {
+            $.ajax({
             type: "POST",
             url: "http://" + host + "/api/datapoint/list",
             data: JSON.stringify({"vals":{"accepted":"pending"}}),
@@ -493,22 +520,9 @@
                 console.log("Failed to get pending data.");
                 console.log(msg);
             }
-      });
+          });
+    }
 
-    $scope.submit = function(action) {
-      var updateVal = (action == "Reject")? "rejected" : "approved";
-      for (i = 0; i < $scope.pendingData.length; i++) {
-        if ($scope.pendingData[i].checked) {
-          $scope.pendingData[i].accepted = updateVal;
-          var request = $.post("http://" + host + "/api/datapoint/update",  $scope.pendingData[i]);
-              request.done(function( msg ) {
-              console.log("updated datapoint");
-            }).fail(function( msg ) {
-              console.log("Could not updated datapoint");
-            });
-          }
-      }
-    };  
 }]);
 
 
