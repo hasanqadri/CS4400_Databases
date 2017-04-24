@@ -28,7 +28,7 @@ router.post('/new', [
 router.post('/list', [
     auth.user,
     function (req, res, next) {
-        poi.fetch({order: req.body.order, like: req.body.like}, function (results) {
+        poi.fetch({vals: req.body.vals, order: req.body.order, like: req.body.like}, function (results) {
             res.results = results;
             next();
         }, function (err) {
