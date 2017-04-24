@@ -15,13 +15,23 @@ router.get('/me', function (req, res, next) {
 router.post('/list', [
     auth.admin,
     function (req, res, next) {
-        user.fetch({vals: req.body.vals, order: req.body.order, like: req.body.like}, function (results) {
-            res.results = results;
-            next();
-        }, function (err) {
-            log.debug(err);
-            res.status(500).end();
-        });
+        if (req.body.vals && req.body.vals['user_type'] === 'official') {
+            cityofficial.fetch({vals: req.body.vals, order: req.body.order, like: req.body.like}, function (results) {
+                res.results = results;
+                next();
+            }, function (err) {
+                log.debug(err);
+                res.status(500).end();
+            });
+        } else {
+            user.fetch({vals: req.body.vals, order: req.body.order, like: req.body.like}, function (results) {
+                res.results = results;
+                next();
+            }, function (err) {
+                log.debug(err);
+                res.status(500).end();
+            });
+        }
     },
     function (req, res) {
         res.json(res.results);
