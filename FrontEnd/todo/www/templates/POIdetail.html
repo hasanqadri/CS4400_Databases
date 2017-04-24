@@ -29,7 +29,7 @@
                        <input type="text" placeholder="Min" ng-model="formData.dataValueLow" style="max-width:40px">
                     </label>
                     <label class="input-label form_size">
-                        <input type="text" placeholder="Max" ng-model="formData.dataValueHigh" style="max-width:40px">
+                        <input type="text" placeholder="Max" ng-model="formData.dataValueHi gh" style="max-width:40px">
                     </label>
                   </div>
                 </div>
@@ -60,14 +60,14 @@
                 <div align="center" ng-show="didQuery">
                     <table align="center">
                     <tr>
-                        <th class="text-center" colspan="1">Data Type</th>
-                        <th class="text-center" colspan="1">Data Value</th>
-                        <th class="text-center" colspan="1">Time and Date</th>
+                        <th class="text-center padding-right-custom" colspan="1">Data Type</th>
+                        <th class="text-center padding-right-custom" colspan="1">Data Value</th>
+                        <th class="text-center padding-right-custom" colspan="1">Time and Date of Reading</th>
                     </tr>
-                    <tr ng-repeat="i in data" align="center">
-                        <td>{{i.dataType}}</td>
-                        <td>{{i.dataValue}}</td>
-                        <td>{{i.timeDate}}</td>
+                    <tr ng-repeat="i in formData|orderBy:date_time" align="center">
+                        <td class="text-center padding-right-custom" colspan="1">{{i.dataType}}</td>
+                        <td class="text-center padding-right-custom" colspan="1">{{i.dataValue}}</td>
+                        <td class="text-center padding-right-custom" colspan="1">{{i.timeDate}}</td>
                     </tr>
                     </table>
                 </div>
