@@ -8,6 +8,7 @@ class city_official extends user {
     constructor(username, email, password, usertype, approved, city, state, title) {
         super(username, email, password, usertype);
 
+        this.username = username;
         this.approved = approved;
         this.city = city;
         this.state = state;
@@ -15,28 +16,26 @@ class city_official extends user {
     }
 
     make(success, err) {
-        //call super with a dummy success function
-        super.make(function () {
-        }, err);
-
         var out = {};
         out['username'] = this.username;
         out['approved'] = this.approved;
         out['city'] = this.city;
         out['state'] = this.state;
         out['title'] = this.title;
-
-        let sql = 'INSERT INTO City_officials SET ?';
-        //also insert City_officials data
-        return db.query({sql: sql, values: out},
-            function (error, results, fields) {
-                if (error) {
-                    err(error);
-                } else {
-                    //success callback
-                    success(results);
-                }
-            });
+        //call super with a dummy success function
+        super.make(function () {
+            let sql = 'INSERT INTO City_officials SET ?';
+            //also insert City_officials data
+            return db.query({sql: sql, values: out},
+                function (error, results, fields) {
+                    if (error) {
+                        err(error);
+                    } else {
+                        //success callback
+                        success(results);
+                    }
+                });
+        }, err);
     }
 
     commit(success, err) {
