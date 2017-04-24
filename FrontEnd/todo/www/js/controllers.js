@@ -44,7 +44,7 @@
       "state": null ,
       "zip": null ,
       "checked": false,
-      "flag", 0,
+      "flag": 0,
       "start": null,
       "end": null,
       "between" : {
