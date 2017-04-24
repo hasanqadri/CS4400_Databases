@@ -42,7 +42,7 @@
       "location_name": null ,
       "city": null ,
       "state": null ,
-      "zip": null ,
+      "zip_code": null ,
       "checked": false,
       "flag": 0,
       "start": null,
