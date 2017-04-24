@@ -23,10 +23,10 @@
                              Data Value
                     </div>
                     <label class="input-label form_size">
-                       <input type="text" placeholder="Min" ng-model="formData.dataValueLow" style="max-width:40px">
+                       <input type="text" placeholder="Min" ng-model="btw.data_value.min" style="max-width:40px">
                     </label>
                     <label class="input-label form_size">
-                        <input type="text" placeholder="Max" ng-model="formData.dataValueHi gh" style="max-width:40px">
+                        <input type="text" placeholder="Max" ng-model="btw.data_value.max" style="max-width:40px">
                     </label>
                   </div>
                 </div>
@@ -54,17 +54,18 @@
                     <button class="button button-block button-calm" ng-click="resetFilter()">Reset Filter</button>
                 </div>
 
-                <div align="center" ng-show="didQuery">
+                <div align="center" ng-show="1">
                     <table align="center">
                     <tr>
                         <th class="text-center padding-right-custom" colspan="1">Data Type</th>
                         <th class="text-center padding-right-custom" colspan="1">Data Value</th>
                         <th class="text-center padding-right-custom" colspan="1">Time and Date of Reading</th>
                     </tr>
-                    <tr ng-repeat="i in formData|orderBy:date_time" align="center">
-                        <td class="text-center padding-right-custom" colspan="1">{{i.dataType}}</td>
-                        <td class="text-center padding-right-custom" colspan="1">{{i.dataValue}}</td>
-                        <td class="text-center padding-right-custom" colspan="1">{{i.timeDate}}</td>
+                    <tr ng-repeat="i in table_data|orderBy:date_time" align="center">
+                        <td>{{i.dataType}}</td>
+                        <td>{{i.dataValue}}</td>
+                        <td>{{i.timeDate}}</td>
+
                     </tr>
                     </table>
                 </div>
