@@ -50,13 +50,13 @@ router.post('/list_officials', [
 
 
 router.post('/update', [
-    function (req, res, next) {
-        if (req.session.usertype === 'admin' || req.session.username === req.body.username) {
-            next();
-        } else {
-            res.status(403).end();
-        }
-    },
+    // function (req, res, next) {
+    //     if (req.session.usertype === 'admin' || req.session.username === req.body.username) {
+    //         next();
+    //     } else {
+    //         res.status(403).end();
+    //     }
+    // },
     function (req, res, next) {
         user.fetch({vals: {username: req.body.username}},
             function (results) {

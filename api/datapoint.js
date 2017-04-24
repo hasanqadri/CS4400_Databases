@@ -27,6 +27,11 @@ router.post('/list', [
         datapoint.fetch({
             // join: {table: 'POIs', colA: 'location_name', colB: 'location_name'},
             // vals: {city: req.session.city, state: req.session.state},
+            between: req.body.between ? {
+                name: req.body.between['name'],
+                min: req.body.between['min'],
+                max: req.body.between['max']
+            } : null,
             order: req.body.order,
             like: req.body.like
         }, function (results) {
