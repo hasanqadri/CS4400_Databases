@@ -64,7 +64,7 @@ class city_official extends user {
     }
 
     static fetch(args, success, error) {
-        args['type'] = 'City_officials';
+        args['name'] = 'City_officials';
         record.fetch(args, success, error);
     }
 }
