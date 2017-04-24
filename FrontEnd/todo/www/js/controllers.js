@@ -431,23 +431,33 @@
 
 .controller('adminPendingDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
     $scope.pendingData = [];
-    console.log(JSON.stringify({"vals":{"accepted":null}}));
-    var request = $.post("http://" + host + "/api/datapoint/list", JSON.stringify({"vals":{"approved":"pending"}}));
-    request.done(function( msg ) {
-      $scope.pendingData = msg;
-      console.log($scope.pendingData);
-      for (i in $scope.pendingData) {
-        i.checked = false;
-      }
-    }).fail(function( msg ) {
-        console.log("Could not get pending data list");
-    })
+
+
+     $.ajax({
+            type: "POST",
+            url: "http://" + host + "/api/datapoint/list",
+            data: JSON.stringify({"vals":{"accepted":"pending"}}),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function(msg) {
+              $scope.pendingData = msg;
+              console.log($scope.pendingData);
+              for (i in $scope.pendingData) {
+                i.checked = false;
+              }
+
+            },
+            error: function(msg) {
+                console.log("Failed to get pending data.");
+                console.log(msg);
+            }
+      });
 
     $scope.submit = function(action) {
       var updateVal = (action == "Reject")? "rejected" : "approved";
       for (i = 0; i < $scope.pendingData.length; i++) {
         if ($scope.pendingData[i].checked) {
-          $scope.pendingData[i].approved = updateVal;
+          $scope.pendingData[i].accepted = updateVal;
           var request = $.post("http://" + host + "/api/datapoint/update",  $scope.pendingData[i]);
               request.done(function( msg ) {
               console.log("updated datapoint");
