@@ -6,52 +6,122 @@
     <ion-content class="padding">
       <div class="row center table_size">
         <div class="col card card_opacity"  align = "center">
-          <table align="center">
+         <h3 class = "title row-center" style="text-align:center"> POI Report </h3>
+          <table class="table_size2" align="center">
             <tr>
-            <th class="text-center padding-right-custom padding-left" colspan="1">POI Location</th>
+            <th class="text-center padding-right-custom" colspan="1">POI Location</th>
             <th class="text-center padding-right-custom" colspan="1">City</th>
             <th class="text-center padding-right-custom" colspan="1">State</th>
             
-            <th class="text-center padding-right-custom" colspan="1"><a href="#" ng-click="orderByField='mold_min'; reverseSort = !reverseSort">
-            Mold Min 
-            </a></th>
+            <th class="text-center padding-right-custom" colspan="1">
+              <a style="color:red" ng-click="orderByField='mold_min'; reverseSort = !reverseSort">
+              Mold Min
+              </a>
+            </th>
 
-            <th class="text-center padding-right-custom" colspan="1"><a href="#" ng-click="orderByField='mold_avg'; reverseSort = !reverseSort">
-            Mold Avg
-            </a></th>
+            <th class="text-center padding-right-custom" colspan="1">
+              <a style="color:red" ng-click="orderByField='mold_avg'; reverseSort = !reverseSort">
+              Mold Avg
+              </a>
+            </th>
             
-            <th class="text-center padding-right-custom" colspan="1"><a href="#" ng-click="orderByField='mold_max'; reverseSort = !reverseSort">
-            Mold Avg
-            </a></th>
+            <th class="text-center padding-right-custom" colspan="1">
+              <a style="color:red" ng-click="orderByField='mold_max'; reverseSort = !reverseSort">
+              Mold Max
+              </a>
+            </th>
 
-            <th class="text-center padding-right-custom" colspan="1"><a href="#" ng-click="orderByField='aq_min'; reverseSort = !reverseSort">
-            AQ Min
-            </a></th>
-            <th class="text-center padding-right-custom" colspan="1"><a href="#" ng-click="orderByField='aq_avg'; reverseSort = !reverseSort">
-            AQ Avg
-            </a></th>
+            <th class="text-center padding-right-custom" colspan="1">
+              <a style="color:red" ng-click="orderByField='aq_min'; reverseSort = !reverseSort">
+              AQ Min
+              </a>
+            </th>
 
-            <th class="text-center padding-right-custom" colspan="1"><a href="#" ng-click="orderByField='aq_max'; reverseSort = !reverseSort">
-            AQ Max
-            </a></th>
-            <th class="text-center padding-right-custom" colspan="1"># of data points</th>
-            <th class="text-center padding-right-custom" colspan="1">Flagged?</th>
+            <th class="text-center padding-right-custom" colspan="1">
+              <a style="color:red" ng-click="orderByField='aq_avg'; reverseSort = !reverseSort">
+              AQ Avg
+              </a>
+            </th>
+
+            <th class="text-center padding-right-custom" colspan="1">
+              <a style="color:red" ng-click="orderByField='aq_max'; reverseSort = !reverseSort">
+              AQ Max
+              </a>
+            </th>
+
+            <th class="text-center padding-right-custom" colspan="1">
+              <a style="color:red" ng-click="orderByField='num_data'; reverseSort = !reverseSort">
+              # of Data Points
+              </a>
+            </th>
+
+            <th class="text-center padding-right-custom" colspan="1">
+              <a style="color:red" ng-click="orderByField='flagged'; reverseSort = !reverseSort">
+              Flagged?
+              </a>
+            </th>
+
             </tr>
             <tr ng-repeat="point in reports|orderBy:orderByField:reverseSort">
-            <td>test</td>
-            <td>{{point.location}}</td>
-            <td>{{point.city}}</td>
-            <td>{{point.state}}</td>
-            <td>{{point.moldMin}}</td>
-            <td>{{point.moldAvg}}</td>
-            <td>{{point.moldMax}}</td>
-            <td>{{point.aqMin}}</td>
-            <td>{{point.aqAvg}}</td>
-            <td>{{point.aqMax}}</td>
-            <td>{{point.numData}}</td>
-            <td>{{point.flagged}}</td>
+            <td class="text-center padding-right-custom" colspan="1">{{point.location_name}}</td>
+            <td class="text-center padding-right-custom" colspan="1">{{point.city}}</td>
+            <td class="text-center padding-right-custom" colspan="1">{{point.state}}</td>
+            <td class="text-center padding-right-custom" colspan="1">{{point.mold_min}}</td>
+            <td class="text-center padding-right-custom" colspan="1">{{point.mold_avg}}</td>
+            <td class="text-center padding-right-custom" colspan="1">{{point.mold_max}}</td>
+            <td class="text-center padding-right-custom" colspan="1">{{point.aq_min}}</td>
+            <td class="text-center padding-right-custom" colspan="1">{{point.aq_avg}}</td>
+            <td class="text-center padding-right-custom" colspan="1">{{point.aq_max}}</td>
+            <td class="text-center padding-right-custom" colspan="1">{{point.dp_count}}</td>
+            <td class="text-center padding-right-custom" colspan="1">{{point.flagged}}</td>
           </tr>
             </table>
 
   </ion-content>
 </ion-view>
+
+<!-- <ion-view view-title="POI Report" name="POIreports-view">
+  <ion-nav-buttons>
+    <button class="button icon ion-ios-arrow-back button-clear" ng-click="goBack()">Back</button>
+  </ion-nav-buttons>
+  <ion-content class="padding">
+    <ion-content class="padding">
+      <div class="row center table_size">
+        <div class="col card card_opacity"  align = "center">
+          
+
+          <section ng-app="app" ng-controller="POIreportsCtrl">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>
+          <a style="color:red" ng-click="orderByField='firstName'; reverseSort = !reverseSort">
+          First Name 
+          </a>
+        </th>
+        <th>
+          <a  ng-click="orderByField='lastName'; reverseSort = !reverseSort">
+            Last Name <span ng-show="orderByField == 'lastName'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+          </a>
+        </th>
+        <th>
+          <a ng-click="orderByField='age'; reverseSort = !reverseSort">
+          Age <span ng-show="orderByField == 'age'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="emp in data|orderBy:orderByField:reverseSort">
+        <td>{{emp.firstName}}</td>
+        <td>{{emp.lastName}}</td>
+        <td>{{emp.age}}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+
+  </ion-content>
+</ion-view> -->
+
