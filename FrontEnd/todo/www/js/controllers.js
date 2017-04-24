@@ -90,13 +90,7 @@
 
   .controller('locationCtrl', ['$rootScope', '$state', '$scope', function($rootScope, $state, $scope) {
 
-    $scope.data = {
-        "location_name": "",
-        "city": "",
-        "state": "",
-        "zip": ""
-    }
-
+    
     var request = $.post("http://" + host + ":3000/api/poi/list", {});
         request.done(function( msg ) {
         $scope.poiInfo = msg;
@@ -118,6 +112,14 @@
   }])
 
   .controller('adminCtrl', ['$rootScope', '$state', function($rootScope, $state) {
+      $scope.data = {
+        "username": "",
+        "email": "",
+        "city": "",
+        "state": "",
+  }
+
+
 
   }])
 
