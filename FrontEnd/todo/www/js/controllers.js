@@ -169,7 +169,7 @@
         "city": null,
         "state": null,
         "title": null,
-        "approved": "pending";
+        "approved": "pending"
     }
 
     $scope.login_data = {
