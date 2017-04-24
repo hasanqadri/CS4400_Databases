@@ -1,31 +1,31 @@
-<ion-view view-title="Add Data Point" name="addDataPoint-view">
+<ion-view view-title="City Scientist" name="addDataPoint-view">
   <ion-nav-buttons>
     <button class="button icon ion-ios-arrow-back button-clear" ng-click="goBack()">Back</button>
   </ion-nav-buttons>
   <ion-content>
-    <div class="row center table_size">
+    <div class="row center" style="max-width:500px">
       <div class="col card" align="center">
         <h3 class = "title row-center" style="text-align:center"> Add Data Point </h3>
 
         <div class="list">
           <div class="item-input-inset">
-            <label class="item">
-              POI location name
+            <label class="right-margin">
+              POI Location Name
             </label>
 
-            <select class="item item-input-wrapper" ng-model="data.location_name"
+            <select class="item item-input right-margin" ng-model="data.location_name"
                     ng-options="poi.location_name as poi.location_name for poi in poiInfo"></select>
-            <button class="button button-balanced" ng-click="addLocation()">Add a new location</button>
+            <button class="button button-balanced button-small" ng-click="addLocation()" style="margin-left:20px">Add a new location</button>
           </div>
 
         </div>
 
         <div class="list">
           <div class="item item-input-inset">
-            <label class="item">
+            <label class="right-margin">
               Enter Date
             </label>
-            <label class="item item-input-wrapper">
+            <label class="item item-input">
               <input ng-model="data.date" type="datetime-local">
             </label>
           </div>
@@ -35,20 +35,20 @@
 
         <div class="list">
           <div class="item item-input-inset">
-            <label class="item">
+            <label class="right-margin">
               Data Type
             </label>
-                       <select class="item item-input-wrapper" ng-model="data.data_type"
+                       <select class="item item-input" ng-model="data.data_type"
                     ng-options="t.type as t.type for t in data_list"></select>
           </div>
         </div>
 
         <div class="list">
           <div class="item item-input-inset">
-            <label class="item">
+            <label class="right-margin">
               Data Value
             </label>
-            <label class="item item-input-wrapper">
+            <label class="item item-input">
               <input ng-model="data.data_value" type="text">
             </label>
           </div>
