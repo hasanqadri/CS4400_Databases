@@ -64,7 +64,11 @@ class city_official extends user {
 
     static fetch(args, success, error) {
         args['name'] = 'City_officials';
-        args['fields'] = union_arrays(args['fields'], ['City_officials.username', 'email', 'city', 'state', 'title']);
+        if (args['fields']) {
+            args['fields'] = union_arrays(args['fields'], ['City_officials.username', 'email', 'city', 'state', 'title']);
+        } else {
+            args['fields'] =['City_officials.username', 'email', 'city', 'state', 'title'];
+        }
         args['join'] = {table: 'Users', colA: 'username', colB: 'username'};
         record.fetch(args, success, error);
     }
