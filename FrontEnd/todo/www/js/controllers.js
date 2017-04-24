@@ -488,7 +488,7 @@
             $.ajax({
             type: "POST",
             url: "http://" + host + "/api/datapoint/list",
-            data: JSON.stringify({"vals":{"accepted":"pending"}}),
+            data: JSON.stringify({"vals":{"approved":"pending"}}),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function(msg) {
