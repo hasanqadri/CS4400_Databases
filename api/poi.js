@@ -9,12 +9,14 @@ router.post('/new', [
     function (req, res, next) {
         let our_poi = new poi(req.body.location_name, req.body.city, req.body.state, null, null, req.body.zip);
         our_poi.make(
-            function(res) {
+            function (res) {
                 res.status(200).end();
             },
-            function(err) {
+            function (err) {
                 if (err.errno === 1062) {
                     res.status(409).end();
+                } else if (err.errno === 1452) {
+                    res.status(400).end();
                 } else {
                     res.status(500).end();
                 }

@@ -182,7 +182,7 @@ class record {
 
     _validate() {
         for (let field of this._fields) {
-            if (!this.hasOwnProperty(field) || this[field] === null) {
+            if (!this.hasOwnProperty(field)) {
                 throw 'Necessary field ' + field + ' not fulfilled';
             }
         }

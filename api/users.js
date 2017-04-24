@@ -15,7 +15,7 @@ router.get('/me', function (req, res, next) {
 router.post('/list', [
     auth.admin,
     function (req, res, next) {
-        user.fetch({order: req.body.order, like: req.body.like}, function (results) {
+        user.fetch({vals: req.body.vals, order: req.body.order, like: req.body.like}, function (results) {
             res.results = results;
             next();
         }, function (err) {
