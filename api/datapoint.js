@@ -10,7 +10,7 @@ router.post('/new', [
     function (req, res, next) {
         let our_datapoint = new datapoint(req.body.location_name, req.body.date_time, req.body.data_value, req.body.data_type, 0);
         our_datapoint.make(
-            function (res) {
+            function (results) {
                 res.status(200).end();
             },
             function (err) {
