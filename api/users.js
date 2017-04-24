@@ -66,9 +66,16 @@ router.post('/update', [
                 user_update.password = req.body.password || user_update.password;
 
                 if (user_update.usertype === 'official') {
-                    let db = require('../db');
-                    let approval = req.body.accepted === 'accepted' ? 'accepted' : 'rejected';
-                    db.query({sql: 'UPDATE City_officials SET approved=' + approval + ' WHERE Username=' + db.mysql.escape(user_update.username)})
+                    cityofficial.fetch({vals: {username: req.body.username}}, function (res) {
+                        let official_data = res[0];
+                        let official = new cityofficial(user_update.username, user_update.email, user_update.password,
+                            user_update.usertype, official_data.approved, official_data.city, official_data.state, official_data.title);
+                        official.approved = req.body.approved || official.approved;
+                        official.city = req.body.city || official.city;
+                        official.state = req.body.state || official.state;
+                        official.title = req.body.title || official.title;
+                        official.commit();
+                    });
                 }
                 user_update.usertype = req.body.usertype || user_update.usertype;
                 user_update.commit();
