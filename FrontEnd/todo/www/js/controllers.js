@@ -431,19 +431,6 @@
 
 .controller('adminPendingDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
     $scope.pendingData = [];
-<<<<<<< HEAD
-    var request = $.post("http://" + host + "/api/datapoint/list", JSON.stringify({"vals":{"accepted": "pending"}}));
-    request.done(function( msg ) {
-      $scope.pendingData = msg;
-      console.log($scope.pendingData);
-      for (i in $scope.pendingData) {
-        i.checked = false;
-      }
-    }).fail(function( msg ) {
-        console.log("Could not get pending data list");
-    })
-=======
-
 
      $.ajax({
             type: "POST",
@@ -464,7 +451,7 @@
                 console.log(msg);
             }
       });
->>>>>>> f70de04c4df787ea4a688833d7d7cfc5fc802692
+
 
     $scope.submit = function(action) {
       var updateVal = (action == "Reject")? "rejected" : "approved";
