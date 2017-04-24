@@ -47,17 +47,17 @@
       "flag": 0,
       "start": null,
       "end": null,
-      "between" : {
-        "date_time": {
-          "min": null,
-          "max": null,
-        }
-      }
     }
+    $scope.btw = {
+      "name": "date_flagged",
+      "min": null,
+      "max": null
+    }
+
     var request = $.post("http://" + host + "/api/poi/list", {});
         request.done(function( msg ) {
         //console.log( JSON.stringify(msg));
-        $scope.poiInfo = msg;
+        $scope.field_data = msg;
       }).fail(function( msg ) {
           console.log("Failed.");
           console.log(msg);
@@ -66,20 +66,42 @@
 
     $scope.querySuccess = 0;
     $scope.applyFilter = function() {
+        var between = {};
         if ($scope.data.start && $scope.data.end) {
-            $scope.data.between.date_time.min = $scope.data.start.toMysqlFormat();
-            $scope.data.between.date_time.max =  $scope.data.end.toMysqlFormat();
+            $scope.btw.min = getDate($scope.data.start);
+            $scope.btw.max =  getDate($scope.data.end);
+            between = $scope.btw;
         }
-        $scope.flag = ($scope.checked)? 1:0;
-        console.log($scope.data);
-        var request = $.post("http://" + host + "/api/poi/list", {"vals": $scope.data});
-        request.done(function(msg) {
-              $scope.querySuccess = 1;
-              console.log($scope.querySuccess);
-              console.log(msg);
-              $scope.poiInfo = msg;
-          }).fail(function(msg) {
-              console.log("fail");
+        $scope.data.flag = ($scope.data.checked)? 1:0;
+        remove =["start", "end", "checked"];
+        request = {};
+        query = buildRequestJSON($scope.data, [], remove);   
+
+        if(query && Object.keys(query).length != 0) {
+          request.vals = query;
+        }
+
+        if(between && Object.keys(between).length != 0) {
+          request.between = between;
+        }
+
+        console.log(JSON.stringify(request));
+        $.ajax({
+            type: "POST",
+            url: "http://" + host + "/api/poi/list",
+            data: JSON.stringify(request),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function(msg) {
+                $scope.poiInfo = msg;
+                console.log("Filtered!");
+                console.log($scope.poiInfo);
+                $scope.didQuery = 1;
+            },
+            error: function(msg) {
+                console.log("Failed to filter.");
+                console.log(msg);
+            }
           });
     }
 
@@ -434,3 +456,31 @@ function twoDigits(d) {
 Date.prototype.toMysqlFormat = function() {
     return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) + " " + twoDigits(this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
 };
+
+function buildRequestJSON(json, desired_nulls=[], remove=[]) {
+  var res = {};
+  for (var key in json) {
+      if (!contains(remove, key) && json.hasOwnProperty(key) && (json[key] != null || contains(desired_nulls, key))) {
+        res[key] = json[key];
+      }
+  }
+  return res;
+
+  function contains(list, queryItem) {
+      for(i = 0; i < list.length; i++) {
+        if (list[i] == queryItem) {
+          return true;
+        }
+      }
+      return false;
+  }
+}
+
+function getDate(dateObj) {
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    newdate = year + "-" + month + "-" + day;
+      return newdate;
+}

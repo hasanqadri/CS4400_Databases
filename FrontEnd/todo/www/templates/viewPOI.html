@@ -15,7 +15,8 @@
               <div class="input-label">
                 POI Location Name: 
               </div>
-              <select ng-model="data.location_name" ng-options="poi.location_name as poi.location_name for poi in poiInfo">
+              <select ng-model="data.location_name" ng-options="poi.location_name as poi.location_name for poi in field_data">
+               <option> </option>
               </select>
             </label>
         </div>
@@ -25,7 +26,8 @@
               <div class="input-label">
                 City: 
               </div>
-              <select ng-model="data.city" ng-options="poi.city as poi.city for poi in poiInfo | unique:'city' ">
+              <select ng-model="data.city" ng-options="poi.city as poi.city for poi in field_data | unique:'city' ">
+                <option></option>
               </select>
             </label>
         </div>
@@ -35,7 +37,8 @@
               <div class="input-label">
                 State: 
               </div>
-              <select ng-model="data.state" ng-options="poi.state as poi.state for poi in poiInfo | unique:'state' "">
+              <select ng-model="data.state" ng-options="poi.state as poi.state for poi in field_data | unique:'state' "">
+                <option></option>
               </select>
             </label>
         </div>
@@ -56,25 +59,23 @@
           <div class="item item-input-inset">
             <label class="right-margin"> Date Flagged: </label>
             <label class="right-margin">
-              <input type="datetime-local" ng-model="data.start">
+              <input type="date" ng-model="data.start">
             </label>
             <label class="right-margin"> to </label>
             <label class="right-margin">
-              <input  class="right-margin" type="datetime-local" ng-model="data.end">
+              <input  class="right-margin" type="date" ng-model="data.end">
             </label>
           </div>
         </div>
-        {{data.date_flagged_start}}
-        {{data.date_flagged_end}}
 
             
         <!--  ADD METHOD CALLS FOR BACK AND SUBMIT -->
         <div align="center">
-          <button class="button button-block button-calm half_size" ng-click="applyFilter()" ng-model="querySuccess" style="max-width:50%">Apply Filter</button>
+          <button class="button button-block button-calm half_size" ng-click="applyFilter()" style="max-width:50%">Apply Filter</button>
           <button class="button button-block button-positive half_size " ng-click="resetFilter()" style="max-width:50%">Reset Filter</button>
         </div>
        
-        <div align="center" ng-show="1">
+        <div align="center">
           <hr>
           <table align="center">
             <tr>
@@ -90,7 +91,7 @@
               <td>{{i.location_name}}</td>  
               <td>{{i.city}}</td>  
               <td>{{i.state}}</td>  
-              <td>{{i.zip}}</td> 
+              <td>{{i.zip_code}}</td> 
               <td>{{i.flag}}</td> 
               <td>{{i.date_flagged}}</td>          
             </tr>
