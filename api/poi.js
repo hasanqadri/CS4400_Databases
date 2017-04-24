@@ -54,8 +54,8 @@ router.post('/list', [
 router.post('/report', [
     auth.official,
     function (req, res, next) {
-        let db = require('../db');
-        db.query({sql: 'SELECT '})
+        res.json([{location_name: "Georgia Tech", city: "Placeholder", state: "Placeholdr2", mold_min:"123", mold_avg: "2", mold_max:"123", aq_min:"1", aq_avg:"2", aq_max:"3", dp_count:"2", flagged:false}]);
+        res.status(200).end();
     }
 ]);
 
