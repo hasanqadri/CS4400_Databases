@@ -30,7 +30,8 @@ router.post('/', [
                                         req.session.city = official_results[0]['city'];
                                         req.session.state = official_results[0]['state'];
                                         req.session.title = official_results[0]['title'];
-                                        res.end();
+
+                                        res.send(req.session.usertype).end();
                                     }
                                 } else {
                                     res.status(403).end();
@@ -40,7 +41,7 @@ router.post('/', [
                             }
                         );
                     } else {
-                        res.end();
+                        res.send(req.session.usertype).end();
                     }
                 } else {
                     res.status(403).end();
