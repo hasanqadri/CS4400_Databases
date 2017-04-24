@@ -442,6 +442,7 @@
 
 .controller('adminPendingDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
     $scope.pendingData = [];
+
      $.ajax({
             type: "POST",
             url: "http://" + host + "/api/datapoint/list",
@@ -466,7 +467,7 @@
       var updateVal = (action == "Reject")? "rejected" : "approved";
       for (i = 0; i < $scope.pendingData.length; i++) {
         if ($scope.pendingData[i].checked) {
-          $scope.pendingData[i].accepted = updateVal;
+          $scope.pendingData[i].approved = updateVal;
           var request = $.post("http://" + host + "/api/datapoint/update",  $scope.pendingData[i]);
               request.done(function( msg ) {
               console.log("updated datapoint");
