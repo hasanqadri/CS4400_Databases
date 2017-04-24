@@ -1,5 +1,6 @@
   var host = "54.85.86.111:80";
   var current_poi_location = null; 
+  var usertype1;
   angular.module('starter')
   .service('userData', function () {
       var user_data = {};
@@ -35,23 +36,12 @@
     /*$scope.orderByField = 'mold_min';
     $scope.reverseSort = false;*/
     $scope.orderByField = 'firstName';
-  $scope.reverseSort = false;
-   console.log("hi")
-  $scope.data = [{
-      firstName: 'John',
-      lastName: 'Doe',
-      age: 30
-    },{
-      firstName: 'Frank',
-      lastName: 'Burns',
-      age: 54
-    },{
-      firstName: 'Sue',
-      lastName: 'Banter',
-      age: 21
-    }];
-  }])
+    $scope.reverseSort = false;
 
+    $scope.viewPOI = function(poi) {
+      current_poi_location = poi;
+      $state.go(POIdetail);
+    }
 
   .controller('viewPOICtrl', ['$state', '$scope', function($state,  $scope) {
     $scope.data = {
@@ -229,14 +219,26 @@
 
     $scope.login = function() {
         console.log($scope.login_data);
-        var request = $.post("http://" + host + "/api/login/", $scope.login_data);
-        request.done(function( msg ) {
-          $state.go("dash");
-          console.log(msg);
-        }).fail(function( msg ) {
-            alert("Username or password incorrect");
-        });
-    
+        $.ajax({
+          type: "POST",
+          url: "http://" + host + "/api/login",
+          data: JSON.stringify($scope.login_data),
+          contentType: 'application/json; charset=utf-8',
+          dataType: 'json',
+          success: function(msg) {
+                var request = $.get("http://" + host + "/api/users/me");
+                request.done(function( msg ) {
+                  usertype1 = msg;
+                  console.log(msg);
+                }).fail(function( msg ) {
+                      console.log("fuck");
+                });
+               $state.go("dash");
+          },
+          error: function(msg) {
+              alert("Username or password incorrect");
+          }
+          });
     }
 
     $scope.register = function() {
@@ -466,6 +468,7 @@
       for (i = 0; i < $scope.pendingData.length; i++) {
         if ($scope.pendingData[i].checked) {
           $scope.pendingData[i].accepted = updateVal;
+          console.log($scope.pendingData[i]);
           var request = $.post("http://" + host + "/api/datapoint/update",  $scope.pendingData[i]);
               request.done(function( msg ) {
               console.log("updated datapoint");
@@ -522,5 +525,5 @@ function getDate(dateObj) {
     var year = dateObj.getUTCFullYear();
 
     newdate = year + "-" + month + "-" + day;
-      return newdate;
+    return newdate;
 }
