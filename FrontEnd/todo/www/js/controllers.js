@@ -397,16 +397,25 @@
 
 .controller('adminCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
     $scope.officials = [];
-    console.log(JSON.stringify({"vals":{"approved":null}}));
-    var request = $.post("http://" + host + "/api/users/list_officials", JSON.stringify({"vals":{"approved":null}}));
-    request.done(function( msg ) {
-      $scope.officials = msg;
-      for (i in $scope.officials) {
-        i.checked = false;
-      }
-    }).fail(function( msg ) {
-        alert("Could not get user list");
-    });
+    $.ajax({
+            type: "POST",
+            url: "http://" + host + "/api/users/list_officials",
+            data: JSON.stringify({"vals":{"approved":"pending"}}),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function(msg) {
+              $scope.officials = msg;
+              console.log($scope.officials);
+              for (i in $scope.officials) {
+                i.checked = false;
+              }
+
+            },
+            error: function(msg) {
+                console.log("Failed to get pending data.");
+                console.log(msg);
+            }
+      });
 
     $scope.submit = function(action) {
       var updateVal = (action == "Reject")? 0 : 1;
