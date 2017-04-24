@@ -23,7 +23,7 @@ class city_official extends user {
         out['state'] = this.state;
         out['title'] = this.title;
         //call super with a dummy success function
-        super.make(function () {
+        super.make(function (res) {
             let sql = 'INSERT INTO City_officials SET ?';
             //also insert City_officials data
             return db.query({sql: sql, values: out},
@@ -64,6 +64,8 @@ class city_official extends user {
 
     static fetch(args, success, error) {
         args['name'] = 'City_officials';
+        args['fields'] = ['City_officials.username', 'email', 'city', 'state', 'title'];
+        args['join'] = {table: 'Users', colA: 'username', colB: 'username'};
         record.fetch(args, success, error);
     }
 }
