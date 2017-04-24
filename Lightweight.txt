@@ -1,0 +1,164 @@
+#All Users
+	#Login Page:
+		SELECT * FROM Users WHERE `username`=$username AND `password`=$password LIMIT 1;
+	#Registration:
+		#(for admins/scientists):
+			INSERT INTO Users values ($username, $email, $password, $usertype);
+		#(for city officials):
+			START TRANSACTION; #transaction so that there isn't loose data if one of the queries fails
+			INSERT INTO Users values ($username, $email, $password, $usertype);
+			INSERT INTO City_officials (`username`, `title`, `city`, `state`) values ($username, $title, $city, $state);
+			COMMIT;
+		
+#Scientists
+	#Add new data point:
+		#Precondition:
+			SELECT location_name FROM POIs;
+			SELECT type from Data_types;
+		INSERT INTO Data_points (`location_name`, `date_time`, `data_value`, `data_type`) values ($location_name, $date_time, $data_value, $data_type);
+	#Add a new POI:
+		#Precondition:
+			SELECT city,state FROM City_states GROUP BY STATE;
+		INSERT INTO POIs (`location_name`, `city`, `state`) values ($location_name, $city, $state);
+
+#Admins
+	#Accept or reject a data point:
+		#Precondition:
+			SELECT * FROM Data_points WHERE `accepted`=NULL;
+		UPDATE Data_points SET `accepted`=$accepted WHERE (`location_name` =$loc1 AND `date_time`=$dt1) OR (`location_name`=$loc2 AND `date_time`=$dt2);  #and so forth
+	#Accept or reject city account
+		#Precondition:
+			SELECT * FROM City_officials WHERE `approved`=NULL;
+		UPDATE City_officials SET `approved`=$approved WHERE `username` IN ($accepted_users_list);
+		
+#City Officials
+	#Filter/Search POI
+		#precondition:
+			SELECT `location_name`,`state`, `city` FROM POIs;
+	#Filter
+			SELECT * FROM POIs WHERE 'location_name' = $loc_name AND  'city'=$city AND `state`=$state AND  `zip_code`=$zipcode AND`flagged`=$flagged AND`date_flagged` > $date_flagged1 AND `date_flagged` < $date_flagged2;
+
+#POI Detail
+	#POI Detail
+		#precondition:
+			SELECT `mold`,`air_quality` FROM Data_type;
+	#Filter
+			SELECT * FROM POIs WHERE `location_name` = $loc_name AND  `city`=$city AND `state`=$state AND `zip_code`=$zipcode AND `flagged`=$flagged AND`date_flagged`=$date_flagged;
+
+
+#Data Points
+
+INSERT INTO Data_points VALUES('Georgia Tech', '2017-01-31 15:32:00', 12, 'mold', 0);
+INSERT INTO Data_points VALUES('Georgia Tech', '2017-02-15 16:21:11', 42, 'mold', 0);
+INSERT INTO Data_points VALUES('Georgia Tech', '2017-02-24 4:29:00', 4, 'air_quality',0);
+INSERT INTO Data_points VALUES('Georgia Tech', '2017-01-02 03:57:01', 34, 'air_quality',0);
+INSERT INTO Data_points VALUES('Uchicago','2017-03-07 05:21:01',31,'mold',0);
+INSERT INTO Data_points VALUES('Uchicago','2017-03-12 04:26:22',24,'air_quality',0);
+INSERT INTO Data_points VALUES('Georgia Tech','2017-02-13 04:43:00',34,'air_quality',0);
+INSERT INTO Data_points VALUES('GSU','2017-01-31 01:33:00', 9,'air_quality',0);
+INSERT INTO Data_points VALUES('Emory','2017-01-17 03:33:00',19,'mold',0);
+INSERT INTO Data_points VALUES('Emory','2017-01-21 02:56:00', 22, 'air_quality',0);
+INSERT INTO Data_points VALUES('Emory','2017-02-07 05:44:01', 32,'air_quality',0);
+INSERT INTO Data_points VALUES('Emory','2017-02-20 03:04:11',51, 'air_quality',0);
+INSERT INTO Data_points VALUES('Uchicago','2017-03-15 05:55:00',43,'air_quality',0);
+INSERT INTO Data_points VALUES('Georgia Tech','2017-01-28 02:05:33',15,'air_quality',0);
+INSERT INTO Data_points VALUES('Emory','2017-02-03 01:59:00',22,'mold',0);
+INSERT INTO Data_points VALUES('Uchicago','2017-03-24 03:32:00',20,'mold',0);
+INSERT INTO Data_points VALUES('GSU','2017-03-01 02:28:00',33,'air_quality',0);
+INSERT INTO Data_points VALUES('Georgia Tech','2017-03-19 01:02:00',40,'air_quality',0);
+INSERT INTO Data_points VALUES('Uchicago','2017-02-06 05:13:04',8,'mold',0);
+INSERT INTO Data_points VALUES('Emory','2017-01-31 02:45:03',44,'air_quality',0);
+INSERT INTO Data_points VALUES('Georgia Tech','2017-03-10 02:11:00',31,'mold',0);
+INSERT INTO Data_points VALUES('Georgia Tech','2017-01-09 04:05:31',36,'mold',0);
+INSERT INTO Data_points VALUES('Georgia Tech','2017-01-10 03:33:04',15,'air_quality',0);
+INSERT INTO Data_points VALUES('Emory','2017-02-18 05:53:00',17,'air_quality',0);
+INSERT INTO Data_points VALUES('Georgia Tech','2017-01-11 05:43:02',41,'air_quality',0);
+INSERT INTO Data_points VALUES('Georgia Tech','2017-02-25 03:22:21',4,'mold',0);
+INSERT INTO Data_points VALUES('Emory','2017-01-18 01:54:30',42,'air_quality',0);
+INSERT INTO Data_points VALUES('Emory','2017-03-20 05:58:09',13,'air_quality',0);
+INSERT INTO Data_points VALUES('Georgia Tech','2017-03-23 03:02:01',20,'mold',0);
+INSERT INTO Data_points VALUES('Georgia Tech','2017-03-16 02:29:10',23,'mold',0);
+INSERT INTO Data_points VALUES('Uchicago','2017-02-23 11:32:02',43,'air_quality',0);
+INSERT INTO Data_points VALUES('GSU','2017-03-24 13:32:02',35,'mold',0);
+INSERT INTO Data_points VALUES('Uchicago','2017-03-06 12:35:22',9,'mold',0);
+INSERT INTO Data_points VALUES('GSU','2017-02-21 11:26:32',29,'mold',0);
+INSERT INTO Data_points VALUES('Georgia Tech','2017-03-19 14:44:23',42,'mold',0);
+INSERT INTO Data_points VALUES('Emory','2017-02-05 15:38:42',48,'mold',0);
+INSERT INTO Data_points VALUES('GSU','2017-02-08 02:33:22',4,'air_quality',0);
+INSERT INTO Data_points VALUES('GSU','2017-02-11 14:32:33',27,'mold',0);
+INSERT INTO Data_points VALUES('GSU','2017-01-08 16:54:54',24,'mold',0);
+
+#Datatype
+INSERT INTO Data_types (type) VALUES ('mold'), ('air_quality');
+
+#POIs
+INSERT INTO POIs VALUES('Atlanta', 'Georgia', 'Georgia Tech', '2017-01-21 05:21:21', 0, 30332);
+INSERT INTO POIs VALUES('Atlanta', 'Georgia', 'GSU', NULL, 0, 30303);
+INSERT INTO POIs VALUES('Atlanta', 'Georgia', 'Emory', NULL, 0, 30322);
+INSERT INTO POIs VALUES('Chicago', 'Illinois', 'Uchicago','2017-02-24 06:22:22', 1, 60637);
+INSERT INTO POIs VALUES('Houston', 'Texas', 'Virginia Tech', NULL, 0, 24061);
+INSERT INTO POIs VALUES('Atlanta', 'Georgia', 'Georgia Aquarium', NULL, 0, 30601);
+INSERT INTO POIs VALUES('Chicago', 'Illinois', 'Obama Library', NULL, 0, 27517);
+INSERT INTO POIs VALUES('Austin', 'Texas', 'UT Austin', NULL, 0, 37011);
+INSERT INTO POIs VALUES('Columbus', 'Ohio', 'RNC Convention', NULL, 0, 22901);
+INSERT INTO POIs VALUES('New York', 'New York', 'Trump Tower', NULL, 0, 37501);
+
+#Users
+INSERT INTO Users VALUES('fnelson0','jburns0@salon.com','gItnh7','admin');
+INSERT INTO Users VALUES('mwest1','kwilliamson1@imdb.com','c124i9ZgOO','scientist');
+INSERT INTO Users VALUES('kpowell2','ppierce2@dagondesign.com','O8m2r7dUs8','admin');
+INSERT INTO Users VALUES('kgreen3','cmartin3@i2i.jp','BJKcdvPuD','scientist');
+INSERT INTO Users VALUES('admin','jcook4@tinyurl.com','admin','admin');
+INSERT INTO Users VALUES('jwarren5','afoster5@alexa.com','MaYrc7jvk','scientist');
+INSERT INTO Users VALUES('jbarnes6','pphillips6@hugedomains.com','0PcFobpHEtpx','admin');
+INSERT INTO Users VALUES('ebrown7','sbryant7@deliciousdays.com','pqiu9wqCiiR','scientist');
+INSERT INTO Users VALUES('awilliamson8','dhenderson8@rakuten.co.jp','YZdDzOyJUHa','admin');
+INSERT INTO Users VALUES('jking9','scampbell9@skyrock.com','HrOE5aS2','scientist');
+INSERT INTO Users VALUES('lhudsona','sstonea@123-reg.co.uk','5wmq5h7gAiGw','admin');
+INSERT INTO Users VALUES('jhernandezb','rhansenb@google.it','VDQMGOPzg8','scientist');
+INSERT INTO Users VALUES('hmorrisonc','kharperc@dagondesign.com','voW0OV0zjEo','admin');
+INSERT INTO Users VALUES('vmorgand','bwatkinsd@weather.com','w536mJmb','scientist');
+INSERT INTO Users VALUES('jreede','aalvareze@microsoft.com','y1LFoftD','admin');
+INSERT INTO Users VALUES('rcooperf','wmasonf@shareasale.com','OwVvmwlRu','scientist');
+INSERT INTO Users VALUES('phuntg','imorenog@cbslocal.com','51A2Su5kRX6Y','admin');
+INSERT INTO Users VALUES('pnelsonh','lrobertsonh@statcounter.com','BbA1Za0h','scientist');
+INSERT INTO Users VALUES('tsmithi','treyesi@house.gov','2eWq9JBfDaR','admin');
+INSERT INTO Users VALUES('rjenkinsj','mbennettj@google.com','nDyBYwyX9C20','scientist');
+
+INSERT INTO Users VALUES('jwilliamson0','bbowman0@imageshack.us','iMNU6BB4Knuj','official');
+INSERT INTO Users VALUES('nwatkins1','jthompson1@japanpost.jp','McvsKTuPOsF6','official');
+INSERT INTO Users VALUES('pford2','koliver2@google.co.uk','viNOh9','official');
+INSERT INTO Users VALUES('apatterson3','rgonzalez3@desdev.cn','DrLBMibbV','official');
+INSERT INTO Users VALUES('wlarson4','pwest4@issuu.com','jmdAhAWqRrJY','official');
+
+
+#City_states
+INSERT INTO City_states VALUES('New York','New York');
+INSERT INTO City_states VALUES('Los Angeles','California');
+INSERT INTO City_states VALUES('Chicago','Illinois');
+INSERT INTO City_states VALUES('Houston','Texas');
+INSERT INTO City_states VALUES('Philadelphia','Pennsylvania');
+INSERT INTO City_states VALUES('Phoenix','Arizona');
+INSERT INTO City_states VALUES('San Antonio','Texas');
+INSERT INTO City_states VALUES('San Diego','California');
+INSERT INTO City_states VALUES('Dallas','Texas');
+INSERT INTO City_states VALUES('San Jose','California');
+INSERT INTO City_states VALUES('Austin','Texas');
+INSERT INTO City_states VALUES('Jacksonville','Florida');
+INSERT INTO City_states VALUES('San Francisco','California');
+INSERT INTO City_states VALUES('Indianapolis','Indiana');
+INSERT INTO City_states VALUES('Columbus','Ohio');
+INSERT INTO City_states VALUES('Fort Worth','Texas');
+INSERT INTO City_states VALUES('Charlotte','North Carolina');
+INSERT INTO City_states VALUES('Seattle','Washington');
+INSERT INTO City_states VALUES('Denver','Colorado');
+INSERT INTO City_states VALUES('El Paso','Texas');
+INSERT INTO City_states VALUES('Atlanta','Georgia');
+
+
+#City_officials
+INSERT INTO City_officials VALUES('jwilliamson0','Mayor',1,'Atlanta','Georgia');
+INSERT INTO City_officials VALUES('nwatkins1','Policeman',0,'Los Angeles','California');
+INSERT INTO City_officials VALUES('pford2','Firefighter',1,'Chicago','Illinois');
+INSERT INTO City_officials VALUES('apatterson3','General',1,'Houston','Texas');
+INSERT INTO City_officials VALUES('wlarson4','Mayor',0,'Philadelphia','Pennsylvania');
