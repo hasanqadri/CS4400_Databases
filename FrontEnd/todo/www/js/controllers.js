@@ -59,7 +59,8 @@
       "city": null ,
       "state": null ,
       "zip": null ,
-      "flag": false,
+      "checked": false,
+      "flag": 0,
       "start": null,
       "end": null,
       "between" : {
@@ -81,18 +82,21 @@
 
     $scope.querySuccess = 0;
     $scope.applyFilter = function() {
-        $scope.data.between.date_time.min = $scope.data.start.toMysqlFormat();
-        $scope.data.between.date_time.max =  $scope.data.end.toMysqlFormat();
+        if ($scope.data.start && $scope.data.end) {
+            $scope.data.between.date_time.min = $scope.data.start.toMysqlFormat();
+            $scope.data.between.date_time.max =  $scope.data.end.toMysqlFormat();
+        }
+        $scope.flag = ($scope.checked)? 1:0;
         console.log($scope.data);
-      var request = $.post("http://" + host + "/api/poi/list", {vals: $scope.data});
-        request.done(function( msg ) {
-        $scope.querySuccess = 1;
-        console.log( $scope.querySuccess);
-        console.log(msg);
-        $scope.poiInfo = msg;
-      }).fail(function( msg ) {
-          console.log("fail");
-      });
+        var request = $.post("http://" + host + "/api/poi/list", {"vals": $scope.data});
+        request.done(function(msg) {
+              $scope.querySuccess = 1;
+              console.log($scope.querySuccess);
+              console.log(msg);
+              $scope.poiInfo = msg;
+          }).fail(function(msg) {
+              console.log("fail");
+          });
     }
 
     $scope.resetFilter = function() {
@@ -250,7 +254,6 @@
 }])
 
 .controller('DashCtrl', ['$scope', 'WaterApp','$state', function($scope, WaterApp,$state) {
-
     $scope.addData = function() {
         $state.go('addData');
     }
@@ -274,7 +277,6 @@
     $scope.viewReports = function() {
         $state.go('POIreports');
     }
-
 }])
 
 .controller('POIdetailCtrl', ['$rootScope', '$state', '$scope', function($rootScope, $state, $scope) {
@@ -311,7 +313,7 @@
     //Need value and time endpoints
       var request = $.post("http://" + host + "/api/data/list", $scope.formData);
       request.done(function( msg ) {
-        $scope.data = msg;
+          $scope.data = msg;
       }).fail(function( msg ) {
           alert("Could not get poi list");
       });
@@ -320,7 +322,7 @@
   $scope.flag = function () {
       var request = $.post("http://" + host + "/api/poi/update", {"location_name": $scope.formData.location_name, "flag": 1});
       request.done(function( msg ) {
-        $scope.data = msg;
+          $scope.data = msg;
       }).fail(function( msg ) {
           console.log("Could not flag POI location");
       });
