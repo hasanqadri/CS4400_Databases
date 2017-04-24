@@ -1,4 +1,4 @@
-<ion-view view-title="POI Report" name="POIreports-view">
+<!-- <ion-view view-title="POI Report" name="POIreports-view">
   <ion-nav-buttons>
     <button class="button icon ion-ios-arrow-back button-clear" ng-click="goBack()">Back</button>
   </ion-nav-buttons>
@@ -54,4 +54,50 @@
             </table>
 
   </ion-content>
+</ion-view> -->
+
+<ion-view view-title="POI Report" name="POIreports-view">
+  <ion-nav-buttons>
+    <button class="button icon ion-ios-arrow-back button-clear" ng-click="goBack()">Back</button>
+  </ion-nav-buttons>
+  <ion-content class="padding">
+    <ion-content class="padding">
+      <div class="row center table_size">
+        <div class="col card card_opacity"  align = "center">
+          
+
+          <section ng-app="app" ng-controller="POIreportsCtrl">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>
+          <a ng-click="orderByField='firstName'; reverseSort = !reverseSort">
+          First Name <span ng-show="orderByField == 'firstName'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+          </a>
+        </th>
+        <th>
+          <a  ng-click="orderByField='lastName'; reverseSort = !reverseSort">
+            Last Name <span ng-show="orderByField == 'lastName'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+          </a>
+        </th>
+        <th>
+          <a ng-click="orderByField='age'; reverseSort = !reverseSort">
+          Age <span ng-show="orderByField == 'age'"><span ng-show="!reverseSort">^</span><span ng-show="reverseSort">v</span></span>
+          </a>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="emp in data|orderBy:orderByField:reverseSort">
+        <td>{{emp.firstName}}</td>
+        <td>{{emp.lastName}}</td>
+        <td>{{emp.age}}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+
+  </ion-content>
 </ion-view>
+

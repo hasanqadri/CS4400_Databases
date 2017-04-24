@@ -32,8 +32,24 @@
         console.log("Failed to get POI reports");
     });
 
-    $scope.orderByField = 'mold_min';
-    $scope.reverseSort = false;
+    /*$scope.orderByField = 'mold_min';
+    $scope.reverseSort = false;*/
+    $scope.orderByField = 'firstName';
+  $scope.reverseSort = false;
+   console.log("hi")
+  $scope.data = [{
+      firstName: 'John',
+      lastName: 'Doe',
+      age: 30
+    },{
+      firstName: 'Frank',
+      lastName: 'Burns',
+      age: 54
+    },{
+      firstName: 'Sue',
+      lastName: 'Banter',
+      age: 21
+    }];
   }])
 
 
