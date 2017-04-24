@@ -7,19 +7,19 @@
       <div class="col text-center center" style="max-width:30%">
         <h3 class="title" style="padding-top:20px">Choose Functionality</h3>
         <!--  ADD METHOD CALLS FOR BUTTONS -->
-        <button class="button button-full button-calm" ng-click="viewPOI()">
+        <button ng-show="(usertype=='official')" class="button button-full button-calm" ng-click="viewPOI()">
           View POI
         </button>
-         <button class="button button-full button-calm" ng-click="addData()">
+         <button ng-show="(usertype=='scientist')" class="button button-full button-calm" ng-click="addData()">
           Add Data Point
         </button>
-        <button ng-hide="usertype1 == scientist || usertype1 == official" class="button button-full button-positive" ng-click="pendingData()">
+        <button ng-show="(usertype=='admin')" class="button button-full button-positive" ng-click="pendingData()">
           Pending Data Points
         </button>
-        <button ng-hide="usertype1 == scientist || usertype1 == official" class="button button-full button-positive" ng-click="pendingOfficials()">
+        <button ng-show="(usertype=='admin')" class="button button-full button-positive" ng-click="pendingOfficials()">
           Pending City Officials
         </button>
-        <button class="button button-full button-positive" ng-click="viewReports()">
+        <button ng-show="(usertype == 'official')"class="button button-full button-positive" ng ng-click="viewReports()">
           POI Reports
         </button>
         <br><br>

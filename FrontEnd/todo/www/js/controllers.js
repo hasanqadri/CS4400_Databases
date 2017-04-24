@@ -1,6 +1,6 @@
   var host = "54.85.86.111:80";
   var current_poi_location = null; 
-  var usertype1;
+  var usertype1 = "admin";
   angular.module('starter')
   .service('userData', function () {
       var user_data = {};
@@ -16,6 +16,7 @@
   })
   .controller('AppCtrl', ['$rootScope', '$state', function($rootScope, $state) {
       $rootScope.goBack = function(view) {
+
         if(!view) {
           $state.go('dash');
         } else {
@@ -159,7 +160,7 @@
     };  
   }])
 
-  .controller('LoginCtrl', ['$scope', 'WaterApp','$state', '$ionicPopup', '$ionicModal', 'userData', function($scope, WaterApp, $state, $ionicPopup, $ionicModal) {
+  .controller('LoginCtrl', ['$scope', '$rootScope','$state', '$ionicPopup', '$ionicModal', 'userData', function($scope, $rootScope, $state, $ionicPopup, $ionicModal) {
     $scope.data = {
         "username": null,
         "password": null,
@@ -195,7 +196,7 @@
           $scope.city_states = msg;
           console.log(msg);
         }).fail(function( msg ) {
-            console.log("Could not access DB for city states");
+          console.log("Could not access DB for city states");
         });
       };
       $scope.closeModal = function() {
@@ -219,7 +220,7 @@
         var request = $.post("http://" + host + "/api/login/", $scope.login_data);
         request.done(function( msg ) {
           $state.go("dash");
-          usertype1 = msg;
+          $rootScope.usertype = String(msg);
           console.log(msg);
         }).fail(function( msg ) {
             alert("Username or password incorrect");
@@ -268,7 +269,9 @@
     }
 }])
 
-.controller('DashCtrl', ['$scope', 'WaterApp','$state', function($scope, WaterApp,$state) {
+.controller('DashCtrl', ['$scope', '$rootScope','$state', function($scope, $rootScope, $state) {
+    
+    console.log($rootScope.usertype);
     $scope.addData = function() {
         $state.go('addData');
     }
@@ -276,7 +279,6 @@
         $state.go('POIdetail');
     }
     $scope.logout = function() {
-        WaterApp.setUserData(null);
         $state.go('login');
     }
     
