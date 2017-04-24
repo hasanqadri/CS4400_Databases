@@ -68,7 +68,8 @@ class city_official extends user {
 
     static fetch(args, success, error) {
         args['type'] = 'City_officials';
-        super.fetch(args, success, error);
+        // super.fetch(args, success, error);
+        super.super.fetch(args, success, error);
     }
 }
 
