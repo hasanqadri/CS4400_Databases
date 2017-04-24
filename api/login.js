@@ -4,10 +4,10 @@ var user = require('../models/user');
 var cityofficial = require('../models/city_official');
 
 /* POST login */
-router.post('/', [
+router.post('/',
     function (req, res, next) {
-        let username = req.body.username;
-        let password = req.body.password;
+        var username = req.body.username;
+        var password = req.body.password;
 
         user.fetch({vals: {username: username, password: password}},
             function (results) {
@@ -53,7 +53,7 @@ router.post('/', [
     function (req, res) {
         res.status(403).end();
     }
-]);
+);
 
 /* GET logout */
 router.get('/logout', function (req, res, next) {

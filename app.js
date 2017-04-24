@@ -17,7 +17,7 @@ app.set('view engine', 'jade');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 
 
@@ -33,11 +33,12 @@ app.use(cors());
 
 app.use(express.static(path.join(__dirname, 'dist')));
 
-app.use('/api/login', require('./api/login'));
 app.use('/api/users', require('./api/users'));
 app.use('/api/citystate', require('./api/citystate'));
 app.use('/api/poi', require('./api/poi'));
 app.use('/api/datapoint', require('./api/datapoint'));
+app.use('/api/login', require('./api/login'));
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
