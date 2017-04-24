@@ -458,6 +458,7 @@
       for (i = 0; i < $scope.pendingData.length; i++) {
         if ($scope.pendingData[i].checked) {
           $scope.pendingData[i].accepted = updateVal;
+          console.log(pendingData[i]);
           var request = $.post("http://" + host + "/api/datapoint/update",  $scope.pendingData[i]);
               request.done(function( msg ) {
               console.log("updated datapoint");
