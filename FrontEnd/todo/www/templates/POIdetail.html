@@ -4,7 +4,7 @@
 
 </ion-nav-buttons>
     <ion-content>
-        <div class="row center half_size">
+        <div class="row center" style="max-width:800px">
             <div class="col card">
                 <h3 class = "title row-center" style="text-align:center"> POI Detail for {{formData.location_name}} </h3>
                  <div class="list">
@@ -33,15 +33,15 @@
 
                  <div class="list">
                   <div class="item item-input-inset">
-                   <div class="input-label" style="width:20px; padding-right:40px">
+                   <div class="input-label" style="width:20px; padding-right:10px">
                              Time/Date Range 
                     </div>
                     <label>
-                      <input type="datetime-local" ng-model="formData.start">
+                      <input type="datetime-local" style="max-width:200px" ng-model="formData.start">
                     </label>
                     <label class="right-margin"> to </label>
                     <label>
-                      <input type="datetime-local" ng-model="formData.end">
+                      <input type="datetime-local" style="max-width:200px" ng-model="formData.end">
                     </label>
                   </div>
                 </div>

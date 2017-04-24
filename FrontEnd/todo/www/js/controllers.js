@@ -1,4 +1,4 @@
-  var host = "localhost:3000";
+  var host = "localhost:80";//"54.85.86.111:80";
   var current_poi_location = null; 
   var usertype1 = "admin";
   angular.module('starter')
