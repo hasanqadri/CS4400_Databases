@@ -13,10 +13,10 @@
          <button class="button button-full button-calm" ng-click="addData()">
           Add Data Point
         </button>
-        <button class="button button-full button-positive" ng-click="pendingData()">
+        <button ng-hide="usertype1 == scientist || usertype1 == official" class="button button-full button-positive" ng-click="pendingData()">
           Pending Data Points
         </button>
-        <button class="button button-full button-positive" ng-click="pendingOfficials()">
+        <button ng-hide="usertype1 == scientist || usertype1 == official" class="button button-full button-positive" ng-click="pendingOfficials()">
           Pending City Officials
         </button>
         <button class="button button-full button-positive" ng-click="viewReports()">

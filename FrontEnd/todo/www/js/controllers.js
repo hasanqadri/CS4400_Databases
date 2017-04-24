@@ -168,13 +168,15 @@
         "usertype": null,
         "city": null,
         "state": null,
-        "title": null
+        "title": null,
+        "approved": "pending";
     }
 
     $scope.login_data = {
       "username": null,
       "password": null
     }
+
 
     $ionicModal.fromTemplateUrl('my-modal.html', {
     scope: $scope,
@@ -233,7 +235,7 @@
             if (key == "state" || key == "title" || key == "city") 
               continue;
           }
-          if ($scope.data[key] == "") {
+          if ($scope.data[key] == null) {
             var error = $ionicPopup.show({
               template: 'Please fill in all fields',
               title: 'Try Again',
