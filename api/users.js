@@ -67,7 +67,8 @@ router.post('/update', [
 
                 if (user_update.usertype === 'official') {
                     let db = require('../db');
-                    db.query({sql: 'UPDATE City_officials SET approved=' + req.body.accepted + ' WHERE Username=' + db.mysql.escape(user_update.username)})
+                    let approval = req.body.accepted === 'accepted' ? 'accepted' : 'rejected';
+                    db.query({sql: 'UPDATE City_officials SET approved=' + approval + ' WHERE Username=' + db.mysql.escape(user_update.username)})
                 }
                 user_update.usertype = req.body.usertype || user_update.usertype;
                 user_update.commit();
