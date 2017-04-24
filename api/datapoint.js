@@ -8,7 +8,7 @@ var datatype = require('../models/data_type');
 router.post('/new', [
     auth.scientist,
     function (req, res, next) {
-        let our_datapoint = new datapoint(req.body.location_name, req.body.date_time, req.body.data_value, req.body.data_type, 0);
+        let our_datapoint = new datapoint(req.body.location_name, req.body.date_time, req.body.data_value, req.body.data_type, 'pending');
         our_datapoint.make(
             function (results) {
                 res.status(200).end();
@@ -27,11 +27,7 @@ router.post('/list', [
         datapoint.fetch({
             // join: {table: 'POIs', colA: 'location_name', colB: 'location_name'},
             // vals: {city: req.session.city, state: req.session.state},
-            between: req.body.between ? {
-                name: req.body.between['name'],
-                min: req.body.between['min'],
-                max: req.body.between['max']
-            } : null,
+            between: between,
             vals: req.body.vals,
             order: req.body.order,
             like: req.body.like
