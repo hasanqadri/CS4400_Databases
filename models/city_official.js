@@ -68,8 +68,8 @@ class city_official extends user {
 
     static fetch(args, success, error) {
         args['type'] = 'City_officials';
-        // super.fetch(args, success, error);
-        super.super.fetch(args, success, error);
+        args['join'] = {table: 'City_officials', colA: 'username', colB: 'username'};
+        super.fetch(args, success, error);
     }
 }
 

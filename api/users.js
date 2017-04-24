@@ -15,29 +15,39 @@ router.get('/me', function (req, res, next) {
 router.post('/list', [
     auth.admin,
     function (req, res, next) {
-        if (req.body.vals && req.body.vals['user_type'] === 'official') {
-            cityofficial.fetch({vals: req.body.vals, order: req.body.order, like: req.body.like}, function (results) {
-                res.results = results;
-                next();
-            }, function (err) {
-                log.debug(err);
-                res.status(500).end();
-            });
-        } else {
-            user.fetch({vals: req.body.vals, order: req.body.order, like: req.body.like}, function (results) {
-                res.results = results;
-                next();
-            }, function (err) {
-                log.debug(err);
-                res.status(500).end();
-            });
-        }
+        user.fetch({vals: req.body.vals, order: req.body.order, like: req.body.like}, function (results) {
+            res.results = results;
+            next();
+        }, function (err) {
+            log.debug(err);
+            res.status(500).end();
+        });
     },
     function (req, res) {
         res.json(res.results);
         res.status(200).end();
     }
 ]);
+
+/* GET users listing. */
+router.post('/list_officials', [
+    auth.admin,
+    function (req, res, next) {
+        cityofficial.fetch({vals: req.body.vals, order: req.body.order, like: req.body.like}, function (results) {
+            res.results = results;
+            next();
+        }, function (err) {
+            log.debug(err);
+            res.status(500).end();
+        });
+    },
+    function (req, res) {
+        res.json(res.results);
+        res.status(200).end();
+    }
+]);
+
+
 
 router.post('/update', [
     function (req, res, next) {
