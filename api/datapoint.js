@@ -62,7 +62,8 @@ router.post('/update', [
             });
     },
     function (req, res) {
-        let our_datapoint = new datapoint(res.results[0].location_name, res.results[0].date_time, res.results[0].data_value, req.body.accepted);
+        let our_datapoint = new datapoint(res.results[0].location_name, res.results[0].date_time, res.results[0].data_value, res.results[0]);
+        our_datapoint.accepted = req.body.accepted;
         our_datapoint.commit(function (suc) {
             res.status(200).end()
         }, function (err) {

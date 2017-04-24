@@ -58,7 +58,7 @@ con.query(
     "CREATE TABLE City_officials( " +
     "username VARCHAR(255) NOT NULL UNIQUE, " +
     "title VARCHAR(255) NOT NULL, " +
-    "approved TINYINT(1) DEFAULT NULL, " +
+    "approved ENUM ('approved', 'rejected', 'pending') NOT NULL DEFAULT 'pending', " +
     "city VARCHAR(255) NOT NULL, " +
     "state VARCHAR(255) NOT NULL, " +
     "PRIMARY KEY (username), " +
@@ -90,7 +90,7 @@ con.query(
     "date_time DATETIME NOT NULL, " +
     "data_value BIGINT NOT NULL, " +
     "data_type VARCHAR(255) NOT NULL, " +
-    "accepted TINYINT(1) DEFAULT NULL," +
+    "accepted ENUM ('approved', 'rejected', 'pending') NOT NULL DEFAULT 'pending', " +
     "PRIMARY KEY(location_name, date_time), " +
     "FOREIGN KEY (location_name) references POIs(location_name) ON DELETE CASCADE ON UPDATE CASCADE, " +
     "FOREIGN KEY (data_type) references Data_types(type) ON DELETE CASCADE ON UPDATE CASCADE);"
