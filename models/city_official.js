@@ -41,29 +41,26 @@ class city_official extends user {
 
     commit(success, err) {
         //throws if required field doesn't exist in this object
-        super.commit(function () {
+        var values = {};
+        values['approved'] = this.approved;
+        values['city'] = this.city;
+        values['state'] = this.state;
+        values['title'] = this.title;
+        values['username'] = this.username;
 
-            var values = {};
-            values['approved'] = this.approved;
-            values['city'] = this.city;
-            values['state'] = this.state;
-            values['title'] = this.title;
-            values['username'] = this.username;
+        let sql = 'UPDATE City_officials SET ? WHERE username=?';
 
-            let sql = 'UPDATE City_officials SET ? WHERE username=?';
-
-            db.query({sql: sql, values: values},
-                function (error, results, fields) {
-                    if (error) {
-                        //sql error callback
-                        err(error);
-                    } else {
-                        //result callback
-                        success(success);
-                    }
+        db.query({sql: sql, values: values},
+            function (error, results, fields) {
+                if (error) {
+                    //sql error callback
+                    err(error);
+                } else {
+                    //result callback
+                    success(success);
                 }
-            );
-        }, err);
+            }
+        );
     }
 
     static fetch(args, success, error) {
