@@ -6,16 +6,13 @@
     <ion-content>
         <div class="row center half_size">
             <div class="col card">
-
-
-
                 <h3 class = "title row-center" style="text-align:center"> POI Detail for {{formData.location_name}} </h3>
                  <div class="list">
                     <label class="item item-input">
                       <div class="input-label" style="width:20px; padding-right:40px">
                         Data Type
                       </div>
-                      <select ng-model="formData.data_type" ng-options="poi.location_name as poi.location_name for poi in poiInfo">
+                      <select ng-model="formData.data_type" ng-options="t.type as t.type for t in data">
                       </select>
                     </label>
                 </div>

@@ -1,5 +1,6 @@
   var host = "54.85.86.111:80";
   var current_poi_location = null; 
+  var usertype1;
   angular.module('starter')
   .service('userData', function () {
       var user_data = {};
@@ -232,6 +233,7 @@
         var request = $.post("http://" + host + "/api/login/", $scope.login_data);
         request.done(function( msg ) {
           $state.go("dash");
+          usertype1 = msg;
           console.log(msg);
         }).fail(function( msg ) {
             alert("Username or password incorrect");
@@ -317,10 +319,8 @@
     "start":null,
     "end":null
   }
-  
-
   $scope.didQuery = 0;
-  var request = $.post("http://" + host + "/api/datapoint/datatypes", {});
+  var request = $.get("http://" + host + "/api/datapoint/datatypes", {});
         request.done(function( msg ) {
           $scope.data = msg;
           console.log($scope.data);
