@@ -32,6 +32,7 @@ router.post('/list', [
                 min: req.body.between['min'],
                 max: req.body.between['max']
             } : null,
+            vals: req.body.vals,
             order: req.body.order,
             like: req.body.like
         }, function (results) {
