@@ -307,7 +307,7 @@
   };
 
   $scope.btw = {
-    "date_flagged": {
+    "date_time": {
           "min":null,
           "max":null
     },
@@ -338,9 +338,9 @@
     //Need value and time endpoints
        var between = {};
         if ($scope.formData.start && $scope.formData.start) {
-            between.date_flagged = {};
-            between.date_flagged.min = $scope.formData.start.toMysqlFormat();
-            between.date_flagged.max =  $scope.formData.end.toMysqlFormat();
+            between.date_time = {};
+            between.date_time.min = $scope.formData.start.toMysqlFormat();
+            between.date_time.max =  $scope.formData.end.toMysqlFormat();
         }
 
         if ($scope.btw.data_value.min && $scope.btw.data_value.max) {
@@ -363,12 +363,20 @@
           request.between = between;
         }
       console.log(request);
-      var request = $.post("http://" + host + "/api/datapoint/list", JSON.stringify(request));
-      request.done(function( msg ) {
-          $scope.table_data = msg;
-          console.log(msg);
-      }).fail(function( msg ) {
-          alert("Could not get poi details");
+      $.ajax({
+            type: "POST",
+            url: "http://" + host + "/api/datapoint/list",
+            data: JSON.stringify(request),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function(msg) {
+                $scope.table_data = msg; 
+                console.log($scope.table_data);
+            },
+            error: function(msg) {
+                console.log("Failed to get POI data details.");
+                console.log(msg);
+            }
       });
   }
   //Need endpoint for updating flag
