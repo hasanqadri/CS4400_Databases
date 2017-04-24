@@ -46,11 +46,13 @@
                 </select>
 
                 <div ng-show="showStates">
-                  <label style="padding-right:10px">City/State</label>
+                  <label style="padding-right:10px">City</label>
                   <select ng-model="data.city"
-                          ng-options="location.city as location.city for location in city_states"></select>
+                          ng-options="location.city as location.city for location in city_states | unique:'city'"></select>
+                     <div ng-show="showStates">
+                  <label style="padding-right:10px">State</label>
                   <select ng-model="data.state"
-                          ng-options="location.state as location.state for location in city_states"></select>
+                          ng-options="location.state as location.state for location in city_states | unique:'state'"></select>
                   <hr>
                   <input type="text" ng-model="data.title" placeholder="Title">
                 </div>

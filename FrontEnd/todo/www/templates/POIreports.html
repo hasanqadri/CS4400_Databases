@@ -17,22 +17,22 @@
             <th class="text-center padding-right-custom" colspan="1">AQ Min</th>
             <th class="text-center padding-right-custom" colspan="1">AQ Avg</th>
             <th class="text-center padding-right-custom" colspan="1">AQ Max</th>
-            <th class="text-center padding-right-custom" colspan="1"># of data points</th>
+            <th class="text-center padding-right-custom" colspan="1"># Points</th>
             <th class="text-center padding-right-custom" colspan="1">Flagged?</th>
             </tr>
           <tr ng-repeat="p in pendingData">
             <td>test</td>
-            <td>{{point.location}}</td>
-            <td>{{point.city}}</td>
-            <td>{{point.state}}</td>
-            <td>{{point.moldMin}}</td>
-            <td>{{point.moldAvg}}</td>
-            <td>{{point.moldMax}}</td>
-            <td>{{point.aqMin}}</td>
-            <td>{{point.aqAvg}}</td>
-            <td>{{point.aqMax}}</td>
-            <td>{{point.numData}}</td>
-            <td>{{point.flagged}}</td>
+            <td>{{p.location}}</td>
+            <td>{{p.city}}</td>
+            <td>{{p.state}}</td>
+            <td>{{p.moldMin}}</td>
+            <td>{{p.moldAvg}}</td>
+            <td>{{p.moldMax}}</td>
+            <td>{{p.aqMin}}</td>
+            <td>{{p.aqAvg}}</td>
+            <td>{{p.aqMax}}</td>
+            <td>{{p.numData}}</td>
+            <td>{{p.flagged}}</td>
           </tr>
             </table>
 

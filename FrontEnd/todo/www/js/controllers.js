@@ -90,8 +90,6 @@
   }])
 
   .controller('locationCtrl', ['$rootScope', '$state', '$scope', function($rootScope, $state, $scope) {
-
-    
     var request = $.post("http://" + host + "/api/poi/list", {});
         request.done(function( msg ) {
         $scope.poiInfo = msg;
@@ -335,7 +333,7 @@
 
 .controller('adminCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
     $scope.officials = [];
-    var request = $.post("http://" + host + "/api/users/list", {vals:{'approved': null, "user_type":"official"}});
+    var request = $.post("http://" + host + "/api/users/list_officials", {"vals":{"approved":null}});
     request.done(function( msg ) {
       $scope.officials = msg;
       for (i in $scope.officials) {
@@ -347,9 +345,11 @@
 
     $scope.submit = function(action) {
       var updateVal = (action == "Reject")? 0 : 1;
+  
+      console.log("updateVal:" + updateVal);
       for (i = 0; i < $scope.officials.length; i++) {
-        if ($scope.officials.checked) {
-          $scope.officials.approved = updateVal;
+        if ($scope.officials[i].checked) {
+          $scope.officials[i].approved = updateVal;
           var request = $.post("http://" + host + "/api/users/update",  $scope.officials[i]);
               request.done(function( msg ) {
               console.log("updated " + $scope.officials[i].username);
@@ -366,9 +366,27 @@
     var request = $.post("http://" + host + "/api/datapoint/list", {vals: {'accepted': null}});
     request.done(function( msg ) {
       $scope.pendingData = msg;
+      for (i in $scope.pendingData) {
+        i.checked = false;
+      }
     }).fail(function( msg ) {
-        console.log("Could not get data list");
+        console.log("Could not get pending data list");
     })
+
+    $scope.submit = function(action) {
+      var updateVal = (action == "Reject")? 0 : 1;
+      for (i = 0; i < $scope.pendingData.length; i++) {
+        if ($scope.pendingData.checked) {
+          $scope.pendingData.approved = updateVal;
+          var request = $.post("http://" + host + "/api/datapoint/update",  $scope.pendingData[i]);
+              request.done(function( msg ) {
+              console.log("updated datapoint " + i);
+            }).fail(function( msg ) {
+              console.log("Could not updated datapoint " + i);
+            });
+          }
+      }
+    };  
 }]);
 
 
