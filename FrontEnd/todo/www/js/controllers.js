@@ -458,7 +458,7 @@
    $scope.query();
 
     $scope.submit = function(action) {
-      var updateVal = (action == "Reject")? "rejected" : "accepted";
+      var updateVal = (action == "Reject")? "rejected" : "approved";
   
       console.log("updateVal:" + updateVal);
       console.log($scope.officials);
