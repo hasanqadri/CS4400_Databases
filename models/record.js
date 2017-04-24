@@ -139,8 +139,8 @@ class record {
                 }
             }
             for (let property in between) {
-                if (between.hasOwnProperty(property)) {
-                    sql += db.mysql.escapeId(property['name']) + ' BETWEEN ' + db.mysql.escape(between[property]['min']) + ' AND ' + db.mysql.escape(between[property]['max']);
+                if (between.hasOwnProperty(property) && between[property].min) {
+                    sql += db.mysql.escapeId(property) + ' BETWEEN ' + db.mysql.escape(between[property].min) + ' AND ' + db.mysql.escape(between[property].max);
                 }
             }
             sql = sql.slice(0, -5);
