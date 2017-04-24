@@ -314,11 +314,21 @@
   $scope.formData = {
     "location_name": current_poi_location,
     "data_type":null,
-    "dataValueLow":null,
-    "dataValueHigh":null,
     "start":null,
     "end":null
-  }
+  };
+
+  $scope.btw = {
+    "date_flagged": {
+          "min":null,
+          "max":null
+    },
+    "data_value": {
+          "min":null,
+          "max":null
+    }
+  };
+
   $scope.didQuery = 0;
   var request = $.get("http://" + host + "/api/datapoint/datatypes", {});
         request.done(function( msg ) {
@@ -338,11 +348,39 @@
 
   $scope.applyFilter = function () {
     //Need value and time endpoints
-      var request = $.post("http://" + host + "/api/data/list", $scope.formData);
+       var between = {};
+        if ($scope.formData.start && $scope.formData.start) {
+            between.date_flagged = {};
+            between.date_flagged.min = $scope.formData.start.toMysqlFormat();
+            between.date_flagged.max =  $scope.formData.end.toMysqlFormat();
+        }
+
+        if ($scope.btw.data_value.min && $scope.btw.data_value.max) {
+            console.log("hi");
+            between.data_value = {};
+            between.data_value.min = $scope.btw.data_value.min;
+            between.data_value.max = $scope.btw.data_value.max;
+        }
+
+        var request = {};
+        $scope.data.flag = ($scope.data.checked)? 1:0;
+        remove =["start", "end"];
+        query = buildRequestJSON($scope.formData, [], remove);   
+
+        if(query && Object.keys(query).length != 0) {
+          request.vals = query;
+        }
+        console.log(between);
+        if(between && Object.keys(between).length != 0) {
+          request.between = between;
+        }
+      console.log(request);
+      var request = $.post("http://" + host + "/api/datapoint/list", JSON.stringify(request));
       request.done(function( msg ) {
-          $scope.data = msg;
+          $scope.table_data = msg;
+          console.log(msg);
       }).fail(function( msg ) {
-          alert("Could not get poi list");
+          alert("Could not get poi details");
       });
   }
   //Need endpoint for updating flag
