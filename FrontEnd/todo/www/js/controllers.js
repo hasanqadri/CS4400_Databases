@@ -51,9 +51,10 @@
       "end": null,
     };
     $scope.btw = {
-      "name": "date_flagged",
-      "min": null,
-      "max": null
+      "date_flagged": {
+            "min":null,
+            "max":null
+      }
     };
 
     var request = $.post("http://" + host + "/api/poi/list", {});
@@ -70,8 +71,8 @@
     $scope.applyFilter = function() {
         var between = {};
         if ($scope.data.start && $scope.data.end) {
-            $scope.btw.min = getDate($scope.data.start);
-            $scope.btw.max =  getDate($scope.data.end);
+            $scope.btw.date_flagged.min = getDate($scope.data.start);
+            $scope.btw.date_flagged.max =  getDate($scope.data.end);
             between = $scope.btw;
         }
         $scope.data.flag = ($scope.data.checked)? 1:0;
@@ -462,9 +463,13 @@
       for (i = 0; i < $scope.officials.length; i++) {
         console.log(i);
         if ($scope.officials[i].checked) {
+
           $scope.officials[i].approved = updateVal;
+          $scope.officials[i].password = "updated from client";
           console.log($scope.officials[i]);
-          var request = $.post("http://" + host + "/api/users/update",  $scope.officials[i]);
+          var q = buildRequestJSON($scope.officials[i], [], ["checked", "$$hashKey"]);
+          console.log(q);
+          var request = $.post("http://" + host + "/api/users/update",  q);
               request.done(function( msg ) {
                 console.log("updated " + i);
               }).fail(function( msg ) {
