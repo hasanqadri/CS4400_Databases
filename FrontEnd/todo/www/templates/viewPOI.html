@@ -56,11 +56,11 @@
           <div class="item item-input-inset">
             <label class="right-margin"> Date Flagged: </label>
             <label class="right-margin">
-              <input type="datetime-local" ng-model="data.date_flagged_start">
+              <input type="datetime-local" ng-model="data.start">
             </label>
             <label class="right-margin"> to </label>
             <label class="right-margin">
-              <input  class="right-margin" type="datetime-local" ng-model="data.date_flagged_end">
+              <input  class="right-margin" type="datetime-local" ng-model="data.end">
             </label>
           </div>
         </div>
@@ -74,7 +74,7 @@
           <button class="button button-block button-positive half_size " ng-click="resetFilter()" style="max-width:50%">Reset Filter</button>
         </div>
        
-        <div align="center" ng-show="querySuccess">
+        <div align="center" ng-show="1">
           <hr>
           <table align="center">
             <tr ng-click="viewPOIDetail('Atlanta')">

@@ -8,7 +8,7 @@
         <div class="col card" align = "center">
           <h3 class = "title row-center" style="text-align:center"> View Pending City Officials </h3>
 
-          <table align="center">
+          <table>
           <tr>
             <th class="text-center" colspan="1">Select</th>
             <th class="text-center" colspan="1">Username</th>
@@ -20,7 +20,6 @@
 
         <tr ng-repeat="i in officials">
           <td> <input type="checkbox" ng-model="i.checked"></td>
-          <td>{{i.checked}}</td>
           <td>{{i.username}}</td>
           <td>{{i.email}}</td>
           <td>{{i.city}}</td>

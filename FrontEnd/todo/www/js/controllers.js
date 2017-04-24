@@ -44,8 +44,14 @@
       "state": null ,
       "zip": null ,
       "flag": false,
-      "date_flagged_start" :null ,
-      "date_flagged_end" : null 
+      "start": null,
+      "end": null,
+      "between" : {
+        "date_time": {
+          "min": null,
+          "max": null,
+        }
+      }
     }
     var request = $.post("http://" + host + "/api/poi/list", {});
         request.done(function( msg ) {
@@ -59,15 +65,15 @@
 
     $scope.querySuccess = 0;
     $scope.applyFilter = function() {
-      console.log({vals: $scope.data});
+        $scope.data.between.date_time.min = $scope.data.start.toMysqlFormat();
+        $scope.data.between.date_time.max =  $scope.data.end.toMysqlFormat();
+        console.log($scope.data);
       var request = $.post("http://" + host + "/api/poi/list", {vals: $scope.data});
         request.done(function( msg ) {
-
         $scope.querySuccess = 1;
         console.log( $scope.querySuccess);
         console.log(msg);
         $scope.poiInfo = msg;
-       
       }).fail(function( msg ) {
           console.log("fail");
       });
@@ -344,7 +350,8 @@
 
 .controller('adminCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
     $scope.officials = [];
-    var request = $.post("http://" + host + "/api/users/list_officials", {"vals":{"approved":null}});
+    console.log(JSON.stringify({"vals":{"approved":null}}));
+    var request = $.post("http://" + host + "/api/users/list_officials", JSON.stringify({"vals":{"approved":null}}));
     request.done(function( msg ) {
       $scope.officials = msg;
       for (i in $scope.officials) {
@@ -358,23 +365,29 @@
       var updateVal = (action == "Reject")? 0 : 1;
   
       console.log("updateVal:" + updateVal);
+      console.log($scope.officials);
+      console.log($scope.officials.length);
       for (i = 0; i < $scope.officials.length; i++) {
+        console.log(i);
         if ($scope.officials[i].checked) {
+          console.log(i);
           $scope.officials[i].approved = updateVal;
           var request = $.post("http://" + host + "/api/users/update",  $scope.officials[i]);
               request.done(function( msg ) {
-              console.log("updated " + $scope.officials[i].username);
-            }).fail(function( msg ) {
-              console.log("Could not update  " + $scope.officials[i].username);
-            });
-          }
+                console.log("updated " + i);
+              }).fail(function( msg ) {
+                console.log("Could not update  " + i);
+                console.log($scope.officials[i]);
+              });
+        }
       }
     };  
 }])
 
 .controller('adminPendingDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
     $scope.pendingData = [];
-    var request = $.post("http://" + host + "/api/datapoint/list", {vals: {'accepted': null}});
+    console.log(JSON.stringify({"vals":{"accepted":null}}));
+    var request = $.post("http://" + host + "/api/datapoint/list", JSON.stringify({"vals":{"accepted":null}}));
     request.done(function( msg ) {
       $scope.pendingData = msg;
       for (i in $scope.pendingData) {
@@ -387,13 +400,13 @@
     $scope.submit = function(action) {
       var updateVal = (action == "Reject")? 0 : 1;
       for (i = 0; i < $scope.pendingData.length; i++) {
-        if ($scope.pendingData.checked) {
-          $scope.pendingData.approved = updateVal;
+        if ($scope.pendingData[i].checked) {
+          $scope.pendingData[i].approved = updateVal;
           var request = $.post("http://" + host + "/api/datapoint/update",  $scope.pendingData[i]);
               request.done(function( msg ) {
-              console.log("updated datapoint " + i);
+              console.log("updated datapoint");
             }).fail(function( msg ) {
-              console.log("Could not updated datapoint " + i);
+              console.log("Could not updated datapoint");
             });
           }
       }
