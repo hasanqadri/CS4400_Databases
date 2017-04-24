@@ -27,10 +27,13 @@
     var request = $.post("http://" + host + "/api/datapoint/list", {});
     request.done(function( msg ) {
       console.log(msg);
-      $scope.pendingData = msg;
+      $scope.reports = msg;
     }).fail(function( msg ) {
         console.log("Failed to get POI reports");
     });
+
+    $scope.orderByField = 'mold_min';
+    $scope.reverseSort = false;
   }])
 
 

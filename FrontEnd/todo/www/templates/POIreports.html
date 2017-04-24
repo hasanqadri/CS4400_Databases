@@ -1,4 +1,4 @@
-<ion-view view-title="POI reports" name="POIreports-view">
+<ion-view view-title="POI Report" name="POIreports-view">
   <ion-nav-buttons>
     <button class="button icon ion-ios-arrow-back button-clear" ng-click="goBack()">Back</button>
   </ion-nav-buttons>
@@ -11,28 +11,45 @@
             <th class="text-center padding-right-custom padding-left" colspan="1">POI Location</th>
             <th class="text-center padding-right-custom" colspan="1">City</th>
             <th class="text-center padding-right-custom" colspan="1">State</th>
-            <th class="text-center padding-right-custom" colspan="1">Mold Min</th>
-            <th class="text-center padding-right-custom" colspan="1">Mold Avg</th>
-            <th class="text-center padding-right-custom" colspan="1">Mold Max</th>
-            <th class="text-center padding-right-custom" colspan="1">AQ Min</th>
-            <th class="text-center padding-right-custom" colspan="1">AQ Avg</th>
-            <th class="text-center padding-right-custom" colspan="1">AQ Max</th>
-            <th class="text-center padding-right-custom" colspan="1"># Points</th>
+            
+            <th class="text-center padding-right-custom" colspan="1"><a href="#" ng-click="orderByField='mold_min'; reverseSort = !reverseSort">
+            Mold Min 
+            </a></th>
+
+            <th class="text-center padding-right-custom" colspan="1"><a href="#" ng-click="orderByField='mold_avg'; reverseSort = !reverseSort">
+            Mold Avg
+            </a></th>
+            
+            <th class="text-center padding-right-custom" colspan="1"><a href="#" ng-click="orderByField='mold_max'; reverseSort = !reverseSort">
+            Mold Avg
+            </a></th>
+
+            <th class="text-center padding-right-custom" colspan="1"><a href="#" ng-click="orderByField='aq_min'; reverseSort = !reverseSort">
+            AQ Min
+            </a></th>
+            <th class="text-center padding-right-custom" colspan="1"><a href="#" ng-click="orderByField='aq_avg'; reverseSort = !reverseSort">
+            AQ Avg
+            </a></th>
+
+            <th class="text-center padding-right-custom" colspan="1"><a href="#" ng-click="orderByField='aq_max'; reverseSort = !reverseSort">
+            AQ Max
+            </a></th>
+            <th class="text-center padding-right-custom" colspan="1"># of data points</th>
             <th class="text-center padding-right-custom" colspan="1">Flagged?</th>
             </tr>
-          <tr ng-repeat="p in pendingData">
+            <tr ng-repeat="point in reports|orderBy:orderByField:reverseSort">
             <td>test</td>
-            <td>{{p.location}}</td>
-            <td>{{p.city}}</td>
-            <td>{{p.state}}</td>
-            <td>{{p.moldMin}}</td>
-            <td>{{p.moldAvg}}</td>
-            <td>{{p.moldMax}}</td>
-            <td>{{p.aqMin}}</td>
-            <td>{{p.aqAvg}}</td>
-            <td>{{p.aqMax}}</td>
-            <td>{{p.numData}}</td>
-            <td>{{p.flagged}}</td>
+            <td>{{point.location}}</td>
+            <td>{{point.city}}</td>
+            <td>{{point.state}}</td>
+            <td>{{point.moldMin}}</td>
+            <td>{{point.moldAvg}}</td>
+            <td>{{point.moldMax}}</td>
+            <td>{{point.aqMin}}</td>
+            <td>{{point.aqAvg}}</td>
+            <td>{{point.aqMax}}</td>
+            <td>{{point.numData}}</td>
+            <td>{{point.flagged}}</td>
           </tr>
             </table>
 
