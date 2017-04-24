@@ -52,7 +52,7 @@ router.post('/report', [
     function (req, res, next) {
         let db = require('../db');
         db.query({
-            sql: "SELECT POIs.location_name, city, state, MIN(mold.data_value), AVG(mold.data_value), MAX(mold.data_value), MIN(air.data_value), AVG(air.data_value), MAX(air.data_value), COUNT(air.data_value + mold.data_value), flag FROM POIs LEFT JOIN Data_points mold on POIs.location_name=mold.location_name and mold.data_type='mold' and mold.accepted='approved' LEFT JOIN Data_points air on POIs.location_name=air.location_name and air.data_type='air_quality' and air.accepted='approved' GROUP BY POIs.location_name"
+            sql: "SELECT POIs.location_name, city, state, MIN(mold.data_value) as `mold_min`, AVG(mold.data_value) as `mold_avg` , MAX(mold.data_value) as `mold_max`, MIN(air.data_value) as `aq_min`, AVG(air.data_value) as `aq_avg`, MAX(air.data_value) as `aq_max`, COUNT(air.data_value + mold.data_value) as `num_data`, flag FROM POIs LEFT JOIN Data_points mold on POIs.location_name=mold.location_name and mold.data_type='mold' and mold.accepted='approved' LEFT JOIN Data_points air on POIs.location_name=air.location_name and air.data_type='air_quality' and air.accepted='approved' GROUP BY POIs.location_name"
         }, function (err, results) {
             if (err) {
                 log.all(err);
