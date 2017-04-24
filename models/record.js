@@ -110,7 +110,7 @@ class record {
         var fields = args['fields'];
         var like = args['like'] || {};
         var order = args['order'];
-        var between = args['between'] || {};
+        var between = args['between'];
         var join = args['join'];
 
         if (name === null) {
@@ -126,7 +126,7 @@ class record {
             sql += ' RIGHT JOIN ' + db.mysql.escapeId(join['table']) + ' ON ' + db.mysql.escapeId(join['table']) + '.' + db.mysql.escapeId(join['colA']) + '=' + db.mysql.escapeId(name) + '.' + db.mysql.escapeId(join['colB']);
         }
 
-        if (Object.keys(vals).length > 0 || Object.keys(like).length > 0 || Object.keys(between).length > 0) {
+        if (Object.keys(vals).length > 0 || Object.keys(like).length > 0 || between) {
             sql += ' WHERE ';
             for (let property in vals) {
                 if (vals.hasOwnProperty(property)) {
