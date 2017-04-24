@@ -58,17 +58,17 @@
       "location_name": null ,
       "city": null ,
       "state": null ,
-      "zip": null ,
+      "zip_code": null ,
       "checked": false,
       "flag": 0,
       "start": null,
       "end": null,
-    }
+    };
     $scope.btw = {
       "name": "date_flagged",
       "min": null,
       "max": null
-    }
+    };
 
     var request = $.post("http://" + host + "/api/poi/list", {});
         request.done(function( msg ) {
@@ -113,13 +113,18 @@
                 console.log("Filtered!");
                 console.log($scope.poiInfo);
                 $scope.didQuery = 1;
+
             },
             error: function(msg) {
                 console.log("Failed to filter.");
                 console.log(msg);
             }
           });
-    }
+
+
+    };
+
+
 
     $scope.resetFilter = function() {
       for (var key in $scope.data) {
@@ -128,7 +133,7 @@
         }
         $scope.flag = false;
       }
-    }
+    };
 
     $scope.viewPOIDetail = function(location) {
       current_poi_location = location;
@@ -136,7 +141,7 @@
       if (current_poi_location) {
         $state.go('POIdetail');
       }
-    }
+    };
 
   }])
 
@@ -146,7 +151,7 @@
         "location_name": null,
         "city": null,
         "state": null,
-        "zip": null
+        "zip_code": null
     }
     var request = $.post("http://" + host + "/api/poi/list", {});
         request.done(function( msg ) {
@@ -426,6 +431,7 @@
 
 .controller('adminPendingDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
     $scope.pendingData = [];
+<<<<<<< HEAD
     var request = $.post("http://" + host + "/api/datapoint/list", JSON.stringify({"vals":{"accepted": "pending"}}));
     request.done(function( msg ) {
       $scope.pendingData = msg;
@@ -436,12 +442,35 @@
     }).fail(function( msg ) {
         console.log("Could not get pending data list");
     })
+=======
+
+
+     $.ajax({
+            type: "POST",
+            url: "http://" + host + "/api/datapoint/list",
+            data: JSON.stringify({"vals":{"accepted":"pending"}}),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function(msg) {
+              $scope.pendingData = msg;
+              console.log($scope.pendingData);
+              for (i in $scope.pendingData) {
+                i.checked = false;
+              }
+
+            },
+            error: function(msg) {
+                console.log("Failed to get pending data.");
+                console.log(msg);
+            }
+      });
+>>>>>>> f70de04c4df787ea4a688833d7d7cfc5fc802692
 
     $scope.submit = function(action) {
-      var updateVal = (action == "Reject")? 0 : 1;
+      var updateVal = (action == "Reject")? "rejected" : "approved";
       for (i = 0; i < $scope.pendingData.length; i++) {
         if ($scope.pendingData[i].checked) {
-          $scope.pendingData[i].approved = updateVal;
+          $scope.pendingData[i].accepted = updateVal;
           var request = $.post("http://" + host + "/api/datapoint/update",  $scope.pendingData[i]);
               request.done(function( msg ) {
               console.log("updated datapoint");
