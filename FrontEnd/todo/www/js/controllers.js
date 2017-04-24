@@ -23,7 +23,7 @@
   }])
 
   .controller('POIreportsCtrl', ['$rootScope', '$state', '$scope', function($rootScope, $state, $scope) {
-    var request = $.post("http://" + host + ":3000/api/datapoint/list", {});
+    var request = $.post("http://" + host + "/api/datapoint/list", {});
     request.done(function( msg ) {
       console.log(msg);
       $scope.pendingData = msg;
@@ -43,7 +43,7 @@
       "date_flagged_start" :null ,
       "date_flagged_end" : null 
     }
-    var request = $.post("http://" + host + ":3000/api/poi/list", {});
+    var request = $.post("http://" + host + "/api/poi/list", {});
         request.done(function( msg ) {
         //console.log( JSON.stringify(msg));
         $scope.poiInfo = msg;
@@ -56,7 +56,7 @@
     $scope.querySuccess = 0;
     $scope.applyFilter = function() {
       console.log({vals: $scope.data});
-      var request = $.post("http://" + host + ":3000/api/poi/list", {vals: $scope.data});
+      var request = $.post("http://" + host + "/api/poi/list", {vals: $scope.data});
         request.done(function( msg ) {
 
         $scope.querySuccess = 1;
@@ -91,7 +91,7 @@
   .controller('locationCtrl', ['$rootScope', '$state', '$scope', function($rootScope, $state, $scope) {
 
     
-    var request = $.post("http://" + host + ":3000/api/poi/list", {});
+    var request = $.post("http://" + host + "/api/poi/list", {});
         request.done(function( msg ) {
         $scope.poiInfo = msg;
       }).fail(function( msg ) {
@@ -101,7 +101,7 @@
     
 
     $scope.submit = function() {
-      var request = $.post("http://" + host + ":3000/api/poi/new", $scope.data);
+      var request = $.post("http://" + host + "/api/poi/new", $scope.data);
       console.log($scope.data);
         request.done(function( msg ) {
           alert("done")
@@ -152,7 +152,7 @@
         //$scope.states = ["OH", "VA", "TN"];
         //$scope.cities = ["Cincinnati", "Columbus", "Atlanta"];
 
-        var request = $.post("http://" + host + ":3000/api/citystate/list", {});
+        var request = $.post("http://" + host + "/api/citystate/list", {});
           request.done(function( msg ) {
           $scope.city_states = msg;
           console.log(msg);
@@ -178,7 +178,7 @@
 
     $scope.login = function() {
         console.log($scope.login_data);
-        var request = $.post("http://" + host + ":3000/api/login/", $scope.login_data);
+        var request = $.post("http://" + host + "/api/login/", $scope.login_data);
         request.done(function( msg ) {
           $state.go("dash");
           console.log(msg);
@@ -216,7 +216,7 @@
           return;
       }
       //Send the request
-      var request = $.post("http://" + host + ":3000/api/users/new", $scope.data);
+      var request = $.post("http://" + host + "/api/users/new", $scope.data);
       request.done(function( msg ) {
         $scope.modal.remove();
       }).fail(function( msg ) {
@@ -271,7 +271,7 @@
   
 
   $scope.didQuery = 0;
-  var request = $.post("http://" + host + ":3000/api/datapoint/datatypes", {});
+  var request = $.post("http://" + host + "/api/datapoint/datatypes", {});
         request.done(function( msg ) {
           $scope.data = msg;
           console.log($scope.data);
@@ -289,7 +289,7 @@
 
   $scope.applyFilter = function () {
     //Need value and time endpoints
-      var request = $.post("http://" + host + ":3000/api/data/list", $scope.formData);
+      var request = $.post("http://" + host + "/api/data/list", $scope.formData);
       request.done(function( msg ) {
         $scope.data = msg;
       }).fail(function( msg ) {
@@ -298,7 +298,7 @@
   }
   //Need endpoint for updating flag
   $scope.flag = function () {
-      var request = $.post("http://" + host + ":3000/api/poi/update", {"location_name": $scope.formData.location_name, "flag": 1});
+      var request = $.post("http://" + host + "/api/poi/update", {"location_name": $scope.formData.location_name, "flag": 1});
       request.done(function( msg ) {
         $scope.data = msg;
       }).fail(function( msg ) {
@@ -319,13 +319,13 @@
     $scope.addLocation = function() {
         $state.go('location');
     }
-    var request = $.post("http://" + host + ":3000/api/poi/list", {});
+    var request = $.post("http://" + host + "/api/poi/list", {});
         request.done(function( msg ) {
         $scope.poiInfo = msg;
       }).fail(function( msg ) {
           console.log(msg);
       });
-    request = $.get("http://" + host + ":3000/api/datapoint/datatypes");
+    request = $.get("http://" + host + "/api/datapoint/datatypes");
         request.done(function( msg ) {
         $scope.data_list = msg;
         console.log($scope.data_list);
@@ -335,7 +335,7 @@
     $scope.submit = function() {
       console.log(($scope.data.date).toMysqlFormat());
       $scope.data.date_time = ($scope.data.date).toMysqlFormat();
-      var request = $.post("http://" + host + ":3000/api/datapoint/new",  $scope.data);
+      var request = $.post("http://" + host + "/api/datapoint/new",  $scope.data);
         request.done(function( msg ) {
         alert("success!");
       }).fail(function( msg ) {
@@ -347,7 +347,7 @@
 .controller('adminCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
     $scope.officials = [];
 
-    var request = $.post("http://" + host + ":3000/api/users/list", {vals: {'approved': '0'}});
+    var request = $.post("http://" + host + "/api/users/list", {vals: {'approved': '0'}});
     request.done(function( msg ) {
       $scope.officials = msg;
     }).fail(function( msg ) {
@@ -358,7 +358,7 @@
 
 .controller('adminPendingDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
     $scope.pendingData = [];
-    var request = $.post("http://" + host + ":3000/api/datapoint/list", {vals: {'pending': '1'}});
+    var request = $.post("http://" + host + "/api/datapoint/list", {vals: {'pending': '1'}});
     request.done(function( msg ) {
       $scope.pendingData = msg;
     }).fail(function( msg ) {
