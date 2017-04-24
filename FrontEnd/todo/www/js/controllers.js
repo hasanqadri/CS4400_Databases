@@ -232,7 +232,7 @@
       //Check if all fields are filled out, very brute forcy but..
       for (var key in $scope.data) {
         if ($scope.data.hasOwnProperty(key)) {
-          if ($scope.data["usertype"] != "Official") {
+          if ($scope.data["usertype"] != "official") {
             if (key == "state" || key == "title" || key == "city") 
               continue;
           }
@@ -256,7 +256,8 @@
           return;
       }
       //Send the request
-      var request = $.post("http://" + host + "/api/users/new", $scope.data);
+      var query = buildRequestJSON($scope.data, [], ['pass_confirm']);
+      var request = $.post("http://" + host + "/api/users/new", query)    ;
       request.done(function( msg ) {
         $scope.modal.remove();
       }).fail(function( msg ) {
@@ -456,18 +457,13 @@
       });
    }
    $scope.query();
-
-    $scope.submit = function(action) {
-      var updateVal = (action == "Reject")? "rejected" : "approved";
-  
-      console.log("updateVal:" + updateVal);
-      console.log($scope.officials);
-      console.log($scope.officials.length);
+   $scope.submit = function(action) {
+      var updateVal = (action == "Reject")? "rejected" : "approved";;
       for (i = 0; i < $scope.officials.length; i++) {
         console.log(i);
         if ($scope.officials[i].checked) {
-          console.log(i);
           $scope.officials[i].approved = updateVal;
+          console.log($scope.officials[i]);
           var request = $.post("http://" + host + "/api/users/update",  $scope.officials[i]);
               request.done(function( msg ) {
                 console.log("updated " + i);
@@ -488,7 +484,7 @@
             $.ajax({
             type: "POST",
             url: "http://" + host + "/api/datapoint/list",
-            data: JSON.stringify({"vals":{"approved":"pending"}}),
+            data: JSON.stringify({"vals":{"accepted":"pending"}}),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function(msg) {

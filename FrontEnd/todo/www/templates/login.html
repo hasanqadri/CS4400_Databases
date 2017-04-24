@@ -40,9 +40,9 @@
 
                 <label style="padding-right:10px">User Type</label>
                 <select ng-model="data.usertype">
-                  <option>Official</option>
-                  <option>Scientist</option>
-                  {{showStates = (data.usertype == "Official")? 1 : 0}}
+                  <option>official</option>
+                  <option>scientist</option>
+                  {{showStates = (data.usertype == "official")? 1 : 0}}
                 </select>
 
                 <div ng-show="showStates">
