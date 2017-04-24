@@ -90,6 +90,13 @@
   }])
 
   .controller('locationCtrl', ['$rootScope', '$state', '$scope', function($rootScope, $state, $scope) {
+
+    $scope.data = {
+        "location_name": null,
+        "city": null,
+        "state": null,
+        "zip": null
+    }
     var request = $.post("http://" + host + "/api/poi/list", {});
         request.done(function( msg ) {
         $scope.poiInfo = msg;
@@ -102,6 +109,7 @@
     $scope.submit = function() {
       var request = $.post("http://" + host + "/api/poi/new", $scope.data);
       console.log($scope.data);
+
         request.done(function( msg ) {
           alert("done")
       }).fail(function( msg ) {
