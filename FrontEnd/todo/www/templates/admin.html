@@ -17,20 +17,27 @@
           <th class="text-center" colspan="1">State</th>
           <th class="text-center" colspan="1">Title</th>
           </tr>
+<<<<<<< HEAD
         <tr ng-repeat="i in data">
           <td><input type="checkbox"></td>
+=======
+        <tr ng-repeat="i in officials">
+          <td> <input type="checkbox" ng-model="i.checked"></td>
+          <td>{{i.checked}}</td>
+>>>>>>> 377c7ec0516d9abdd6ebf88bd132bef3388feda9
           <td>{{i.username}}</td>
           <td>{{i.email}}</td>
           <td>{{i.city}}</td>
           <td>{{i.state}}</td>
           <td>{{i.title}}</td>
+          
         </tr>
         <tr>
         </tr>
           </table>
         <div class = "three_quarter_size">
-        <button class="button button-block button-balanced"   ng-click="accept()">Accept</button>
-        <button class="button button-block button-assertive" ng-click="reject()">Reject</button>
+        <button class="button button-block button-balanced"   ng-click="submit('Accept')">Accept</button>
+        <button class="button button-block button-assertive" ng-click="submit('Reject')">Reject</button>
         </div>
         </div>
     </div>

@@ -1,5 +1,5 @@
-  host = "54.85.86.111:80";
-  current_poi_location = null; 
+  var host = "54.85.86.111:80";
+  var current_poi_location = null; 
   angular.module('starter')
   .service('userData', function () {
       var user_data = {};
@@ -17,8 +17,9 @@
       $rootScope.goBack = function(view) {
         if(!view) {
           $state.go('dash');
+        } else {
+          $state.go(view);
         }
-        $state.go(view);
       };
   }])
 
@@ -116,18 +117,6 @@
           console.log(msg);
       });
     };  
-  }])
-
-  .controller('adminCtrl', ['$rootScope', '$state', function($rootScope, $state) {
-      $scope.data = {
-        "username": "",
-        "email": "",
-        "city": "",
-        "state": "",
-  }
-
-
-
   }])
 
   .controller('LoginCtrl', ['$scope', 'WaterApp','$state', '$ionicPopup', '$ionicModal', 'userData', function($scope, WaterApp, $state, $ionicPopup, $ionicModal) {
@@ -353,19 +342,35 @@
 
 .controller('adminCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
     $scope.officials = [];
-
-    var request = $.post("http://" + host + "/api/users/list", {vals: {'approved': '0'}});
+    var request = $.post("http://" + host + "/api/users/list", {vals:{'approved': null, "user_type":"official"}});
     request.done(function( msg ) {
       $scope.officials = msg;
+      for (i in $scope.officials) {
+        i.checked = false;
+      }
     }).fail(function( msg ) {
         alert("Could not get user list");
     });
 
+    $scope.submit = function(action) {
+      var updateVal = (action == "Reject")? 0 : 1;
+      for (i = 0; i < $scope.officials.length; i++) {
+        if ($scope.officials.checked) {
+          $scope.officials.approved = updateVal;
+          var request = $.post("http://" + host + "/api/users/update",  $scope.officials[i]);
+              request.done(function( msg ) {
+              console.log("updated " + $scope.officials[i].username);
+            }).fail(function( msg ) {
+              console.log("Could not update  " + $scope.officials[i].username);
+            });
+          }
+      }
+    };  
 }])
 
 .controller('adminPendingDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
     $scope.pendingData = [];
-    var request = $.post("http://" + host + "/api/datapoint/list", {vals: {'pending': '1'}});
+    var request = $.post("http://" + host + "/api/datapoint/list", {vals: {'accepted': null}});
     request.done(function( msg ) {
       $scope.pendingData = msg;
     }).fail(function( msg ) {
