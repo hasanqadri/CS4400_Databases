@@ -24,10 +24,10 @@
   }])
 
   .controller('POIreportsCtrl', ['$rootScope', '$state', '$scope', function($rootScope, $state, $scope) {
-    var request = $.post("http://" + host + "/api/datapoint/list", {});
+    var request = $.post("http://" + host + "/api/poi/report", {});
     request.done(function( msg ) {
-      console.log(msg);
       $scope.reports = msg;
+      console.log(msg);
     }).fail(function( msg ) {
         console.log("Failed to get POI reports");
     });
@@ -408,6 +408,7 @@
     var request = $.post("http://" + host + "/api/datapoint/list", JSON.stringify({"vals":{"accepted":null}}));
     request.done(function( msg ) {
       $scope.pendingData = msg;
+      console.log($scope.pendingData);
       for (i in $scope.pendingData) {
         i.checked = false;
       }

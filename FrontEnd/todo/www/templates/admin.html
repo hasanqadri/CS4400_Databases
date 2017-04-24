@@ -8,23 +8,23 @@
         <div class="col card" align = "center">
           <h3 class = "title row-center" style="text-align:center"> View Pending City Officials </h3>
 
-          <table>
+          <table class="table_size2" align="center">
           <tr>
-            <th class="text-center" colspan="1">Select</th>
-            <th class="text-center" colspan="1">Username</th>
-            <th class="text-center" colspan="1">Email</th>
-            <th class="text-center" colspan="1">City</th>
-            <th class="text-center" colspan="1">State</th>
-            <th class="text-center" colspan="1">Title</th>
+            <th class="text-center padding-right-custom" colspan="1">Select</th>
+            <th class="text-center padding-right-custom" colspan="1">Username</th>
+            <th class="text-center padding-right-custom" colspan="1">Email</th>
+            <th class="text-center padding-right-custom" colspan="1">City</th>
+            <th class="text-center padding-right-custom" colspan="1">State</th>
+            <th class="text-center padding-right-custom" colspan="1">Title</th>
           </tr>
 
         <tr ng-repeat="i in officials">
-          <td> <input type="checkbox" ng-model="i.checked"></td>
-          <td>{{i.username}}</td>
-          <td>{{i.email}}</td>
-          <td>{{i.city}}</td>
-          <td>{{i.state}}</td>
-          <td>{{i.title}}</td>
+          <td class="text-center padding-right-custom" colspan="1"> <input type="checkbox" ng-model="i.checked"></td>
+          <td class="text-center padding-right-custom" colspan="1">{{i.username}}</td>
+          <td class="text-center padding-right-custom" colspan="1">{{i.email}}</td>
+          <td class="text-center padding-right-custom" colspan="1">{{i.city}}</td>
+          <td class="text-center padding-right-custom" colspan="1">{{i.state}}</td>
+          <td class="text-center padding-right-custom" colspan="1">{{i.title}}</td>
         </tr>
         <tr>
         </tr>

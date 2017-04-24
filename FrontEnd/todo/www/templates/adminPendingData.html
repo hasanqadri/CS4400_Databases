@@ -8,20 +8,38 @@
     <div class="row center table_size">
       <div class="col card" align = "center">
         <h3 class = "title row-center" style="text-align:center"> View Pending Data Points</h3>
-        <table align="center">
+        <table class="table_size2" align="center">
           <tr>
             <th class="text-center" colspan="1">Select</th>
-            <th class="text-center" colspan="1">POI Location</th>
-            <th class="text-center" colspan="1">Data Type</th>
-            <th class="text-center" colspan="1">Data Value</th>
-            <th class="text-center" colspan="1">Time and Date of Reading</th>
+            <th class="text-center" colspan="1">
+              <a style="color:red" ng-click="orderByField='location_name'; reverseSort = !reverseSort">
+              Location Name
+              </a>
+            </th>
+            <th class="text-center padding-right-custom" colspan="1">
+              <a style="color:red" ng-click="orderByField='data_type'; reverseSort = !reverseSort">
+              Data Type
+              </a>
+            </th>
+
+            <th class="text-center padding-right-custom" colspan="1">
+              <a style="color:red" ng-click="orderByField='data_value'; reverseSort = !reverseSort">
+              Data Value
+              </a>
+            </th>
+
+            <th class="text-center padding-right-custom" colspan="1">
+              <a style="color:red" ng-click="orderByField='date_time'; reverseSort = !reverseSort">
+              Time and Date of Reading
+              </a>
+            </th>
           </tr>
           <tr ng-repeat="i in pendingData">
-            <td><input type="checkbox" ng-model="i.checked">{{i.checked}}</td>
-            <td>{{i.location}}</td>
-            <td>{{i.dataType}}</td>
-            <td>{{i.dataValue}}</td>
-            <td>{{i.timeDate}}</td>
+            <td class="text-center padding-right-custom" colspan="1"><input type="checkbox" ng-model="i.checked">{{i.checked}}</td>
+            <td class="text-center padding-right-custom" colspan="1">{{i.location}}</td>
+            <td class="text-center padding-right-custom" colspan="1">{{i.dataType}}</td>
+            <td class="text-center padding-right-custom" colspan="1">{{i.dataValue}}</td>
+            <td class="text-center padding-right-custom" colspan="1">{{i.timeDate}}</td>
           </tr>
         </table>
       </div>
