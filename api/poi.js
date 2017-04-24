@@ -52,13 +52,15 @@ router.post('/report', [
     function (req, res, next) {
         let db = require('../db');
         db.query({
-            sql: "SELECT  POIs.location_name,  POIs.city,  POIs.state,  MIN(mold.data_value),  AVG(mold.data_value),  MAX(mold.data_value),  MIN(air.data_value),  AVG(air.data_value),  MAX(air.data_value) FROM POIs LEFT JOIN Data_points mold on POIs.location_name=mold.location_name and mold.data_type='mold' LEFT JOIN Data_points air on POIs.location_name=air.location_name and air.data_type='mold'"
-        }, function(results) {
-            res.json(results);
-            res.status(200).end();
-        }, function(err) {
-            log.all(err);
-            res.status(500).end();
+            sql: "SELECT POIs.location_name, city, state, MIN(mold.data_value), AVG(mold.data_value), MAX(mold.data_value), MIN(air.data_value), AVG(air.data_value), MAX(air.data_value) FROM POIs LEFT JOIN Data_points mold on POIs.location_name=mold.location_name and mold.data_type='mold' LEFT JOIN Data_points air on POIs.location_name=air.location_name and air.data_type='air_quality' GROUP BY POIs.location_name"
+        }, function (err, results) {
+            if (err) {
+                log.all(err);
+                res.status(500).end();
+            } else {
+                res.json(results);
+                res.status(200).end();
+            }
         })
         // res.json([
         //     {

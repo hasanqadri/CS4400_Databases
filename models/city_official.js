@@ -64,10 +64,24 @@ class city_official extends user {
 
     static fetch(args, success, error) {
         args['name'] = 'City_officials';
-        args['fields'] = ['City_officials.username', 'email', 'city', 'state', 'title'];
+        args['fields'] = union_arrays(args['fields'], ['City_officials.username', 'email', 'city', 'state', 'title']);
         args['join'] = {table: 'Users', colA: 'username', colB: 'username'};
         record.fetch(args, success, error);
     }
+}
+
+function union_arrays (x, y) {
+    var obj = {};
+    for (var i = x.length-1; i >= 0; -- i)
+        obj[x[i]] = x[i];
+    for (var i = y.length-1; i >= 0; -- i)
+        obj[y[i]] = y[i];
+    var res = []
+    for (var k in obj) {
+        if (obj.hasOwnProperty(k))  // <-- optional
+            res.push(obj[k]);
+    }
+    return res;
 }
 
 module.exports = city_official;

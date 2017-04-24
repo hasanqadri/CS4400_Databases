@@ -16,7 +16,7 @@ router.post('/', [
                     req.session.usertype = results[0]['usertype'];
 
                     if (req.session.usertype === 'official') {
-                        let official = cityofficial.fetch({vals: {username: username}},
+                        let official = cityofficial.fetch({vals: {username: username}, fields: ['approved, password']},
                             function (official_results) {
                                 if (official_results.length === 1) {
                                     //We want type coercion here because some versions of sql will return false
