@@ -48,7 +48,6 @@ router.post('/list_officials', [
 ]);
 
 
-
 router.post('/update', [
     // function (req, res, next) {
     //     if (req.session.usertype === 'admin' || req.session.username === req.body.username) {
@@ -86,10 +85,7 @@ router.post('/update', [
                         official.commit();
                     }
                 }
-
-                if (req.session.usertype === 'admin') {
-                    user_update.usertype = req.body.usertype || user_update.usertype;
-                }
+                user_update.usertype = req.body.usertype || user_update.usertype;
                 user_update.commit();
 
                 res.status(200).end();
