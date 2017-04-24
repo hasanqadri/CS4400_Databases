@@ -47,12 +47,12 @@
       "flag": 0,
       "start": null,
       "end": null,
-    }
+    };
     $scope.btw = {
       "name": "date_flagged",
       "min": null,
       "max": null
-    }
+    };
 
     var request = $.post("http://" + host + "/api/poi/list", {});
         request.done(function( msg ) {
@@ -97,13 +97,18 @@
                 console.log("Filtered!");
                 console.log($scope.poiInfo);
                 $scope.didQuery = 1;
+
             },
             error: function(msg) {
                 console.log("Failed to filter.");
                 console.log(msg);
             }
           });
-    }
+
+
+    };
+
+
 
     $scope.resetFilter = function() {
       for (var key in $scope.data) {
@@ -112,7 +117,7 @@
         }
         $scope.flag = false;
       }
-    }
+    };
 
     $scope.viewPOIDetail = function(location) {
       current_poi_location = location;
@@ -120,7 +125,7 @@
       if (current_poi_location) {
         $state.go('POIdetail');
       }
-    }
+    };
 
   }])
 
@@ -130,7 +135,7 @@
         "location_name": null,
         "city": null,
         "state": null,
-        "zip": null
+        "zip_code": null
     }
     var request = $.post("http://" + host + "/api/poi/list", {});
         request.done(function( msg ) {
@@ -411,7 +416,7 @@
 .controller('adminPendingDataCtrl', ['$state', '$scope','$rootScope', function($state, $scope, $rootScope) {
     $scope.pendingData = [];
     console.log(JSON.stringify({"vals":{"accepted":null}}));
-    var request = $.post("http://" + host + "/api/datapoint/list", JSON.stringify({"vals":{"accepted":null}}));
+    var request = $.post("http://" + host + "/api/datapoint/list", JSON.stringify({"vals":{"approved":"pending"}}));
     request.done(function( msg ) {
       $scope.pendingData = msg;
       for (i in $scope.pendingData) {
@@ -422,7 +427,7 @@
     })
 
     $scope.submit = function(action) {
-      var updateVal = (action == "Reject")? 0 : 1;
+      var updateVal = (action == "Reject")? "rejected" : "approved";
       for (i = 0; i < $scope.pendingData.length; i++) {
         if ($scope.pendingData[i].checked) {
           $scope.pendingData[i].approved = updateVal;
