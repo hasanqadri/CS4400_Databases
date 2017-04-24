@@ -1,4 +1,4 @@
-<ion-view view-title="Admin" name="dashboard-view">
+<ion-view view-title="Pending City Officials" name="dashboard-view">
   <ion-nav-buttons>
     <button class="button icon ion-ios-arrow-back button-clear" ng-click="goBack()">Back</button>
   </ion-nav-buttons>
@@ -17,14 +17,10 @@
           <th class="text-center" colspan="1">State</th>
           <th class="text-center" colspan="1">Title</th>
           </tr>
-<<<<<<< HEAD
-        <tr ng-repeat="i in data">
-          <td><input type="checkbox"></td>
-=======
+
         <tr ng-repeat="i in officials">
           <td> <input type="checkbox" ng-model="i.checked"></td>
           <td>{{i.checked}}</td>
->>>>>>> 377c7ec0516d9abdd6ebf88bd132bef3388feda9
           <td>{{i.username}}</td>
           <td>{{i.email}}</td>
           <td>{{i.city}}</td>
