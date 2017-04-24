@@ -110,7 +110,8 @@ class record {
         var fields = args['fields'];
         var like = args['like'] || {};
         var order = args['order'];
-        var between = args['between'];
+        var between = args['between'] || {};
+        var join = args['join'];
 
         if (name === null) {
             throw "name cannot be null"
@@ -119,6 +120,10 @@ class record {
         let sql = 'SELECT ?? from ' + db.mysql.escapeId(name);
         if (!fields) {
             sql = 'SELECT * from ' + db.mysql.escapeId(name);
+        }
+
+        if (join) {
+            sql += ' RIGHT JOIN ' + db.mysql.escapeId(join['table']) + ' ON ' + db.mysql.escapeId(join['table']) + '.' + db.mysql.escapeId(join['colA']) + '=' + db.mysql.escapeId(name) + '.' + db.mysql.escapeId(join['colB']);
         }
 
         if (Object.keys(vals).length > 0 || Object.keys(like).length > 0 || Object.keys(between).length > 0) {

@@ -28,7 +28,7 @@ class city_official extends user {
 
         let sql = 'INSERT INTO City_officials SET ?';
         //also insert City_officials data
-        return db.query({sql: sql, vals: out},
+        return db.query({sql: sql, values: out},
             function (error, results, fields) {
                 if (error) {
                     err(error);

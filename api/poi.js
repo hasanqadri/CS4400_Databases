@@ -5,9 +5,9 @@ var auth = require('../middlewares/authentication');
 var poi = require('../models/poi');
 
 router.post('/new', [
-    auth.official,
+    auth.scientist,
     function (req, res, next) {
-        let our_poi = new poi(req.body.location_name, req.body.city, null, null, req.body.state, req.body.zip);
+        let our_poi = new poi(req.body.location_name, req.body.city, req.body.state, null, null, req.body.zip);
         our_poi.make(
             function(res) {
                 res.status(200).end();
@@ -24,8 +24,7 @@ router.post('/new', [
 ]);
 
 router.post('/list', [
-    auth.user
-    ,
+    auth.user,
     function (req, res, next) {
         poi.fetch({order: req.body.order, like: req.body.like}, function (results) {
             res.results = results;

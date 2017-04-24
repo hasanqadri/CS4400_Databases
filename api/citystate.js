@@ -1,100 +1,40 @@
-#!/usr/bin/env node
+var express = require('express');
+var router = express.Router();
 
-//Logger for con.js to behave
-global.log = require('loglevel');
-log.setLevel(log.levels.DEBUG);
+var auth = require('../middlewares/authentication');
+var citystate = require('../models/city_state');
 
-var mysql = require('mysql');
-
-const host = process.env.con_HOST || 'localhost';
-const user = process.env.con_USER || 'SLS017';
-const password = process.env.con_PASS || 'GROUP17_SPR17';
-const database = process.env.con_con || 'SLS017';
-
-var con = mysql.createConnection({
-    host: host,
-    user: user,
-    password: password,
-    database: database,
-    multipleStatements: true
-});
-
-con.connect(function (e) {
-    if (e) {
-        log.error('Error connecting to DB', e);
-    } else {
-        log.debug('DB connected successfully');
+router.post('/new', [
+    auth.admin,
+    function (req, res, next) {
+        let our_city = new citystate(req.body.city, req.body.state);
+        our_city.make(
+            function (res) {
+                res.status(200).end();
+            },
+            function (err) {
+                log.debug(err);
+                res.status(500).end();
+            }
+        )
     }
-});
+]);
 
-con.query("SELECT * " +
-    "FROM information_schema.tables " +
-    "WHERE table_schema='SLS017' " +
-    "AND table_name = 'Users' " +
-    "LIMIT 1", function (error, results, fields) {
-    if (error) {
-        throw error;
-    } else if (results.length > 0) {
-        throw "database is already populated";
+router.post('/list', [
+    auth.user,
+    function (req, res, next) {
+        citystate.fetch({order: req.body.order, like: req.body.like}, function (results) {
+            res.results = results;
+            next();
+        }, function (err) {
+            log.debug(err);
+            res.end();
+        });
+    },
+    function (req, res) {
+        res.json(res.results);
+        res.status(200).end();
     }
-});
+]);
 
-con.query(
-    "CREATE TABLE Users(  " +
-    "username VARCHAR(255) NOT NULL UNIQUE, " +
-    "email VARCHAR(255) NOT NULL UNIQUE, " +
-    "password VARCHAR(255) NOT NULL, " +
-    "usertype ENUM ('admin','official','scientist') NOT NULL, " +
-    "PRIMARY KEY (username));"
-);
-
-con.query(
-    "CREATE TABLE City_states( " +
-    "city VARCHAR(255) NOT NULL, " +
-    "state VARCHAR(255) NOT NULL, " +
-    "PRIMARY KEY (city, state));"
-);
-con.query(
-    "CREATE TABLE City_officials( " +
-    "username VARCHAR(255) NOT NULL UNIQUE, " +
-    "title VARCHAR(255) NOT NULL, " +
-    "approved TINYINT(1) DEFAULT 0, " +
-    "city VARCHAR(255) NOT NULL, " +
-    "state VARCHAR(255) NOT NULL, " +
-    "PRIMARY KEY (username), " +
-    "FOREIGN KEY (username) REFERENCES Users(username) ON DELETE CASCADE ON UPDATE CASCADE, " +
-    "FOREIGN KEY (city, state) REFERENCES City_states(city, state) ON DELETE CASCADE ON UPDATE CASCADE);"
-);
-con.query(
-    "CREATE TABLE POIs( " +
-    "city VARCHAR(255) NOT NULL," +
-    " state VARCHAR(255) NOT NULL," +
-    " location_name VARCHAR(255) NOT NULL UNIQUE," +
-    " date_flagged DATE, " +
-    "flag TINYINT(1) DEFAULT 0," +
-    " zip_code INTEGER(5) NOT NULL," +
-    " PRIMARY KEY(location_name)," +
-    " FOREIGN KEY (city,state) REFERENCES City_states(city,state) ON DELETE CASCADE ON UPDATE CASCADE);"
-);
-con.query(
-    "CREATE TABLE Data_types ( " +
-    "type VARCHAR(255) NOT NULL, " +
-    "PRIMARY KEY (type));"
-);
-con.query(
-    "INSERT INTO Data_types (type) VALUES ('mold'), ('air_quality');"
-);
-con.query(
-    "CREATE TABLE Data_points( " +
-    "location_name VARCHAR(255) NOT NULL, " +
-    "date_time DATETIME NOT NULL, " +
-    "data_value BIGINT NOT NULL, " +
-    "data_type VARCHAR(255) NOT NULL, " +
-    "accepted TINYINT(1) DEFAULT 0," +
-    "PRIMARY KEY(location_name, date_time), " +
-    "FOREIGN KEY (location_name) references POIs(location_name) ON DELETE CASCADE ON UPDATE CASCADE, " +
-    "FOREIGN KEY (data_type) references Data_types(type) ON DELETE CASCADE ON UPDATE CASCADE);"
-);
-
-log.debug("Tables added successfully");
-con.end();
+module.exports = router;

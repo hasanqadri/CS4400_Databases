@@ -22,9 +22,10 @@ router.post('/new', [
 ]);
 
 router.post('/list', [
-    auth.user,
+    auth.admin,
     function (req, res, next) {
         datapoint.fetch({
+            // join: {table: 'POIs', colA: 'location_name', colB: 'location_name'},
             vals: {city: req.session.city, state: req.session.state},
             order: req.body.order,
             like: req.body.like
@@ -43,7 +44,7 @@ router.post('/list', [
 ]);
 
 router.post('/update', [
-    auth.official,
+    auth.admin,
     function (req, res, next) {
         datapoint.fetch({vals: {location_name: req.body.location_name, date_time: req.body.date_time}},
             function (results) {

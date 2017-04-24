@@ -75,7 +75,7 @@ router.post('/update', [
                 res.status(200).end();
             },
             function (err) {
-                logger.debug(err);
+                log.debug(err);
                 res.status(500).end();
             }
         );
