@@ -62,7 +62,7 @@
             </th>
 
             </tr>
-            <tr ng-repeat="point in reports|orderBy:orderByField:reverseSort">
+            <tr ng-repeat="point in reports|orderBy:orderByField:reverseSort" ng-click="">
             <td class="text-center padding-right-custom" colspan="1">{{point.location_name}}</td>
             <td class="text-center padding-right-custom" colspan="1">{{point.city}}</td>
             <td class="text-center padding-right-custom" colspan="1">{{point.state}}</td>
