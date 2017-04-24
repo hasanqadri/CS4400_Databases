@@ -67,8 +67,8 @@ router.post('/update', [
 
                 if (user_update.usertype === 'official') {
                     let official_data = cityofficial.fetch({vals: {username: req.body.username}}, function (res) {
-                        let official = new cityofficial(official_data.username, official_data.email, official_data.password,
-                            official_data.usertype, official_data.approved, official_data.city, official_data.state, official_data.title);
+                        let official = new cityofficial(user_update.username, user_update.email, user_update.password,
+                            user_update.usertype, official_data.approved, official_data.city, official_data.state, official_data.title);
                         official.approved = req.body.approved || official.approved;
                         official.city = req.body.city || official.city;
                         official.state = req.body.state || official.state;
