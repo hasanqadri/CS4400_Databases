@@ -28,7 +28,16 @@ router.post('/new', [
 router.post('/list', [
     auth.user,
     function (req, res, next) {
-        poi.fetch({vals: req.body.vals, order: req.body.order, like: req.body.like}, function (results) {
+        poi.fetch({
+            between: req.body.between ? {
+                name: req.body.between['name'],
+                min: req.body.between['min'],
+                max: req.body.between['max']
+            } : null,
+            vals: req.body.vals,
+            order: req.body.order,
+            like: req.body.like
+        }, function (results) {
             res.results = results;
             next();
         }, function (err) {
@@ -39,6 +48,14 @@ router.post('/list', [
     function (req, res) {
         res.json(res.results);
         res.status(200).end();
+    }
+]);
+
+router.post('/report', [
+    auth.official,
+    function (req, res, next) {
+        let db = require('../db');
+        db.query({sql: 'SELECT '})
     }
 ]);
 
